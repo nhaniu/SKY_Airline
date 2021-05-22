@@ -73,7 +73,7 @@ public class trangchu extends JFrame {
 			}
 		});
 	}
-
+//
 	/**
 	 * Create the frame.
 	 */
