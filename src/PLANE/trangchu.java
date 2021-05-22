@@ -68,7 +68,7 @@ public class trangchu extends JFrame {
 					frame.setIconImage(imgIcon);
 					
 				} catch (Exception e) {
-					e.printStackTrace(); //
+					e.printStackTrace(); //  tt
 				}
 			}
 		});
