@@ -42,7 +42,7 @@ public class QuanLy_hanhkhach extends JFrame {
 		setVisible(true);
 		setBackground(new Color(240, 255, 255));
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 170, 542, 279);
+		setBounds(100, 170, 590, 336);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(240, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -67,13 +67,18 @@ public class QuanLy_hanhkhach extends JFrame {
 		});
 		bt_them.setBackground(new Color(135, 206, 250));
 		bt_them.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		bt_them.setBounds(61, 147, 129, 31);
+		bt_them.setBounds(63, 171, 129, 31);
 		contentPane.add(bt_them);
 		
 		JButton bt_timkiem = new JButton("Tìm kiếm");
+		bt_timkiem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new timkiemhanhkhach();
+			}
+		});
 		bt_timkiem.setBackground(new Color(135, 206, 250));
 		bt_timkiem.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		bt_timkiem.setBounds(345, 147, 123, 31);
+		bt_timkiem.setBounds(361, 171, 123, 31);
 		contentPane.add(bt_timkiem);
 	}
 }

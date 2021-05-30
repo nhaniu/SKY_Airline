@@ -9,6 +9,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.Image;
 import java.awt.Insets;
 
@@ -172,6 +173,9 @@ public class trangchu extends JFrame {
 		item_khuhoi.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		item_khuhoi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
+				
+				
 				new muave_khuhoi();
 			}
 		});
@@ -536,7 +540,7 @@ public class trangchu extends JFrame {
 				menu_changdung.setFont(new Font("Segoe UI", Font.BOLD, 15));
 				menu_changdung.setBounds(264, 96, 103, 42);
 				
-				JMenuItem menu_tracuuCD = new JMenuItem("tra cứu");
+				JMenuItem menu_tracuuCD = new JMenuItem("Tra cứu");
 				menu_tracuuCD.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						new tracuu_changdung();
