@@ -108,6 +108,7 @@ public class quanly_chuyenbay extends JFrame {
 		JButton bt_timkiem = new JButton("Tìm kiếm");
 		bt_timkiem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				new timkiem_chuyenbay();
 			}
 		});
 		bt_timkiem.setBackground(new Color(135, 206, 250));
@@ -169,13 +170,10 @@ public class quanly_chuyenbay extends JFrame {
 				String tg2 = ngayhc.substring(0, 10);
 				System.out.println(tg1);
 				System.out.println(tg2);
-				
-				
+								
 				String tongsove= model.getValueAt(SelectedRows, 6).toString();
-				System.out.println("loi1");
 				String idnql= model.getValueAt(SelectedRows, 7).toString();
 				
-				System.out.println("trc loi");
 				update_chuyenbay update= new update_chuyenbay(id, idmb, sanbaydi, sanbayden, tg1, tg2, tongsove, idnql);
 				update.setVisible(true);
 				
@@ -205,12 +203,11 @@ public class quanly_chuyenbay extends JFrame {
 
 																											
 							Class.forName("oracle.jdbc.OracleDriver");
-							java.sql.Connection DB_AIRLINE= DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","1");  		
+							java.sql.Connection DB_AIRLINE= DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");  		
 							PreparedStatement pst = DB_AIRLINE.prepareStatement("delete from CHUYENBAY where ID=?");
 							pst.setInt(1, id);
 							pst.executeUpdate();
 							JOptionPane.showMessageDialog(null, "Xóa thành công");
-							textField_ID.setText("");
 						
 						
 					}
@@ -228,6 +225,54 @@ public class quanly_chuyenbay extends JFrame {
 		contentPane.add(bt_xoa);
 		bt_xoa.setVisible(false);
 		
+		try {
+			Class.forName("oracle.jdbc.OracleDriver");
+			Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+			Statement st=con.createStatement(); 
+			
+
+
+			String search="select * from CHUYENBAY";				
+			while(tableModel.getRowCount() > 0) 
+			{									
+				tableModel.removeRow(0);
+			}
+			
+			ResultSet rs= st.executeQuery(search);
+			while(rs.next()) {
+				String ID =rs.getString(1);
+				String ttmaybayid =rs.getString(2);
+				String sanbaydi =rs.getString(3);
+				String sanbayden =rs.getString(4);
+				String ngaygiokh =rs.getString(5);
+				String ngaygiohc =rs.getString(6);
+				String tongsove=rs.getString(7);
+				String ID_NQL =rs.getString(8);
+
+				
+
+				//System.out.print(ID_NQL+sovetrong+sovedat+sovedat+tongsove+sanbayden+ngaygiohc+ngaygiokh+sanbaydi+ttmaybayid+ID+"\n");
+				
+				tableModel.addRow(new Object[] {ID,ttmaybayid,sanbaydi,sanbayden,ngaygiokh,ngaygiohc,tongsove,ID_NQL});
+
+				table.setModel(tableModel);
+				scrollPane.setVisible(true);
+				bt_them.setVisible(true);
+				bt_sua.setVisible(true);
+				bt_timkiem.setVisible(true);
+				bt_xoa.setVisible(true);
+
+			}
+			
+			con.close();
+			
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+
+		
 		JButton bt_hienthidanhsachchuyenbay = new JButton("Hiển thị danh sách chuyến bay");
 		bt_hienthidanhsachchuyenbay.setBackground(new Color(135, 206, 250));
 		bt_hienthidanhsachchuyenbay.addActionListener(new ActionListener() {
@@ -237,7 +282,7 @@ public class quanly_chuyenbay extends JFrame {
 				
 				try {
 					Class.forName("oracle.jdbc.OracleDriver");
-					Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","1");
+					Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
 					Statement st=con.createStatement(); 
 					
 

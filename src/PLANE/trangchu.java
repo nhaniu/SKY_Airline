@@ -43,17 +43,24 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.swing.event.AncestorListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.event.AncestorEvent;
 import javax.swing.JTextPane;
 import javax.swing.SpringLayout;
 import javax.swing.JSeparator;
+import javax.swing.JTable;
 
 public class trangchu extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField_email;
 
 	/**
 	 * Launch the application.
@@ -239,6 +246,10 @@ public class trangchu extends JFrame {
 				new thongtin_quydinhphapluat();
 			}
 		});
+		
+		JMenuItem menuItem_khuyenmai_khtt = new JMenuItem("Thông tin khuyến mãi cho khách hàng thân thiết");
+		menuItem_khuyenmai_khtt.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		menu_thongtin.add(menuItem_khuyenmai_khtt);
 		menu_thongtin.add(item_quydinh);
 		
 		JMenu mnDchV = new JMenu("Dịch vụ ");
@@ -269,18 +280,91 @@ public class trangchu extends JFrame {
 		menu_khuyenmai.setBounds(189, 110, 113, 27);
 		menuBar.add(menu_khuyenmai);
 		
-		JMenuItem item_theothang = new JMenuItem("Khuyến mãi theo tháng");
+		JMenuItem item_theothang = new JMenuItem("Khuyến mãi vào các dịp đặc biệt");
 		item_theothang.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		item_theothang.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new Khuyenmai_theothang();
+				JFrame frame1=new JFrame();
+				frame1.setVisible(true);
+				frame1.setBackground(new Color(240, 255, 255));
+				frame1.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+				frame1.setBounds(100, 100, 733, 335);
+				JPanel panel = new JPanel();
+				panel.setBackground(new Color(240, 255, 255));
+				panel.setBorder(new EmptyBorder(5, 5, 5, 5));
+				frame1.getContentPane().add(panel);
+				panel.setLayout(null);
+				
+				JLabel lblNewLabel = new JLabel("Khuyến mãi vào các dịp lễ");
+				lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+				lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 25));
+				lblNewLabel.setBounds(58, 15, 595, 30);
+				panel.add(lblNewLabel);
+				
+				JSeparator separator = new JSeparator();
+				separator.setBounds(5, 56, 688, 14);
+				panel.add(separator);
+				
+				JScrollPane scrollPane = new JScrollPane();
+				scrollPane.setBounds(10, 81, 683, 184);
+				panel.add(scrollPane);
+				
+				JTable table = new JTable();
+				scrollPane.setViewportView(table);
+
+				final DefaultTableModel tableModel = new DefaultTableModel();
+				tableModel.addColumn("ID");
+				tableModel.addColumn("Ngày bắt đầu");
+				tableModel.addColumn("Ngày kết thúc");
+				tableModel.addColumn("Nội dung");
+				tableModel.addColumn("Phần trăm khuyến mãi");
+				
+				JTableHeader Theader = table.getTableHeader();
+				 Theader.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+				Theader.setBackground(new Color(255, 255, 255));
+				table.setModel(tableModel);
+				Theader.setBackground(new Color(135, 206, 250));
+				try {
+					Class.forName("oracle.jdbc.OracleDriver");
+					Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+					Statement st=con.createStatement(); 
+					
+
+					String search="select* from BKHUYENMAI";				
+					while(tableModel.getRowCount() > 0) 
+					{									
+						tableModel.removeRow(0);
+					}
+					
+					ResultSet rs= st.executeQuery(search);
+					while(rs.next()) {
+						String id =rs.getString(1);
+						String ngaybatdau =rs.getString(2);
+						String ngayketthuc =rs.getString(3);
+						String noidung =rs.getString(4);					
+						String phantram =rs.getString(5);					
+
+						
+						tableModel.addRow(new Object[] {id,ngaybatdau,ngayketthuc,noidung,phantram});
+						table.setModel(tableModel);
+						//table.setVisible(true);
+						//scrollPane.setVisible(true);
+
+					}
+					
+					con.close();
+					
+				} catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				
+
+				
 			}
 		});
 		menu_khuyenmai.add(item_theothang);
-		
-		JMenuItem item_kh_thanthiet = new JMenuItem("Khuyến mãi cho khách hàng thân thiết");
-		item_kh_thanthiet.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		menu_khuyenmai.add(item_kh_thanthiet);
 		
 		JTextArea textfield_bottom = new JTextArea();
 		textfield_bottom.setBounds(0, 570, 1283, 97);
@@ -306,7 +390,7 @@ public class trangchu extends JFrame {
 		item_dk_khachhang.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		item_dk_khachhang.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new DangKy_khachhang();
+				new Dangky_taikhoan();
 			}
 		});
 		menu_dangky.add(item_dk_khachhang);
@@ -356,29 +440,6 @@ public class trangchu extends JFrame {
 		lb_goingay.setBounds(28, 48, 248, 27);
 		panel_chamsockhachhang.add(lb_goingay);
 		
-		JRadioButton RadioButton_dk_nhantin = new JRadioButton("Đăng ký nhận thông tin");
-		RadioButton_dk_nhantin.setBackground(new Color(255, 255, 224));
-		RadioButton_dk_nhantin.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		RadioButton_dk_nhantin.setForeground(new Color(0, 0, 0));
-		RadioButton_dk_nhantin.setBounds(63, 109, 236, 23);
-		panel_chamsockhachhang.add(RadioButton_dk_nhantin);
-		
-		JLabel lb_email = new JLabel("Email: ");
-		lb_email.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		lb_email.setBounds(37, 151, 43, 14);
-		panel_chamsockhachhang.add(lb_email);
-		
-		textField_email = new JTextField();
-		textField_email.setBounds(90, 149, 186, 20);
-		panel_chamsockhachhang.add(textField_email);
-		textField_email.setColumns(10);
-		
-		JButton bt_dangky = new JButton("Đăng ký");
-		bt_dangky.setBackground(new Color(255, 218, 185));
-		bt_dangky.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		bt_dangky.setBounds(119, 190, 89, 23);
-		panel_chamsockhachhang.add(bt_dangky);
-		
 		JTextArea lb_tt_cskh = new JTextArea();
 		lb_tt_cskh.setBackground(new Color(255, 255, 224));
 		lb_tt_cskh.setForeground(new Color(178, 34, 34));
@@ -396,10 +457,10 @@ public class trangchu extends JFrame {
 		
 		menu_NV.setVisible(false);
 		
-		JMenuItem menuItem_qlttkh = new JMenuItem("Quản lý thông tin hành khách");
+		JMenuItem menuItem_qlttkh = new JMenuItem("Quản lý hành khách");
 		menuItem_qlttkh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new QuanLy_hanhkhach();
+				new timkiemhanhkhach();
 			}
 		});
 		menuItem_qlttkh.setFont(new Font("Segoe UI", Font.PLAIN, 14));
@@ -408,7 +469,7 @@ public class trangchu extends JFrame {
 		JMenuItem menuItem_QLVE = new JMenuItem("Quản lý vé");
 		menuItem_QLVE.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new nv_quanlyve();
+				new quanly_ve();
 			}
 		});
 		
@@ -418,6 +479,15 @@ public class trangchu extends JFrame {
 				new QuanLy_DatVe();
 			}
 		});
+		
+		JMenuItem menuItem_QLTK = new JMenuItem("Quản lý tài khoản");
+		menuItem_QLTK.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new Quanly_taikhoan();
+			}
+		});
+		menuItem_QLTK.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		menu_NV.add(menuItem_QLTK);
 		menu_qly_datve.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		menu_NV.add(menu_qly_datve);
 		menuItem_QLVE.setFont(new Font("Segoe UI", Font.PLAIN, 14));
@@ -471,6 +541,15 @@ public class trangchu extends JFrame {
 				new Quanly_taichinh();
 			}
 		});
+		
+		JMenuItem menuitem_dk_taikhoan_nv = new JMenuItem("Đăng ký tài khoản cho nhân viên");
+		menuitem_dk_taikhoan_nv.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new Dangky_taikhoan_nhanvien();
+			}
+		});
+		menuitem_dk_taikhoan_nv.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		menu_NQL.add(menuitem_dk_taikhoan_nv);
 		menuItem_QLTC.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		menu_NQL.add(menuItem_QLTC);
 		
@@ -510,7 +589,7 @@ public class trangchu extends JFrame {
 				item_nhanvien.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 				item_nhanvien.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						new DangNhap(1,menu_NV, null,menu_dangnhap,bt_logout);
+						new dangnhap_nhanvien(1,menu_NV, null,menu_dangnhap,bt_logout);
 						
 							
 					}
@@ -530,7 +609,7 @@ public class trangchu extends JFrame {
 				item_quanly.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 				item_quanly.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						new DangNhap(2,menu_NQL,menu_NV,menu_dangnhap,bt_logout);
+						new dangnhap_quanly(2,menu_NQL,menu_NV,menu_dangnhap,bt_logout);
 					}
 				});
 				menu_dangnhap.add(item_quanly);

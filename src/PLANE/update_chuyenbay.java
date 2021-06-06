@@ -1,12 +1,10 @@
 package PLANE;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -15,48 +13,43 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
-import java.awt.Frame;
 
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import com.toedter.calendar.JDateChooser;
+
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.JSeparator;
-import javax.swing.JTable;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
+
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.logging.Level;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.awt.event.ActionEvent;
-import javax.swing.JScrollPane;
 
-public class them_chuyenbay extends JFrame {
+public class update_chuyenbay extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField_ID_NQL;
 	private JTextField textField_tongsove;
 	private JTextField textField_IDmb;
-	private JLabel lb_id;
+	private JTextField textField_ID;
+	private JComboBox comboBox_noidi;
+	private JComboBox comboBox_noiden;
+ 
 
-	public them_chuyenbay() {
-		initComponent();
-		autoID();}
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					them_chuyenbay frame = new them_chuyenbay();
+					update_chuyenbay frame = new update_chuyenbay("b", "a", null, null, "2001-10-01", "2001-12-12", "205", "205");
+					
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -64,22 +57,29 @@ public class them_chuyenbay extends JFrame {
 			}
 		});
 	}
-
+	
 	/**
 	 * Create the frame.
 	 */
-	public void initComponent() {
+	
+	
+	public update_chuyenbay(String id, String idmmb, String sanbaydi, String sanbayden, String ngay_kh, String ngay_hc, String tongsove,String idnql) {
+		
+		
+		
+			
+		
 		setBackground(new Color(240, 255, 255));
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 170, 797, 543);
+		setBounds(100, 170, 797, 469);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(240, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lb_title = new JLabel("Thêm chuyến bay");
+		JLabel lb_title = new JLabel("Cập nhật chuyến bay");
 		lb_title.setHorizontalAlignment(SwingConstants.CENTER);
 		lb_title.setFont(new Font("Times New Roman", Font.BOLD, 25));
 		lb_title.setBounds(229, 15, 306, 34);
@@ -94,10 +94,19 @@ public class them_chuyenbay extends JFrame {
 		JComboBox comboBox_noiden = new JComboBox();
 		comboBox_noiden.setBounds(559, 133, 151, 21);
 		contentPane.add(comboBox_noiden);
+		comboBox_noiden.setModel(new DefaultComboBoxModel(new String[] { "Tp. Hồ Chí Minh (SGN), Việt Nam", "Hà Nội (HAN), Việt Nam","Đà Nẵng (DAD), Việt Nam", "Phú Quốc (PQC), Việt Nam", "Nha Trang (CXR), Việt Nam", "Buôn Ma Thuột (BMV), Việt Nam", "Đồng Hới (VDH), Việt Nam"}));
+
+		
+		comboBox_noiden.setSelectedItem(sanbayden);
+
 		
 		final JComboBox comboBox_noidi = new JComboBox();
 		comboBox_noidi.setModel(new DefaultComboBoxModel(new String[] {"Hà Nội (HAN), Việt Nam", "Tp. Hồ Chí Minh (SGN), Việt Nam", "Đà Nẵng (DAD), Việt Nam", "Phú Quốc (PQC), Việt Nam", "Nha Trang (CXR), Việt Nam", "Buôn Ma Thuột (BMV), Việt Nam", "Đồng Hới (VDH), Việt Nam"}));
 		comboBox_noidi.setBounds(172, 133, 151, 20);
+		
+		comboBox_noidi.setSelectedItem(sanbaydi);
+
+		
 		contentPane.add(comboBox_noidi);
 		comboBox_noidi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -180,8 +189,13 @@ public class them_chuyenbay extends JFrame {
 		contentPane.add(lb_ngaydi);
 		
 		JDateChooser dateChooser_hc = new JDateChooser();
+		dateChooser_hc.setDateFormatString("yyyy-MM-dd hh:mm:ss");
 		dateChooser_hc.setBounds(559, 172, 151, 20);
 		contentPane.add(dateChooser_hc);
+		
+		LocalDate localDate = LocalDate.parse(ngay_hc);
+        Date date3 = (Date) Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		dateChooser_hc.setDate(date3);
 		
 
 		
@@ -193,7 +207,7 @@ public class them_chuyenbay extends JFrame {
 		});
 		bt_thoat.setBackground(new Color(0, 191, 255));
 		bt_thoat.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		bt_thoat.setBounds(559, 384, 102, 23);
+		bt_thoat.setBounds(559, 346, 102, 23);
 		contentPane.add(bt_thoat);
 		
 		JSeparator separator = new JSeparator();
@@ -202,13 +216,15 @@ public class them_chuyenbay extends JFrame {
 		
 		JLabel lb_idnql = new JLabel("ID người quản lý:");
 		lb_idnql.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lb_idnql.setBounds(408, 260, 127, 18);
+		lb_idnql.setBounds(421, 249, 127, 18);
 		contentPane.add(lb_idnql);
 		
 		textField_ID_NQL = new JTextField();
-		textField_ID_NQL.setBounds(559, 260, 151, 21);
+		textField_ID_NQL.setBounds(559, 247, 151, 21);
 		contentPane.add(textField_ID_NQL);
 		textField_ID_NQL.setColumns(10);
+		
+		textField_ID_NQL.setText(idnql);
 		
 		JLabel lblNewLabel_1 = new JLabel("Tổng số vé:");
 		lblNewLabel_1.setFont(new Font("Times New Roman", Font.BOLD, 15));
@@ -220,15 +236,23 @@ public class them_chuyenbay extends JFrame {
 		contentPane.add(textField_tongsove);
 		textField_tongsove.setColumns(10);
 		
+		textField_tongsove.setText(tongsove);
+		
 		JLabel lblNewLabel_2 = new JLabel("Ngày-giờ khởi hành:");
 		lblNewLabel_2.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		lblNewLabel_2.setBounds(25, 174, 136, 18);
 		contentPane.add(lblNewLabel_2);
 		
+		
 		JDateChooser dateChooser_kh = new JDateChooser();
+		dateChooser_kh.setDateFormatString("yyyy-MM-dd hh:mm:ss");
 		dateChooser_kh.setBounds(172, 172, 151, 20);
 		contentPane.add(dateChooser_kh);
 		
+		LocalDate localDate1 = LocalDate.parse(ngay_kh);
+        Date date2 = (Date) Date.from(localDate1.atStartOfDay(ZoneId.systemDefault()).toInstant());;
+		dateChooser_kh.setDate(date2);
+			
 		JLabel lblNewLabel_3 = new JLabel("ID máy bay:");
 		lblNewLabel_3.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		lblNewLabel_3.setBounds(421, 87, 114, 17);
@@ -239,23 +263,28 @@ public class them_chuyenbay extends JFrame {
 		contentPane.add(textField_IDmb);
 		textField_IDmb.setColumns(10);
 		
+		textField_IDmb.setText(idmmb);
+		
 		JLabel lblNewLabel_4 = new JLabel("ID chuyến bay:");
 		lblNewLabel_4.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		lblNewLabel_4.setBounds(25, 86, 122, 18);
 		contentPane.add(lblNewLabel_4);
 		
 		
-		JButton bt_them = new JButton("Thêm");
-		bt_them.setBackground(new Color(0, 191, 255));
-		bt_them.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		bt_them.setBounds(134, 384, 102, 23);
-		contentPane.add(bt_them);
+		JButton bt_capnhat = new JButton("Cập nhật");
+		bt_capnhat.setBackground(new Color(0, 191, 255));
+		bt_capnhat.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		bt_capnhat.setBounds(164, 346, 102, 23);
+		contentPane.add(bt_capnhat);
 		
-		 lb_id = new JLabel("");
-		lb_id.setBounds(172, 85, 151, 18);
-		contentPane.add(lb_id);
+		textField_ID = new JTextField();
+		textField_ID.setBounds(172, 86, 151, 21);
+		contentPane.add(textField_ID);
+		textField_ID.setColumns(10);
 		
-		bt_them.addActionListener(new ActionListener() {
+		textField_ID.setText(id);
+		
+		bt_capnhat.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (textField_ID_NQL.getText().isEmpty()) {
 					 JOptionPane.showMessageDialog(null, "vui lòng nhập ID người quản lý");
@@ -275,67 +304,37 @@ public class them_chuyenbay extends JFrame {
 					String tgString=formatter.format(dateChooser_kh.getDate());
 					String ngay_khoihanh="TO_DATE('"+tgString+"','DD-MM-RR HH24:MI:SS')";
 	
-
 					SimpleDateFormat formatter1 = new SimpleDateFormat("dd-MM-YY hh:mm:ss");
 					String tgString1=formatter1.format(dateChooser_hc.getDate());
 					String ngay_hacanh="TO_DATE('"+tgString1+"','DD-MM-RR HH24:MI:SS')";
+					
+					String update ="update CHUYENBAY set ID= "+textField_ID.getText()+",TTMAYBAY_ID="+textField_IDmb.getText()+",SANBAYDI='"+comboBox_noidi.getSelectedItem()+"',SANBAYDEN='"+comboBox_noiden.getSelectedItem()+"',NGAY_GIO_KH="+ngay_khoihanh+",NGAY_GIO_HC="+ngay_hacanh+",TONGSOVE="+textField_tongsove.getText()+",NGUOIQUANLY_ID="+textField_ID_NQL.getText()+"where ID="+ textField_ID.getText()+"";
+																		
+					Class.forName("oracle.jdbc.OracleDriver");
+					java.sql.Connection DB_AIRLINE= DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");  		
+					PreparedStatement pst = DB_AIRLINE.prepareStatement(update);
+					pst= DB_AIRLINE.prepareStatement(update);
+					pst.execute();
+	
+					JOptionPane.showMessageDialog(null, "Cập nhật thành công");
+					pst.close();
+					DB_AIRLINE.close();
 
+				} catch (ClassNotFoundException e1) {
+					Component a=null;
 
-				Class.forName("oracle.jdbc.OracleDriver");
-				Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
-				PreparedStatement pst= con.prepareStatement("insert into \"DB_AIRLINE\".\"CHUYENBAY\"  (\"ID\", \"TTMAYBAY_ID\", \"SANBAYDI\",\"SANBAYDEN\",  \"NGAY_GIO_KH\", \"NGAY_GIO_HC\", \"TONGSOVE\",\"NGUOIQUANLY_ID\") values("+lb_id.getText()+","+textField_IDmb.getText()+",'"+comboBox_noidi.getSelectedItem()+"','"+comboBox_noiden.getSelectedItem()+"',"+ngay_khoihanh+","+ngay_hacanh+","+textField_tongsove.getText()+","+textField_ID_NQL.getText()+")");		
-				pst.execute();				
-				pst.close();
-				Component a=null;
-				JOptionPane.showMessageDialog(a, "Đã thêm thành công");
+					JOptionPane.showMessageDialog(a, e1);						
+				} catch (SQLException e1) {
+					Component a=null;
 
-				
-				con.close();
-			} catch (ClassNotFoundException e1) {
-				e1.printStackTrace();
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-				
-			}
+					JOptionPane.showMessageDialog(a, e1);						
+	
+				}
+		}
 				
 		});
 
 		
 	}
 
-	public void autoID() {
-		
-		
-		
-		try {
-			Class.forName("oracle.jdbc.OracleDriver");
-			java.sql.Connection DB_AIRLINE= DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");  		
-			
-			Statement stmt=(Statement) ((java.sql.Connection) DB_AIRLINE).createStatement();  	
-			ResultSet rs=((java.sql.Statement) stmt).executeQuery("select MAX(ID) from CHUYENBAY");  
-			
-			rs.next();
-			System.out.println(rs.getString("MAX(ID)"));
-			
-			if(rs.getString("MAX(ID)")==null) {
-				lb_id.setText("601");
-			}
-			else 
-			{
-				Integer result1 = Integer.valueOf(rs.getString("MAX(ID)"));
-				result1++;
-				lb_id.setText(result1.toString());
-			}
-			
-			rs.close();
-			DB_AIRLINE.close();
-		} catch (ClassNotFoundException e) {
-			java.util.logging.Logger.getLogger(them_hanhkhach.class.getName()).log(Level.SEVERE,null,e);
-		} catch (SQLException e) {
-			java.util.logging.Logger.getLogger(them_hanhkhach.class.getName()).log(Level.SEVERE,null,e);
-
-		}  
-	}
 	}

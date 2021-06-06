@@ -16,10 +16,15 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.security.InvalidAlgorithmParameterException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.JSeparator;
 import java.awt.Font;
+import java.awt.Toolkit;
 
 public class DangNhap extends JFrame {
 
@@ -80,37 +85,47 @@ public class DangNhap extends JFrame {
 		bt_dangnhap.setBackground(new Color(0, 191, 255));
 		bt_dangnhap.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String password = passwordField_matkhau.getText();
-				String username = textField_taikhoan.getText();
-				if(password.contains("nhaniu") && username.contains("nhaniu"))
-				{
-					//textField_taikhoan.setText(null);
-					//passwordField_matkhau.setText(null);
-					JOptionPane.showMessageDialog(null, "Đăng nhập thành công");
-					if(n!=0)
-					{
-						Mn.setVisible(true);
-						//setVisible(false);
-						//bt.setVisible(false);
+				
+				try {
+					Class.forName("oracle.jdbc.OracleDriver");
+					Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+					Statement st=con.createStatement(); 
+					String search="select TENDANGNHAP,MATKHAU from TAIKHOAN where TENDANGNHAP='"+textField_taikhoan.getText()+"' and MATKHAU='"+passwordField_matkhau.getText()+"'";						
+					
+					ResultSet rs= st.executeQuery(search);
 
+						
+						if(rs.next())
+						{
+
+							JOptionPane.showMessageDialog(null, "Đăng nhập thành công");
+							if(n!=0)
+							{
+								Mn.setVisible(true);
+							}
+							if(n==2) {
+								Mn1.setVisible(true);
+
+							}
+							mndn.setVisible(false);
+							setVisible(false);
+							bt.setVisible(true);
+
+						}
+						else {
+							JOptionPane.showMessageDialog(null, "Đăng nhập không hợp lệ","Login Error",JOptionPane.ERROR_MESSAGE);
+							textField_taikhoan.setText(null);
+							passwordField_matkhau.setText(null);
+							setVisible(false);
+						
 					}
-					if(n==2) {
-						Mn1.setVisible(true);
-						//bt.setVisible(false);
-
-					}
-					mndn.setVisible(false);
-					setVisible(false);
-					bt.setVisible(true);
-
+						
+						
+				} catch (Exception e2) {
 				}
-				else {
-					JOptionPane.showMessageDialog(null, "Đăng nhập không hợp lệ","Login Error",JOptionPane.ERROR_MESSAGE);
-					textField_taikhoan.setText(null);
-					passwordField_matkhau.setText(null);
-					setVisible(false);
-
-				}
+				
+				
+				
 					
 			}
 		});

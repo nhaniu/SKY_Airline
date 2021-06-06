@@ -7,7 +7,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
+import java.awt.Component;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.JTextField;
@@ -16,6 +19,14 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JSlider;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.logging.Level;
 import java.awt.event.ActionEvent;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JSeparator;
@@ -23,11 +34,13 @@ import javax.swing.JSeparator;
 public class them_ve extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField_tenCB;
-	private JTextField textField_MVE;
-	private JTextField textField_giave;
-	private JTextField textField_giodi;
-	private JTextField textField_gioden;
+	private JTextField textField_hv;
+	private JTextField textField_cb;
+	private JLabel lb_id;
+	
+	public them_ve() {
+		initComponent();
+		autoID();}
 
 	/**
 	 * Launch the application.
@@ -48,11 +61,11 @@ public class them_ve extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public them_ve() {
+	public void initComponent() {
 		setBackground(new Color(240, 255, 255));
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 170, 728, 454);
+		setBounds(100, 170, 451, 366);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(240, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -62,122 +75,136 @@ public class them_ve extends JFrame {
 		JLabel lb_title = new JLabel("Thêm vé máy bay");
 		lb_title.setFont(new Font("Times New Roman", Font.BOLD, 25));
 		lb_title.setHorizontalAlignment(SwingConstants.CENTER);
-		lb_title.setBounds(234, 11, 273, 44);
+		lb_title.setBounds(69, 11, 273, 44);
 		contentPane.add(lb_title);
 		
-		JLabel lb_maCB = new JLabel("Tên chuyến bay:");
-		lb_maCB.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lb_maCB.setBounds(368, 89, 112, 18);
-		contentPane.add(lb_maCB);
-		
-		JLabel lb_hangve = new JLabel("Hạng vé:");
+		JLabel lb_hangve = new JLabel("ID hạng vé:");
 		lb_hangve.setBackground(new Color(240, 255, 255));
 		lb_hangve.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lb_hangve.setBounds(37, 214, 101, 18);
+		lb_hangve.setBounds(37, 139, 101, 18);
 		contentPane.add(lb_hangve);
-		
-		JComboBox comboBox_hangve = new JComboBox();
-		comboBox_hangve.setBackground(new Color(135, 206, 250));
-		comboBox_hangve.setModel(new DefaultComboBoxModel(new String[] {"Phổ thông tiêu chuẩn", "Hạng phổ thông linh hoạt", "Hạng phổ thông tiết kiệm", "Hạng thương gia"}));
-		comboBox_hangve.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		comboBox_hangve.setBounds(123, 214, 204, 27);
-		contentPane.add(comboBox_hangve);
-		
-		textField_tenCB = new JTextField();
-		textField_tenCB.setBounds(493, 87, 167, 24);
-		contentPane.add(textField_tenCB);
-		textField_tenCB.setColumns(10);
 		
 		JLabel lb_mave = new JLabel("Mã vé:");
 		lb_mave.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		lb_mave.setBounds(37, 89, 76, 18);
 		contentPane.add(lb_mave);
 		
-		textField_MVE = new JTextField();
-		textField_MVE.setBounds(123, 87, 169, 24);
-		contentPane.add(textField_MVE);
-		textField_MVE.setColumns(10);
-		
-		JLabel lb_giave = new JLabel("Giá vé: ");
-		lb_giave.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lb_giave.setBounds(37, 267, 65, 14);
-		contentPane.add(lb_giave);
-		
-		textField_giave = new JTextField();
-		textField_giave.setBounds(123, 263, 169, 24);
-		contentPane.add(textField_giave);
-		textField_giave.setColumns(10);
-		
 		JButton bt_them = new JButton("Thêm");
+		bt_them.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				
+				if (textField_cb.getText().isEmpty()) {
+					 JOptionPane.showMessageDialog(null, "vui lòng nhập ID chuyến bay");
+					 textField_cb.requestFocus();
+					 return; 
+					}
+				
+				if (textField_hv.getText().isEmpty()) {
+					 JOptionPane.showMessageDialog(null, "vui lòng nhập ID hạng vé");
+					 textField_hv.requestFocus();
+					 return; 
+					}
+			
+				try {
+					
+
+				Class.forName("oracle.jdbc.OracleDriver");
+				Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+				PreparedStatement pst= con.prepareStatement("insert into \"DB_AIRLINE\".\"VEMAYBAY\"  (\"ID\",  \"HANGVE_ID\",\"CHUYENBAY_ID\") values("+lb_id.getText()+","+textField_hv.getText()+","+textField_cb.getText()+")");		
+				pst.execute();				
+				pst.close();
+				Component a=null;
+				JOptionPane.showMessageDialog(a, "Đã thêm thành công");
+
+				
+				con.close();
+			} catch (ClassNotFoundException e1) {
+				e1.printStackTrace();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+				
+			}
+			
+		});
 		bt_them.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		bt_them.setBackground(new Color(0, 191, 255));
-		bt_them.setBounds(126, 348, 101, 23);
+		bt_them.setBounds(26, 285, 101, 23);
 		contentPane.add(bt_them);
-		
-		JLabel lb_giodi = new JLabel("Giờ đi: ");
-		lb_giodi.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lb_giodi.setBounds(37, 126, 65, 28);
-		contentPane.add(lb_giodi);
-		
-		textField_giodi = new JTextField();
-		textField_giodi.setBounds(123, 128, 169, 27);
-		contentPane.add(textField_giodi);
-		textField_giodi.setColumns(10);
-		
-		JLabel lb_gioden = new JLabel("Giờ đến: ");
-		lb_gioden.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lb_gioden.setBounds(368, 131, 101, 18);
-		contentPane.add(lb_gioden);
-		
-		textField_gioden = new JTextField();
-		textField_gioden.setBounds(493, 128, 169, 27);
-		contentPane.add(textField_gioden);
-		textField_gioden.setColumns(10);
-		
-		JLabel lb_ngaydi = new JLabel("Ngày đi: ");
-		lb_ngaydi.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lb_ngaydi.setBounds(368, 214, 65, 18);
-		contentPane.add(lb_ngaydi);
-		
-		JDateChooser dateChooser = new JDateChooser();
-		dateChooser.setBounds(493, 214, 169, 27);
-		contentPane.add(dateChooser);
 		
 		JSeparator separator = new JSeparator();
 		separator.setBounds(10, 66, 704, 2);
 		contentPane.add(separator);
 		
 		JSeparator separator_1 = new JSeparator();
-		separator_1.setBounds(10, 318, 704, 2);
+		separator_1.setBounds(10, 245, 704, 2);
 		contentPane.add(separator_1);
 		
-		JLabel lb_noidi = new JLabel("Nơi đi: ");
-		lb_noidi.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lb_noidi.setBounds(32, 175, 70, 18);
-		contentPane.add(lb_noidi);
-		
-		JComboBox comboBox_noidi = new JComboBox();
-		comboBox_noidi.setBackground(new Color(240, 255, 255));
-		comboBox_noidi.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		comboBox_noidi.setModel(new DefaultComboBoxModel(new String[] {"Hà Nội (HAN), Việt Nam", "Tp. Hồ Chí Minh (SGN), Việt Nam", "Đà Nẵng (DAD), Việt Nam", "Phú Quốc (PQC), Việt Nam", "Nha Trang (CXR), Việt Nam", "Buôn Ma Thuột (BMV), Việt Nam", "Đồng Hới (VDH), Việt Nam"}));
-		comboBox_noidi.setBounds(123, 174, 204, 27);
-		contentPane.add(comboBox_noidi);
-		
-		JLabel lb_noiden = new JLabel("Nơi đến: ");
-		lb_noiden.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lb_noiden.setBounds(368, 175, 76, 18);
-		contentPane.add(lb_noiden);
-		
-		JComboBox comboBox_noiden = new JComboBox();
-		comboBox_noiden.setBackground(new Color(240, 255, 255));
-		comboBox_noiden.setModel(new DefaultComboBoxModel(new String[] {"Tp. Hồ Chí Minh (SGN), Việt Nam", "Hà Nội (HAN), Việt Nam", "Đà Nẵng (DAD), Việt Nam", "Phú Quốc (PQC), Việt Nam", "Nha Trang (CXR), Việt Nam", "Buôn Ma Thuột (BMV), Việt Nam", "Đồng Hới (VDH), Việt Nam"}));
-		comboBox_noiden.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		comboBox_noiden.setBounds(491, 176, 213, 27);
-		contentPane.add(comboBox_noiden);
-		
 		JButton bt_thoat = new JButton("Thoát");
+		bt_thoat.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+			}
+		});
+		bt_thoat.setBackground(new Color(135, 206, 250));
 		bt_thoat.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		bt_thoat.setBounds(418, 349, 89, 23);
+		bt_thoat.setBounds(296, 285, 89, 23);
 		contentPane.add(bt_thoat);
+		
+		lb_id = new JLabel("");
+		lb_id.setHorizontalAlignment(SwingConstants.CENTER);
+		lb_id.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		lb_id.setBounds(123, 92, 204, 18);
+		contentPane.add(lb_id);
+		
+		textField_hv = new JTextField();
+		textField_hv.setBounds(145, 138, 159, 23);
+		contentPane.add(textField_hv);
+		textField_hv.setColumns(10);
+		
+		JLabel lblNewLabel_1 = new JLabel("ID chuyến bay:");
+		lblNewLabel_1.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lblNewLabel_1.setBounds(37, 187, 116, 14);
+		contentPane.add(lblNewLabel_1);
+		
+		textField_cb = new JTextField();
+		textField_cb.setBounds(145, 185, 159, 23);
+		contentPane.add(textField_cb);
+		textField_cb.setColumns(10);
 	}
-}
+
+public void autoID() {
+	
+	
+	
+	try {
+		Class.forName("oracle.jdbc.OracleDriver");
+		java.sql.Connection DB_AIRLINE= DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");  		
+		
+		Statement stmt=(Statement) ((java.sql.Connection) DB_AIRLINE).createStatement();  	
+		ResultSet rs=((java.sql.Statement) stmt).executeQuery("select MAX(ID) from VEMAYBAY");  
+		
+		rs.next();
+		System.out.println(rs.getString("MAX(ID)"));
+		
+		if(rs.getString("MAX(ID)")==null) {
+			lb_id.setText("801");
+		}
+		else 
+		{
+			Integer result1 = Integer.valueOf(rs.getString("MAX(ID)"));
+			result1++;
+			lb_id.setText(result1.toString());
+		}
+		
+		rs.close();
+		DB_AIRLINE.close();
+	} catch (ClassNotFoundException e) {
+		java.util.logging.Logger.getLogger(them_hanhkhach.class.getName()).log(Level.SEVERE,null,e);
+	} catch (SQLException e) {
+		java.util.logging.Logger.getLogger(them_hanhkhach.class.getName()).log(Level.SEVERE,null,e);
+
+	}  
+}}
