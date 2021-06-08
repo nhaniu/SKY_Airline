@@ -41,7 +41,7 @@ public class khuyenmai_khachhang_thanthiet extends JFrame {
 		setBackground(new Color(240, 255, 255));
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 170, 729, 506);
+		setBounds(100, 170, 729, 427);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(240, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -56,6 +56,16 @@ public class khuyenmai_khachhang_thanthiet extends JFrame {
 		JSeparator separator = new JSeparator();
 		separator.setBounds(10, 77, 695, 9);
 		contentPane.add(separator);
+		
+		JTextArea txtrViMiLn = new JTextArea();
+		txtrViMiLn.setEditable(false);
+		txtrViMiLn.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		txtrViMiLn.setBackground(new Color(240, 255, 255));
+		txtrViMiLn.setWrapStyleWord(true);
+		txtrViMiLn.setLineWrap(true);
+		txtrViMiLn.setText("    Với mỗi lần thanh toán, khách hàng mua vé với số tiền 500 000vnd sẽ được tích điểm vào tài khoản với số điểm là 1 điểm.\r\n\r\n    Để đạt hạng bạc, khách hàng cần đạt từ 20-30 điểm, Nếu khách hàng đồng ý đổi điểm, khách hàng sẽ được giảm 50 000vnd cho lần mua vé tiếp theo.\r\n\r\n    Để đạt hạng vàng, khách hàng cần đạt từ 31-50 điểm, Nếu khách hàng đồng ý đổi điểm, khách hàng sẽ được giảm 100 000vnd cho lần mua vé tiếp theo.\r\n\r\n    Để đạt hạng kim cương, khách hàng cần đạt từ 51 điểm trở lên, Nếu khách hàng đồng ý đổi điểm, khách hàng sẽ được giảm 150 000vnd cho lần mua vé tiếp theo.");
+		txtrViMiLn.setBounds(73, 131, 586, 248);
+		contentPane.add(txtrViMiLn);
 		
 	}
 }

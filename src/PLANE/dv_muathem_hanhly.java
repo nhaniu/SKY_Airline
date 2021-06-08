@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JSeparator;
@@ -16,18 +18,35 @@ import javax.swing.JRadioButton;
 import javax.swing.border.LineBorder;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.awt.event.ActionEvent;
+import javax.swing.JScrollPane;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import com.toedter.calendar.JDateChooser;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class dv_muathem_hanhly extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField_MaDC;
 	private JTable table;
-	private JTextField textField_hoten;
-	private JTextField textField_email;
+	private JTextField textField;
+	private JTextField textField_1;
+	public dv_muathem_hanhly() {
+		initcomponents();
+		//isCellEditable(ERROR, ABORT);
+	}
 
 	/**
 	 * Launch the application.
@@ -48,148 +67,331 @@ public class dv_muathem_hanhly extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public dv_muathem_hanhly() {
+	public void initcomponents() {
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBackground(new Color(240, 255, 255));
-		setBounds(100, 170, 793, 397);
+		setBounds(100, 170, 819, 494);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(240, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lb_MaDC = new JLabel("Mã đặt chỗ: ");
+		JLabel lb_MaDC = new JLabel("Mã đặt vé:");
 		lb_MaDC.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lb_MaDC.setBounds(30, 84, 99, 22);
+		lb_MaDC.setBounds(41, 279, 99, 22);
 		contentPane.add(lb_MaDC);
 		
 		JLabel lb_title = new JLabel("Mua thêm hành lý ký gửi");
 		lb_title.setFont(new Font("Times New Roman", Font.BOLD, 25));
 		lb_title.setHorizontalAlignment(SwingConstants.CENTER);
-		lb_title.setBounds(231, 11, 321, 36);
+		lb_title.setBounds(89, 11, 321, 36);
 		contentPane.add(lb_title);
 		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 58, 759, 8);
+		separator.setBounds(10, 56, 785, 10);
 		contentPane.add(separator);
 		
 		textField_MaDC = new JTextField();
-		textField_MaDC.setBounds(132, 86, 143, 20);
+		textField_MaDC.setBounds(150, 281, 143, 20);
 		contentPane.add(textField_MaDC);
 		textField_MaDC.setColumns(10);
 		
-		JLabel lb_goiHL = new JLabel("Gói hành lý: ");
-		lb_goiHL.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lb_goiHL.setBounds(30, 231, 99, 15);
-		contentPane.add(lb_goiHL);
+
+		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(new Color(240, 255, 255));
+		panel_1.setBounds(468, 66, 327, 382);
+		contentPane.add(panel_1);
+		panel_1.setLayout(null);
+		panel_1.setVisible(false);
 		
-		JRadioButton rdbt_5 = new JRadioButton("10 kg");
-		rdbt_5.setBackground(new Color(240, 255, 255));
-		rdbt_5.setHorizontalAlignment(SwingConstants.CENTER);
-		rdbt_5.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		rdbt_5.setBounds(132, 227, 64, 23);
-		contentPane.add(rdbt_5);
 		
-		JRadioButton rdbt_10 = new JRadioButton("15 kg");
-		rdbt_10.setBackground(new Color(240, 255, 255));
-		rdbt_10.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		rdbt_10.setBounds(225, 227, 64, 23);
-		contentPane.add(rdbt_10);
-		
-		JRadioButton rdbt_15 = new JRadioButton("20 kg");
-		rdbt_15.setBackground(new Color(240, 255, 255));
-		rdbt_15.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		rdbt_15.setHorizontalAlignment(SwingConstants.CENTER);
-		rdbt_15.setBounds(318, 227, 72, 22);
-		contentPane.add(rdbt_15);
-		
-		JRadioButton rdbt_20 = new JRadioButton("25 kg");
-		rdbt_20.setBackground(new Color(240, 255, 255));
-		rdbt_20.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		rdbt_20.setBounds(430, 227, 64, 23);
-		contentPane.add(rdbt_20);
-		
-		ButtonGroup G = new ButtonGroup();
-		G.add(rdbt_5);
-		G.add(rdbt_10);
-		G.add(rdbt_15);
-		G.add(rdbt_20);
+		JLabel lb_tien = new JLabel("New label");
+		lb_tien.setBounds(125, 291, 139, 24);
+		panel_1.add(lb_tien);
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel.setBackground(new Color(135, 206, 250));
-		panel.setBounds(554, 107, 215, 153);
+		panel.setBounds(41, 86, 397, 166);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
 		JLabel lb_banggia = new JLabel("Bảng giá ");
-		lb_banggia.setBounds(65, 5, 79, 24);
+		lb_banggia.setBounds(169, 11, 79, 24);
 		lb_banggia.setFont(new Font("Times New Roman", Font.BOLD, 20));
 		panel.add(lb_banggia);
 		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"      10 kg ", new Integer(150000)},
-				{"      15 kg", new Integer(200000)},
-				{"      20 kg", new Integer(250000)},
-				{"      25 kg", new Integer(300000)},
-			},
-			new String[] {
-				"G\u00F3i h\u00E0nh l\u00FD", "Gi\u00E1 (vnd)"
-			}
-		) {
-			Class[] columnTypes = new Class[] {
-				Object.class, Integer.class
-			};
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		});
-		table.getColumnModel().getColumn(0).setPreferredWidth(76);
-		table.setBounds(10, 61, 195, 64);
-		panel.add(table);
-		
 		JSeparator separator_1 = new JSeparator();
-		separator_1.setBounds(10, 40, 195, 4);
+		separator_1.setBounds(10, 35, 377, 9);
 		panel.add(separator_1);
 		
-		JLabel lb_hoten = new JLabel("Họ tên: ");
-		lb_hoten.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lb_hoten.setBounds(30, 129, 81, 20);
-		contentPane.add(lb_hoten);
+		JLabel lblNewLabel_5 = new JLabel("ID:");
+		lblNewLabel_5.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lblNewLabel_5.setBounds(10, 214, 94, 21);
+		panel_1.add(lblNewLabel_5);
 		
-		textField_hoten = new JTextField();
-		textField_hoten.setBounds(132, 130, 143, 19);
-		contentPane.add(textField_hoten);
-		textField_hoten.setColumns(10);
+		JLabel lb_id = new JLabel("New label");
+		lb_id.setBounds(125, 215, 133, 21);
+		panel_1.add(lb_id);
 		
-		JLabel lb_email = new JLabel("Email: ");
-		lb_email.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lb_email.setBounds(30, 176, 81, 22);
-		contentPane.add(lb_email);
+		JLabel lblNewLabel_6 = new JLabel("Dịch vụ:");
+		lblNewLabel_6.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lblNewLabel_6.setBounds(10, 246, 110, 24);
+		panel_1.add(lblNewLabel_6);
 		
-		textField_email = new JTextField();
-		textField_email.setBounds(132, 178, 234, 20);
-		contentPane.add(textField_email);
-		textField_email.setColumns(10);
+		JLabel lb_dv = new JLabel("New label");
+		lb_dv.setBounds(125, 247, 154, 24);
+		panel_1.add(lb_dv);
 		
-		JButton bt_thanhtoan = new JButton("Thanh toán");
-		bt_thanhtoan.setBackground(new Color(135, 206, 250));
-		bt_thanhtoan.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		bt_thanhtoan.setBounds(41, 305, 127, 22);
-		contentPane.add(bt_thanhtoan);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(20, 55, 356, 100);
+		panel.add(scrollPane);
 		
-		JButton bt_thoat = new JButton("Thoát");
-		bt_thoat.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
+		table = new JTable();
+		//table.setEditable(false);
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				DefaultTableModel model=(DefaultTableModel) table.getModel();
+				int i=table.getSelectedRow();
+				
+				lb_id.setText(model.getValueAt(i, 0).toString());
+				lb_tien.setText(model.getValueAt(i, 2).toString());
+				lb_dv.setText(model.getValueAt(i, 1).toString());
+
 			}
 		});
-		bt_thoat.setBackground(new Color(135, 206, 250));
-		bt_thoat.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		bt_thoat.setBounds(243, 306, 89, 22);
-		contentPane.add(bt_thoat);
+		scrollPane.setViewportView(table);
+		final DefaultTableModel tableModel = new DefaultTableModel();
+		
+		tableModel.addColumn("ID");
+		tableModel.addColumn("Nội dung dịch vụ");
+		tableModel.addColumn("Giá tiền");
+		
+		JTableHeader Theader = table.getTableHeader();
+		 Theader.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		Theader.setBackground(new Color(255, 255, 255));
+		table.setModel(tableModel);
+		
+		
+		try {
+			Class.forName("oracle.jdbc.OracleDriver");
+			Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+			Statement st=con.createStatement(); 
+			
+
+
+			String search="select * from DICHVUBOTRO";				
+			while(tableModel.getRowCount() > 0) 
+			{									
+				tableModel.removeRow(0);
+			}
+			
+			ResultSet rs= st.executeQuery(search);
+			while(rs.next()) {
+				String id =rs.getString(1);
+				String nd =rs.getString(2);
+				String gia =rs.getString(3);
+
+				
+				//System.out.print(ID_NQL+sovetrong+sovedat+sovedat+tongsove+sanbayden+ngaygiohc+ngaygiokh+sanbaydi+ttmaybayid+ID+"\n");
+				
+				tableModel.addRow(new Object[] {id, nd,gia});
+
+				table.setModel(tableModel);
+				
+			}
+			
+			con.close();
+			
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}								
+
+		
+		JButton bt_thanhtoan = new JButton("Thanh toán");
+		bt_thanhtoan.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panel_1.setVisible(true);
+				if (textField_MaDC.getText().isEmpty()) {
+					 JOptionPane.showMessageDialog(null, "vui lòng nhập mã đặt vé");
+					 textField_MaDC.requestFocus();
+					 return; 
+					}
+				
+				try {
+					Class.forName("oracle.jdbc.OracleDriver");
+					Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+					Statement st=con.createStatement(); 
+
+					String search="select ID from DATVEBAY where ID="+textField_MaDC.getText()+"";				
+				
+					ResultSet rs= st.executeQuery(search);
+					if(rs.next()) {
+						 final String id =rs.getString(1);
+						System.out.println(id);	
+					}
+					else
+						JOptionPane.showMessageDialog(null, " Mã đặt vé không tồn tại");
+
+					
+					con.close();
+					
+				} catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}				
+				
+			}
+		});
+		bt_thanhtoan.setBackground(new Color(135, 206, 250));
+		bt_thanhtoan.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		bt_thanhtoan.setBounds(51, 335, 127, 22);
+		contentPane.add(bt_thanhtoan);
+		
+		
+		JLabel lblNewLabel = new JLabel("Ngân hàng:");
+		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lblNewLabel.setBounds(10, 25, 94, 24);
+		panel_1.add(lblNewLabel);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Agribank", "ABC", "MB bank", "Vietcombank", "ViettinBank"}));
+		comboBox.setBounds(125, 27, 139, 24);
+		panel_1.add(comboBox);
+		
+		JLabel lblNewLabel_1 = new JLabel("Số tài khoản:");
+		lblNewLabel_1.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lblNewLabel_1.setBounds(10, 68, 94, 24);
+		panel_1.add(lblNewLabel_1);
+		
+		textField = new JTextField();
+		textField.setBounds(125, 71, 139, 21);
+		panel_1.add(textField);
+		textField.setColumns(10);
+		
+		JLabel lblNewLabel_2 = new JLabel("Tên chủ thẻ:");
+		lblNewLabel_2.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lblNewLabel_2.setBounds(10, 113, 104, 24);
+		panel_1.add(lblNewLabel_2);
+		
+		textField_1 = new JTextField();
+		textField_1.setBounds(125, 116, 139, 21);
+		panel_1.add(textField_1);
+		textField_1.setColumns(10);
+		
+		JLabel lblNewLabel_3 = new JLabel("Ngày phát hành:");
+		lblNewLabel_3.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lblNewLabel_3.setBounds(10, 163, 118, 21);
+		panel_1.add(lblNewLabel_3);
+		
+		JDateChooser dateChooser = new JDateChooser();
+		dateChooser.setBounds(125, 164, 139, 20);
+		panel_1.add(dateChooser);
+		
+		JLabel lblNewLabel_4 = new JLabel("Tiền dịch vụ:");
+		lblNewLabel_4.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lblNewLabel_4.setBounds(10, 290, 104, 24);
+		panel_1.add(lblNewLabel_4);
+		
+		
+		
+		JButton btnNewButton = new JButton("Xác nhận");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				if (textField.getText().isEmpty()) {
+					 JOptionPane.showMessageDialog(null, "vui lòng nhập đầy đủ thông tin");
+					 textField.requestFocus();
+					 return; 
+					}
+				if (textField_1.getText().isEmpty()) {
+						 JOptionPane.showMessageDialog(null, "vui lòng nhập đầy đủ thông tin");
+						 textField_1.requestFocus();
+						 return; 
+					}
+				
+				
+				try {
+									
+					Class.forName("oracle.jdbc.OracleDriver");
+					Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+					Statement st=con.createStatement(); 
+					
+				
+					String search="select TONGTIEN, TAIKHOAN_ID from DATVEBAY where ID="+textField_MaDC.getText();					
+										
+					ResultSet rs= st.executeQuery(search);
+					rs.next() ;
+						String tongtienve =rs.getString(1);
+						int tongtien=Integer.parseInt(tongtienve);
+						
+						String tiendv=lb_tien.getText();
+						int tiendvbt=Integer.parseInt(tiendv);
+
+						int tongtiendatve=tongtien+tiendvbt;
+						System.out.println("đặt vé "+tongtien+" "+tiendvbt+" "+tongtiendatve);
+						
+						String id_taikhoan=rs.getString(2);
+						int id_tk=Integer.parseInt(id_taikhoan);
+						System.out.println(id_tk);
+
+						String update ="update DATVEBAY set DICHVUBOTRO_ID="+lb_id.getText()+",TONGTIEN="+tongtiendatve+" where ID="+textField_MaDC.getText()+"";
+						PreparedStatement pst = con.prepareStatement(update);
+						pst= con.prepareStatement(update);
+						pst.execute();
+						rs.close();
+						pst.close();
+
+//						if(id_taikhoan==null) {
+//							System.out.println("tai khoan null");      // ????????????????????????????
+//						}
+//						else {
+//							String select_tichdiem="select TONGTIENMUAVE from TAIKHOAN where ID="+id_tk+"";					
+//							ResultSet rs1= st.executeQuery(select_tichdiem);
+//							//while( rs1.next()) {
+//							rs1.next();
+//								String tongtienve_tk =rs.getString(1);
+//								int tongtienmuave_tk=Integer.parseInt(tongtienve_tk);
+//								int tongtientrongtaikhoan=tongtienmuave_tk+tiendvbt;
+//								System.out.println("tổng tiền trong tài khoản: "+ tongtientrongtaikhoan );
+////								String diem_tk =rs.getString(2);
+////								
+////								String hang_tk =rs.getString(3);
+//						//	}
+//							
+//														
+//					//	}
+//					
+//					
+//					rs1.close();
+					con.close();
+					JOptionPane.showMessageDialog(null, "mua thành công");
+					
+				} catch (ClassNotFoundException e1) {
+					JOptionPane.showMessageDialog(null, "thất bại");
+
+					e1.printStackTrace();
+				} catch (SQLException e2) {
+					e2.printStackTrace();
+				}
+				
+				
+				
+				
+				
+			}
+		});
+		btnNewButton.setBackground(new Color(135, 206, 250));
+		btnNewButton.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		btnNewButton.setBounds(161, 342, 118, 23);
+		panel_1.add(btnNewButton);
+		
+
 	}
 }

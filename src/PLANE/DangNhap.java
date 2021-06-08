@@ -19,6 +19,7 @@ import java.security.InvalidAlgorithmParameterException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
@@ -31,6 +32,10 @@ public class DangNhap extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField_taikhoan;
 	private JPasswordField passwordField_matkhau;
+	public static String tendn;
+	public static String mk;
+
+	
 
 	/**
 	 * Launch the application.
@@ -39,7 +44,7 @@ public class DangNhap extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DangNhap frame = new DangNhap(0,null,null,null,null);
+					DangNhap frame = new DangNhap(0,null,null,null,null,null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -48,10 +53,11 @@ public class DangNhap extends JFrame {
 		});
 	}
 
+	
+
 	/**
-	 * Create the frame.
 	 */
-	public DangNhap(final int n, final JMenu Mn,  final JMenu Mn1, final JMenu mndn, final JButton bt) {
+	public DangNhap(final int n, final JMenu Mn,  final JMenu Mn1, final JMenu mndn, final JButton bt,final JButton  bt_user) {
 		
 		setBackground(new Color(240, 255, 255));
 		setVisible(true);
@@ -80,6 +86,7 @@ public class DangNhap extends JFrame {
 		passwordField_matkhau = new JPasswordField();
 		passwordField_matkhau.setBounds(171, 104, 132, 20);
 		contentPane.add(passwordField_matkhau);
+
 		
 		JButton bt_dangnhap = new JButton("Đăng nhập");
 		bt_dangnhap.setBackground(new Color(0, 191, 255));
@@ -89,19 +96,24 @@ public class DangNhap extends JFrame {
 				try {
 					Class.forName("oracle.jdbc.OracleDriver");
 					Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
-					Statement st=con.createStatement(); 
+					Statement st=con.createStatement(); 					
+					
 					String search="select TENDANGNHAP,MATKHAU from TAIKHOAN where TENDANGNHAP='"+textField_taikhoan.getText()+"' and MATKHAU='"+passwordField_matkhau.getText()+"'";						
 					
 					ResultSet rs= st.executeQuery(search);
-
 						
 						if(rs.next())
 						{
+							 tendn =rs.getString(1);
+							 mk =rs.getString(2);
+							 System.out.println(mk);
+							
 
 							JOptionPane.showMessageDialog(null, "Đăng nhập thành công");
 							if(n!=0)
 							{
 								Mn.setVisible(true);
+							
 							}
 							if(n==2) {
 								Mn1.setVisible(true);
@@ -110,6 +122,7 @@ public class DangNhap extends JFrame {
 							mndn.setVisible(false);
 							setVisible(false);
 							bt.setVisible(true);
+							bt_user.setVisible(true);
 
 						}
 						else {

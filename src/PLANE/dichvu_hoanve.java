@@ -188,8 +188,8 @@ public class dichvu_hoanve extends JFrame {
 				System.out.println(tien);
 				
 				float tongtien=Integer.parseInt(tien);
-				 float phihv=(float)(0.2*tongtien);
-				 float tienhoan=tongtien-phihv;
+				float phihv=(float)(0.2*tongtien);
+				float tienhoan=tongtien-phihv;
 
 				PreparedStatement pst= con.prepareStatement("insert into \"DB_AIRLINE\".\"HOANVEBAY\"  (\"ID\", \"DATVEBAY_ID\", \"LIDO\",\"NGAYHOAN\",  \"PHIHV\", \"TIENHV\", \"NHANVIEN_ID\") values("+lb_id.getText()+","+textField_madatcho.getText()+",'"+textField_lido.getText()+"',"+ngayhoan+","+phihv+","+tienhoan+","+0+")");		
 				pst.execute();

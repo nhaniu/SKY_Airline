@@ -101,7 +101,7 @@ public class quanly_chuyenbay extends JFrame {
 		});
 		bt_them.setBackground(new Color(135, 206, 250));
 		bt_them.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		bt_them.setBounds(317, 398, 102, 23);
+		bt_them.setBounds(256, 398, 102, 23);
 		contentPane.add(bt_them);
 		bt_them.setVisible(false);
 		
@@ -183,7 +183,7 @@ public class quanly_chuyenbay extends JFrame {
 		
 		bt_sua.setBackground(new Color(135, 206, 250));
 		bt_sua.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		bt_sua.setBounds(583, 398, 102, 23);
+		bt_sua.setBounds(450, 398, 102, 23);
 		contentPane.add(bt_sua);
 		bt_sua.setVisible(false);
 		
@@ -221,7 +221,7 @@ public class quanly_chuyenbay extends JFrame {
 		});
 		bt_xoa.setBackground(new Color(135, 206, 250));
 		bt_xoa.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		bt_xoa.setBounds(840, 398, 89, 23);
+		bt_xoa.setBounds(676, 398, 89, 23);
 		contentPane.add(bt_xoa);
 		bt_xoa.setVisible(false);
 		
@@ -303,9 +303,7 @@ public class quanly_chuyenbay extends JFrame {
 						String ngaygiohc =rs.getString(6);
 						String tongsove=rs.getString(7);
 						String ID_NQL =rs.getString(8);
-
 						
-
 						//System.out.print(ID_NQL+sovetrong+sovedat+sovedat+tongsove+sanbayden+ngaygiohc+ngaygiokh+sanbaydi+ttmaybayid+ID+"\n");
 						
 						tableModel.addRow(new Object[] {ID,ttmaybayid,sanbaydi,sanbayden,ngaygiokh,ngaygiohc,tongsove,ID_NQL});
@@ -316,7 +314,6 @@ public class quanly_chuyenbay extends JFrame {
 						bt_sua.setVisible(true);
 						bt_timkiem.setVisible(true);
 						bt_xoa.setVisible(true);
-
 					}
 					
 					con.close();
@@ -325,16 +322,23 @@ public class quanly_chuyenbay extends JFrame {
 					e1.printStackTrace();
 				} catch (SQLException e1) {
 					e1.printStackTrace();
-				}
-
-				
-				
+				}								
 			}
 		});
 		bt_hienthidanhsachchuyenbay.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		bt_hienthidanhsachchuyenbay.setBounds(740, 94, 244, 28);
 		contentPane.add(bt_hienthidanhsachchuyenbay);
+		
+		JButton bt_thongke = new JButton("Thống kê");
+		bt_thongke.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new thongke_chuyenbay();
+				
+			}
+		});
+		bt_thongke.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		bt_thongke.setBackground(new Color(135, 206, 250));
+		bt_thongke.setBounds(870, 399, 114, 23);
+		contentPane.add(bt_thongke);
 	}
-
-
 }

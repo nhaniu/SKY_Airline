@@ -20,6 +20,7 @@ import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JMenuBar;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
@@ -36,6 +37,7 @@ import java.awt.Toolkit;
 import javax.swing.border.LineBorder;
 
 import com.toedter.calendar.JDateChooser;
+
 
 import java.awt.Dimension;
 import java.awt.Dialog.ModalExclusionType;
@@ -76,7 +78,7 @@ public class trangchu extends JFrame {
 					frame.setIconImage(imgIcon);
 					
 				} catch (Exception e) {
-					e.printStackTrace(); //  tt
+					e.printStackTrace(); 
 				}
 			}
 		});
@@ -89,6 +91,9 @@ public class trangchu extends JFrame {
 	final JMenu menu_dangnhap = new JMenu("Đăng Nhập");
 	final JMenu menu_NV = new JMenu("Nhân viên");
 	final JMenu menu_NQL = new JMenu("Người quản lý");
+	JButton bt_user = new JButton("");
+	
+
 	public trangchu() {		
 		setTitle("SKY Airline");
 		setBackground(new Color(240, 255, 255));
@@ -129,7 +134,7 @@ public class trangchu extends JFrame {
 		lblNewLabel.setForeground(new Color(220, 20, 60));
 		lblNewLabel.setFont(new Font("UTM French Vanilla", Font.BOLD, 30));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(625, 25, 463, 44);
+		lblNewLabel.setBounds(510, 26, 463, 44);
 		panel.add(lblNewLabel);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -145,6 +150,7 @@ public class trangchu extends JFrame {
 				menu_NQL.setVisible(false);
 				menu_dangnhap.setVisible(true);
 				bt_logout.setVisible(false);
+				bt_user.setVisible(false);
 				
 			}
 		});
@@ -156,6 +162,7 @@ public class trangchu extends JFrame {
 		Image imgScale_logout =imgIcon_logout.getScaledInstance(38,38, Image.SCALE_SMOOTH);
 		ImageIcon scaleIcon_logout=new ImageIcon(imgScale_logout);
 		bt_logout.setIcon(scaleIcon_logout);
+		
 		
 		
 		
@@ -558,11 +565,11 @@ public class trangchu extends JFrame {
 		contentPane.add(lb);
 		
 		
-		ImageIcon icon=new ImageIcon("phongcanh.jpg");
-		Image imgIcon =icon.getImage();
-		Image imgScale =imgIcon.getScaledInstance(958, 449, Image.SCALE_SMOOTH);
-		ImageIcon scaleIcon=new ImageIcon(imgScale);
-		lb.setIcon(scaleIcon);
+		ImageIcon icon3=new ImageIcon("phongcanh.jpg");
+		Image imgIcon3 =icon3.getImage();
+		Image imgScale3 =imgIcon3.getScaledInstance(958, 449, Image.SCALE_SMOOTH);
+		ImageIcon scaleIcon3=new ImageIcon(imgScale3);
+		lb.setIcon(scaleIcon3);
 		
 		
 		JLabel lb_dulichxuyenViet = new JLabel("Du lịch xuyên Việt cùng Sky Airline");
@@ -589,8 +596,13 @@ public class trangchu extends JFrame {
 				item_nhanvien.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 				item_nhanvien.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						new dangnhap_nhanvien(1,menu_NV, null,menu_dangnhap,bt_logout);
+						new dangnhap_nhanvien(1,menu_NV, null,menu_dangnhap,bt_logout,bt_user);
 						
+						bt_user.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								new taikhoan_nhanvien();
+							}
+						});
 							
 					}
 				});
@@ -600,7 +612,14 @@ public class trangchu extends JFrame {
 				item_khachhang.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 				item_khachhang.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						new DangNhap(0,null, null, menu_dangnhap,bt_logout);
+						new DangNhap(0,null, null, menu_dangnhap,bt_logout,bt_user);
+						
+						bt_user.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								new taikhoan_khachhang();
+								
+							}
+						});
 					}
 				});
 				menu_dangnhap.add(item_khachhang);
@@ -609,7 +628,14 @@ public class trangchu extends JFrame {
 				item_quanly.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 				item_quanly.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						new dangnhap_quanly(2,menu_NQL,menu_NV,menu_dangnhap,bt_logout);
+						new dangnhap_quanly(2,menu_NQL,menu_NV,menu_dangnhap,bt_logout,bt_user);
+						
+						bt_user.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								new taikhoan_quanly();
+
+							}
+						});
 					}
 				});
 				menu_dangnhap.add(item_quanly);
@@ -629,9 +655,25 @@ public class trangchu extends JFrame {
 				menu_tracuuCD.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 				menu_tracuuCD.setHorizontalAlignment(SwingConstants.CENTER);
 				menu_changdung.add(menu_tracuuCD);
+				bt_user.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+					}
+				});
 		
 
-;
+				
+				bt_user.setBounds(1161, 30, 42, 42);
+				panel.add(bt_user);
+				
+
+				ImageIcon icon=new ImageIcon("user.png");
+				Image imgIcon =icon.getImage();
+				Image imgScale =imgIcon.getScaledInstance(bt_user.getWidth(), bt_user.getHeight(), Image.SCALE_SMOOTH);
+				ImageIcon scaleIcon=new ImageIcon(imgScale);
+				bt_user.setIcon(scaleIcon);
+				bt_user.setVisible(false);
+
+			//	bt_user.setIcon(new ImageIcon("C:\\Users\\nguyen thi nhan\\Downloads\\pngtree-office-work-user-icon-avatar-png-image_4815124.jpg"));
 		
 		
 
