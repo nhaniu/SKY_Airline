@@ -182,21 +182,41 @@ public class dichvu_hoanve extends JFrame {
 				ResultSet rs= st.executeQuery(b);
 				
 				rs.next();
-				System.out.println("ok");
-				String tien =rs.getString(1);
-				
-				System.out.println(tien);
-				
+				String tien =rs.getString(1);				
+				System.out.println("tong tien: "+tien);				
 				float tongtien=Integer.parseInt(tien);
 				float phihv=(float)(0.2*tongtien);
 				float tienhoan=tongtien-phihv;
+				
 
 				PreparedStatement pst= con.prepareStatement("insert into \"DB_AIRLINE\".\"HOANVEBAY\"  (\"ID\", \"DATVEBAY_ID\", \"LIDO\",\"NGAYHOAN\",  \"PHIHV\", \"TIENHV\", \"NHANVIEN_ID\") values("+lb_id.getText()+","+textField_madatcho.getText()+",'"+textField_lido.getText()+"',"+ngayhoan+","+phihv+","+tienhoan+","+0+")");		
 				pst.execute();
 				
+				
+				String C= "select DT.ID, DT.TONGPHIHOANVE,DT.TONGDOANHTHU \r\n"
+						+ "from DOANHTHUCHUYENBAY DT, VEMAYBAY VE, DATVEBAY DV \r\n"
+						+ "WHERE   DT.CHUYENBAY_ID=VE.CHUYENBAY_ID AND VE.ID=DV.VEMAYBAY_ID AND DV.ID="+textField_madatcho.getText();
+				ResultSet rs2= st.executeQuery(C);
+
+				rs2.next();
+				String tonghoanve =rs2.getString(2);				
+				System.out.println("tong tien hoàn vé trong db"+tonghoanve);				
+				float tongtienhoan=Float.parseFloat(tonghoanve);
+				float updatetth=tongtienhoan+tienhoan;
+				System.out.println("update "+updatetth );
+				String id_dt =rs2.getString(1);	
+				String tongdt =rs2.getString(3);	
+				float tdt=Float.parseFloat(tongdt);
+				float tongdoanhthu=tdt-tienhoan;
+
+				PreparedStatement pst1= con.prepareStatement("update DOANHTHUCHUYENBAY set TONGPHIHOANVE="+updatetth+", TONGDOANHTHU="+tongdoanhthu+" where ID= "+id_dt+"");		
+				pst1.execute();
+				
+				
 				Component a=null;
 				JOptionPane.showMessageDialog(a, "Thêm thành công");
 				
+				rs2.close();
 				rs.close();
 				pst.close();
 				
@@ -229,7 +249,6 @@ public class dichvu_hoanve extends JFrame {
 			} catch (ClassNotFoundException e1) {
 				e1.printStackTrace();
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 				

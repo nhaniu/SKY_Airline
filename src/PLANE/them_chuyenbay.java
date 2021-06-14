@@ -284,8 +284,26 @@ public class them_chuyenbay extends JFrame {
 				Class.forName("oracle.jdbc.OracleDriver");
 				Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
 				PreparedStatement pst= con.prepareStatement("insert into \"DB_AIRLINE\".\"CHUYENBAY\"  (\"ID\", \"TTMAYBAY_ID\", \"SANBAYDI\",\"SANBAYDEN\",  \"NGAY_GIO_KH\", \"NGAY_GIO_HC\", \"TONGSOVE\",\"NGUOIQUANLY_ID\") values("+lb_id.getText()+","+textField_IDmb.getText()+",'"+comboBox_noidi.getSelectedItem()+"','"+comboBox_noiden.getSelectedItem()+"',"+ngay_khoihanh+","+ngay_hacanh+","+textField_tongsove.getText()+","+textField_ID_NQL.getText()+")");		
-				pst.execute();				
-				pst.close();
+				pst.execute();	
+				
+				int id_thongke=6000;
+				Statement st=(Statement) ((java.sql.Connection) con).createStatement();  	
+				ResultSet rs=((java.sql.Statement) st).executeQuery("select MAX(ID) from THONGKECHUYENBAY");  			
+				rs.next();
+				
+				if(rs.getString("MAX(ID)")==null) {
+					id_thongke=6001;
+				}
+				else 
+				{
+					id_thongke = Integer.valueOf(rs.getString("MAX(ID)"));
+					id_thongke++;
+
+				}
+								
+				PreparedStatement pst1= con.prepareStatement("insert into \"DB_AIRLINE\".\"THONGKECHUYENBAY\"  (\"ID\", \"CHUYENBAY_ID\", \"THOIGIAN\",\"SOLUONGVECON\",  \"SOLUONGVEBAN\",\"NGUOIQUANLY_ID\") values("+id_thongke+","+lb_id.getText()+","+ngay_khoihanh+","+textField_tongsove.getText()+","+0+","+textField_ID_NQL.getText()+")");		
+				pst1.execute();
+				pst1.close();
 				Component a=null;
 				JOptionPane.showMessageDialog(a, "Đã thêm thành công");
 
@@ -338,4 +356,39 @@ public class them_chuyenbay extends JFrame {
 
 		}  
 	}
+//	public void autoID1() {
+//		
+//		
+//		
+//		try {
+//			Class.forName("oracle.jdbc.OracleDriver");
+//			java.sql.Connection DB_AIRLINE= DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");  		
+//			
+//			Statement stmt=(Statement) ((java.sql.Connection) DB_AIRLINE).createStatement();  	
+//			ResultSet rs=((java.sql.Statement) stmt).executeQuery("select MAX(ID) from THONGKECHUYENBAY");  
+//			
+//			rs.next();
+//			System.out.println(rs.getString("MAX(ID)"));
+//			
+//			if(rs.getString("MAX(ID)")==null) {
+//				rs.getString("ID=6001");
+//			}
+//			else 
+//			{
+//				Integer result1 = Integer.valueOf(rs.getString("MAX(ID)"));
+//				result1++;
+//				rs.getString(result1.toString());
+//				System.out.println(	rs.getString(result1.toString()));
+//
+//			}
+//			
+//			rs.close();
+//			DB_AIRLINE.close();
+//		} catch (ClassNotFoundException e) {
+//			java.util.logging.Logger.getLogger(them_hanhkhach.class.getName()).log(Level.SEVERE,null,e);
+//		} catch (SQLException e) {
+//			java.util.logging.Logger.getLogger(them_hanhkhach.class.getName()).log(Level.SEVERE,null,e);
+//
+//		}  
+//	}
 	}

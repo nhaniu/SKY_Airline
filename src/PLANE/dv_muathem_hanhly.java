@@ -86,7 +86,7 @@ public class dv_muathem_hanhly extends JFrame {
 		JLabel lb_title = new JLabel("Mua thêm hành lý ký gửi");
 		lb_title.setFont(new Font("Times New Roman", Font.BOLD, 25));
 		lb_title.setHorizontalAlignment(SwingConstants.CENTER);
-		lb_title.setBounds(89, 11, 321, 36);
+		lb_title.setBounds(240, 9, 321, 36);
 		contentPane.add(lb_title);
 		
 		JSeparator separator = new JSeparator();
@@ -345,31 +345,38 @@ public class dv_muathem_hanhly extends JFrame {
 						PreparedStatement pst = con.prepareStatement(update);
 						pst= con.prepareStatement(update);
 						pst.execute();
+						
+						
+						String C= "select DT.ID, DT.TONGTIENBANVE,DT.TONGDOANHTHU \r\n"
+								+ "from DOANHTHUCHUYENBAY DT, VEMAYBAY VE, DATVEBAY DV \r\n"
+								+ "WHERE   DT.CHUYENBAY_ID=VE.CHUYENBAY_ID AND VE.ID=DV.VEMAYBAY_ID AND DV.ID="+textField_MaDC.getText();
+						ResultSet rs2= st.executeQuery(C);
+
+						rs2.next();
+						
+					
+						String id_dt =rs2.getString(1);
+						String tongtienbv=rs2.getString(2);
+						float ttbv=Float.parseFloat(tongtienbv);
+						float tongtbv=ttbv+tiendvbt;
+						
+						String tongdt =rs2.getString(3);	
+						float tdt=Float.parseFloat(tongdt);
+						float tongdoanhthu=tdt+tiendvbt;
+
+
+						
+						
+						PreparedStatement pst1= con.prepareStatement("update DOANHTHUCHUYENBAY set TONGTIENBANVE="+tongtbv+", TONGDOANHTHU="+tongdoanhthu+" where ID= "+id_dt+"");		
+						pst1.execute();
+						
+						
+						
+						
+						
 						rs.close();
 						pst.close();
 
-//						if(id_taikhoan==null) {
-//							System.out.println("tai khoan null");      // ????????????????????????????
-//						}
-//						else {
-//							String select_tichdiem="select TONGTIENMUAVE from TAIKHOAN where ID="+id_tk+"";					
-//							ResultSet rs1= st.executeQuery(select_tichdiem);
-//							//while( rs1.next()) {
-//							rs1.next();
-//								String tongtienve_tk =rs.getString(1);
-//								int tongtienmuave_tk=Integer.parseInt(tongtienve_tk);
-//								int tongtientrongtaikhoan=tongtienmuave_tk+tiendvbt;
-//								System.out.println("tổng tiền trong tài khoản: "+ tongtientrongtaikhoan );
-////								String diem_tk =rs.getString(2);
-////								
-////								String hang_tk =rs.getString(3);
-//						//	}
-//							
-//														
-//					//	}
-//					
-//					
-//					rs1.close();
 					con.close();
 					JOptionPane.showMessageDialog(null, "mua thành công");
 					

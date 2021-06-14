@@ -97,6 +97,7 @@ public class quanly_chuyenbay extends JFrame {
 		bt_them.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new them_chuyenbay();
+				
 			}
 		});
 		bt_them.setBackground(new Color(135, 206, 250));

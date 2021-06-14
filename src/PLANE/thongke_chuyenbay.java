@@ -22,6 +22,7 @@ import javax.swing.SwingConstants;
 import javax.swing.JSeparator;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JButton;
 
 public class thongke_chuyenbay extends JFrame {
 
@@ -51,7 +52,7 @@ public class thongke_chuyenbay extends JFrame {
 		setBackground(new Color(240, 255, 255));
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 170, 636, 300);
+		setBounds(100, 170, 636, 327);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(240, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
