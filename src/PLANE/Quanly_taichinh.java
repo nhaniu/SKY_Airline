@@ -185,7 +185,7 @@ public class Quanly_taichinh extends JFrame {
 			}
 		});
 		bt_1ngay.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		bt_1ngay.setBounds(122, 81, 89, 23);
+		bt_1ngay.setBounds(144, 81, 89, 23);
 		contentPane.add(bt_1ngay);
 		
 		JButton bt_1thang = new JButton("Nhiều ngày");
@@ -199,7 +199,7 @@ public class Quanly_taichinh extends JFrame {
 			}
 		});
 		bt_1thang.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		bt_1thang.setBounds(504, 89, 125, 23);
+		bt_1thang.setBounds(564, 81, 125, 23);
 		contentPane.add(bt_1thang);
 		
 		table_1 = new JTable();
@@ -277,14 +277,7 @@ public class Quanly_taichinh extends JFrame {
 						tableModel.addRow(new Object[] {id,cbid,ngaygiokh,tongbanve,tongphihoan,tongdoanhthu});
 
 						table.setModel(tableModel);
-						
-						
-	
-							
-//							SimpleDateFormat formatter11 = new SimpleDateFormat("dd-MM-YY hh:mm:ss");
-//							String tgString11=formatter11.format(dateChooser1.getDate());
-//							String ngay_khoihanh="TO_DATE('"+tgString11+"','DD-MM-RR HH24:MI:SS')";
-//							
+												
 							 String thoigian11 = "TO_DATE('"+ngaygiokh+"','yyyy-mm-dd HH24:MI:SS')";
 
 			
@@ -455,7 +448,7 @@ public class Quanly_taichinh extends JFrame {
 							model.removeRow(0);
 						}
 									
-						String search=" SELECT count(DISTINCT CB.ID), SUM(TONGTIENBANVE),SUM(TONGPHIHOANVE), SUM(TONGDOANHTHU)\r\n"
+						String search=" SELECT DISTINCT count(DISTINCT CB.ID), SUM(TONGTIENBANVE),SUM(TONGPHIHOANVE), SUM(TONGDOANHTHU)\r\n"
 								+ "FROM  CHUYENBAY CB, DOANHTHUCHUYENBAY DT\r\n"
 								+ "WHERE CB.ID= DT.CHUYENBAY_ID AND CB.NGAY_GIO_KH>= "+thoigian11+" AND CB.NGAY_GIO_KH<="+thoigian22+"\r\n";
 						ResultSet rs= st.executeQuery(search);

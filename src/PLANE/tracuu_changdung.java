@@ -164,7 +164,7 @@ public class tracuu_changdung extends JFrame {
 					Statement st=con.createStatement(); 
 					
 
-					String search="select NOIDI, NOIDEN, DIADIEMDUNG from CHANGDUNG where NOIDI='"+comboBox_noidi.getSelectedItem()+"' and NOIDEN='"+comboBox_noiden.getSelectedItem()+"'";				
+					String search="select NOIDI, NOIDEN, DIADIEM from CHANGDUNG where NOIDI='"+comboBox_noidi.getSelectedItem()+"' and NOIDEN='"+comboBox_noiden.getSelectedItem()+"'";				
 					while(tableModel.getRowCount() > 0) 
 					{									
 						tableModel.removeRow(0);
