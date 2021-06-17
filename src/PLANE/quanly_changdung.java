@@ -28,6 +28,7 @@ import java.sql.Statement;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ImageIcon;
 
 public class quanly_changdung extends JFrame {
 
@@ -106,7 +107,7 @@ public class quanly_changdung extends JFrame {
 				new them_changdung();
 			}
 		});
-		bt_them.setBackground(new Color(135, 206, 250));
+		bt_them.setBackground(new Color(255, 255, 224));
 		bt_them.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		bt_them.setBounds(93, 409, 163, 29);
 		contentPane.add(bt_them);
@@ -116,6 +117,9 @@ public class quanly_changdung extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel model =(DefaultTableModel) table.getModel();
 				int SelectedRows=table.getSelectedRow();
+				if(SelectedRows==-1) {
+					JOptionPane.showMessageDialog(null, "Chọn chặng dừng cần xóa");
+				}
 				
 				try {	
 						int id=Integer.parseInt(model.getValueAt(SelectedRows, 0).toString());
@@ -142,7 +146,7 @@ public class quanly_changdung extends JFrame {
 				
 			}
 		});
-		bt_xoa.setBackground(new Color(135, 206, 250));
+		bt_xoa.setBackground(new Color(255, 255, 224));
 		bt_xoa.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		bt_xoa.setBounds(568, 411, 146, 25);
 		contentPane.add(bt_xoa);
@@ -189,10 +193,15 @@ public class quanly_changdung extends JFrame {
 				}
 			}
 		});
-		bt_hienthi.setBackground(new Color(135, 206, 250));
+		bt_hienthi.setBackground(new Color(255, 255, 224));
 		bt_hienthi.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		bt_hienthi.setBounds(591, 101, 181, 23);
 		contentPane.add(bt_hienthi);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon("anh.jpg"));
+		lblNewLabel.setBounds(0, 0, 830, 476);
+		contentPane.add(lblNewLabel);
 		
 		
 		

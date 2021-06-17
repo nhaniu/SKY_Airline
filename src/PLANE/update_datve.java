@@ -13,11 +13,14 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.SwingConstants;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JComboBox;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.DriverManager;
@@ -237,6 +240,16 @@ public class update_datve extends JFrame {
 		btnNewButton.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		btnNewButton.setBounds(280, 419, 99, 23);
 		contentPane.add(btnNewButton);
+		
+		JLabel lblNewLabel_5 = new JLabel("New label");
+		lblNewLabel_5.setBounds(0, 0, 487, 510);
+		contentPane.add(lblNewLabel_5);
+		
+		ImageIcon icon=new ImageIcon("anh1.jpg");
+		Image imgIcon =icon.getImage();
+		Image imgScale =imgIcon.getScaledInstance(lblNewLabel_5.getWidth(), lblNewLabel_5.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon scaleIcon=new ImageIcon(imgScale);
+		lblNewLabel_5.setIcon(scaleIcon);
 		
 
 

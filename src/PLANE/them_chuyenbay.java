@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import java.awt.Frame;
+import java.awt.Image;
 
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
@@ -25,6 +26,8 @@ import javax.swing.SwingConstants;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -255,6 +258,16 @@ public class them_chuyenbay extends JFrame {
 		lb_id.setBounds(172, 85, 151, 18);
 		contentPane.add(lb_id);
 		
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setBounds(0, 0, 795, 524);
+		contentPane.add(lblNewLabel);
+		
+		ImageIcon icon=new ImageIcon("anh1.jpg");
+		Image imgIcon =icon.getImage();
+		Image imgScale =imgIcon.getScaledInstance(lblNewLabel.getWidth(), lblNewLabel.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon scaleIcon=new ImageIcon(imgScale);
+		lblNewLabel.setIcon(scaleIcon);
+		
 		bt_them.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (textField_ID_NQL.getText().isEmpty()) {
@@ -300,20 +313,33 @@ public class them_chuyenbay extends JFrame {
 					id_thongke++;
 
 				}
+				
+				ResultSet rs1=((java.sql.Statement) st).executeQuery("select ID from NGUOIQUANLY"); 
+				rs1.next();
+				String ID =rs1.getString(1);
+				int id_ql=Integer.parseInt(ID);
+				int id_ql_nhap=Integer.parseInt(textField_ID_NQL.getText());
+				if(id_ql!=id_ql_nhap) {
+					JOptionPane.showMessageDialog(null, "Nhập sai ID người quản lý");
+				}
+
+
 								
-				PreparedStatement pst1= con.prepareStatement("insert into \"DB_AIRLINE\".\"THONGKECHUYENBAY\"  (\"ID\", \"CHUYENBAY_ID\", \"THOIGIAN\",\"SOLUONGVECON\",  \"SOLUONGVEBAN\",\"NGUOIQUANLY_ID\") values("+id_thongke+","+lb_id.getText()+","+ngay_khoihanh+","+textField_tongsove.getText()+","+0+","+textField_ID_NQL.getText()+")");		
-				pst1.execute();
-				pst1.close();
-				Component a=null;
-				JOptionPane.showMessageDialog(a, "Đã thêm thành công");
+//				PreparedStatement pst1= con.prepareStatement("insert into \"DB_AIRLINE\".\"THONGKECHUYENBAY\"  (\"ID\", \"CHUYENBAY_ID\", \"THOIGIAN\",\"SOLUONGVECON\",  \"SOLUONGVEBAN\",\"NGUOIQUANLY_ID\") values("+id_thongke+","+lb_id.getText()+","+ngay_khoihanh+","+textField_tongsove.getText()+","+0+","+textField_ID_NQL.getText()+")");		
+//				pst1.execute();
+//				pst1.close();
+//				Component a=null;
+//				JOptionPane.showMessageDialog(a, "Đã thêm thành công");
 
 				
 				con.close();
 			} catch (ClassNotFoundException e1) {
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, e);
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				//e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, e1);
+
 			}
 				
 			}

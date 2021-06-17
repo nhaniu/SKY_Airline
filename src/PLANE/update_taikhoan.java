@@ -13,9 +13,13 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.DriverManager;
@@ -245,6 +249,16 @@ public class update_taikhoan extends JFrame {
 		bt_capnhat.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		bt_capnhat.setBounds(456, 358, 89, 23);
 		contentPane.add(bt_capnhat);
+		
+		JLabel lblNewLabel_2 = new JLabel("New label");
+		lblNewLabel_2.setBounds(0, 0, 713, 424);
+		contentPane.add(lblNewLabel_2);
+		
+		ImageIcon icon=new ImageIcon("563774.jpg");
+		Image imgIcon =icon.getImage();
+		Image imgScale =imgIcon.getScaledInstance(lblNewLabel_2.getWidth(), lblNewLabel_2.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon scaleIcon=new ImageIcon(imgScale);
+		lblNewLabel_2.setIcon(scaleIcon);
 		
 
 	

@@ -27,6 +27,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
 
 public class quanly_khuyenmai extends JFrame {
 
@@ -78,7 +79,7 @@ public class quanly_khuyenmai extends JFrame {
 			}
 		});
 		bt_them.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		bt_them.setBackground(new Color(135, 206, 250));
+		bt_them.setBackground(new Color(255, 255, 224));
 		bt_them.setBounds(120, 386, 102, 23);
 		contentPane.add(bt_them);
 		bt_them.setVisible(false);
@@ -89,6 +90,9 @@ public class quanly_khuyenmai extends JFrame {
 				DefaultTableModel model =(DefaultTableModel) table.getModel();
 				int SelectedRows=table.getSelectedRow();
 				
+				if(SelectedRows==-1) {
+					JOptionPane.showMessageDialog(null, "Chọn khuyến mãi cần xóa");
+				}
 				try {	
 						int id=Integer.parseInt(model.getValueAt(SelectedRows, 0).toString());
 						int deleteItem =JOptionPane.showConfirmDialog(null, "Xác nhận nếu bạn muốn xóa","Warning",JOptionPane.YES_NO_OPTION);
@@ -109,7 +113,7 @@ public class quanly_khuyenmai extends JFrame {
 				}
 			}
 		});
-		bt_xoa.setBackground(new Color(135, 206, 250));
+		bt_xoa.setBackground(new Color(255, 255, 224));
 		bt_xoa.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		bt_xoa.setBounds(597, 386, 102, 23);
 		contentPane.add(bt_xoa);
@@ -121,6 +125,10 @@ public class quanly_khuyenmai extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel model=(DefaultTableModel) table.getModel();
 				int SelectedRows=table.getSelectedRow();
+				
+				if(SelectedRows==-1) {
+					JOptionPane.showMessageDialog(null, "Chọn thông tin khuyến mãi cần cập nhật");
+				}
 				
 				String id= model.getValueAt(SelectedRows, 0).toString();
 				String ngaybt =model.getValueAt(SelectedRows, 1).toString();
@@ -137,7 +145,7 @@ public class quanly_khuyenmai extends JFrame {
 				update.setVisible(true);
 			}
 		});
-		bt_capnhat.setBackground(new Color(135, 206, 250));
+		bt_capnhat.setBackground(new Color(255, 255, 224));
 		bt_capnhat.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		bt_capnhat.setBounds(360, 386, 121, 23);
 		contentPane.add(bt_capnhat);
@@ -172,55 +180,50 @@ public class quanly_khuyenmai extends JFrame {
 		table.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		scrollPane.setViewportView(table);
 		
-		JButton bt_hienthitt = new JButton("Hiển thị thông tin");
-		bt_hienthitt.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					Class.forName("oracle.jdbc.OracleDriver");
-					Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
-					Statement st=con.createStatement(); 
-					
+		try {
+			Class.forName("oracle.jdbc.OracleDriver");
+			Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+			Statement st=con.createStatement(); 
+			
 
-					String search="select* from BKHUYENMAI";				
-					while(tableModel.getRowCount() > 0) 
-					{									
-						tableModel.removeRow(0);
-					}
-					
-					ResultSet rs= st.executeQuery(search);
-					while(rs.next()) {
-						String id =rs.getString(1);
-						String ngaybatdau =rs.getString(2);
-						String ngayketthuc =rs.getString(3);
-						String noidung =rs.getString(4);					
-						String phantram =rs.getString(5);					
+			String search="select* from BKHUYENMAI";				
+			while(tableModel.getRowCount() > 0) 
+			{									
+				tableModel.removeRow(0);
+			}
+			
+			ResultSet rs= st.executeQuery(search);
+			while(rs.next()) {
+				String id =rs.getString(1);
+				String ngaybatdau =rs.getString(2);
+				String ngayketthuc =rs.getString(3);
+				String noidung =rs.getString(4);					
+				String phantram =rs.getString(5);					
 
-						
-						tableModel.addRow(new Object[] {id,ngaybatdau,ngayketthuc,noidung,phantram});
-						table.setModel(tableModel);
-						table.setVisible(true);
-						scrollPane.setVisible(true);
-						bt_them.setVisible(true);
-						bt_xoa.setVisible(true);
-						bt_capnhat.setVisible(true);
-						
-
-					}
-					
-					con.close();
-					
-				} catch (ClassNotFoundException e1) {
-					e1.printStackTrace();
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
+				
+				tableModel.addRow(new Object[] {id,ngaybatdau,ngayketthuc,noidung,phantram});
+				table.setModel(tableModel);
+				table.setVisible(true);
+				scrollPane.setVisible(true);
+				bt_them.setVisible(true);
+				bt_xoa.setVisible(true);
+				bt_capnhat.setVisible(true);
+				
 
 			}
-		});
-		bt_hienthitt.setBackground(new Color(135, 206, 250));
-		bt_hienthitt.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		bt_hienthitt.setBounds(621, 91, 182, 28);
-		contentPane.add(bt_hienthitt);
+			
+			con.close();
+			
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setIcon(new ImageIcon("anh.jpg"));
+		lblNewLabel.setBounds(0, 0, 866, 457);
+		contentPane.add(lblNewLabel);
 		
 	}
 }

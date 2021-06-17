@@ -30,6 +30,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.ImageIcon;
 
 public class quanly_ve extends JFrame {
 
@@ -94,7 +95,7 @@ public class quanly_ve extends JFrame {
 				
 			}
 		});
-		bt_timkiem.setBackground(new Color(135, 206, 250));
+		bt_timkiem.setBackground(new Color(255, 255, 224));
 		bt_timkiem.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		bt_timkiem.setBounds(51, 404, 116, 31);
 		contentPane.add(bt_timkiem);
@@ -109,6 +110,10 @@ public class quanly_ve extends JFrame {
 				int SelectedRows=table.getSelectedRow();
 				System.out.println(SelectedRows);
 				
+				if(SelectedRows==-1) {
+					JOptionPane.showMessageDialog(null, "Chọn vé cần cập nhật");
+				}
+				
 				String id= model.getValueAt(SelectedRows, 0).toString();
 				String idhv =model.getValueAt(SelectedRows, 1).toString();
 				String idcb= model.getValueAt(SelectedRows, 2).toString();
@@ -119,7 +124,7 @@ public class quanly_ve extends JFrame {
 				update.setVisible(true);
 			}
 		});
-		bt_capnhat.setBackground(new Color(135, 206, 250));
+		bt_capnhat.setBackground(new Color(255, 255, 224));
 		bt_capnhat.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		bt_capnhat.setBounds(519, 404, 107, 31);
 		contentPane.add(bt_capnhat);
@@ -211,13 +216,13 @@ public class quanly_ve extends JFrame {
 			
 			}
 		});
-		btnNewButton.setBackground(new Color(135, 206, 250));
+		btnNewButton.setBackground(new Color(255, 255, 224));
 		btnNewButton.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		btnNewButton.setBounds(499, 125, 127, 23);
 		contentPane.add(btnNewButton);
 		
 		
-		bt_them.setBackground(new Color(135, 206, 250));
+		bt_them.setBackground(new Color(255, 255, 224));
 		bt_them.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		bt_them.setBounds(294, 404, 116, 31);
 		contentPane.add(bt_them);
@@ -226,6 +231,11 @@ public class quanly_ve extends JFrame {
 		lblNewLabel.setFont(new Font("Times New Roman", Font.ITALIC, 15));
 		lblNewLabel.setBounds(360, 128, 116, 19);
 		contentPane.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setIcon(new ImageIcon("anh.jpg"));
+		lblNewLabel_1.setBounds(0, 0, 727, 474);
+		contentPane.add(lblNewLabel_1);
 		
 		
 	}

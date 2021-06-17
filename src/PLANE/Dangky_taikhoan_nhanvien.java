@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Image;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -30,6 +31,7 @@ import com.toedter.calendar.JDateChooser;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
 
 public class Dangky_taikhoan_nhanvien extends JFrame {
 
@@ -281,6 +283,17 @@ public class Dangky_taikhoan_nhanvien extends JFrame {
 		bt_dangky.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		bt_dangky.setBounds(93, 394, 89, 23);
 		contentPane.add(bt_dangky);
+		
+		JLabel lblNewLabel_3 = new JLabel("New label");
+		//lblNewLabel_3.setIcon(new ImageIcon("C:\\Users\\nguyen thi nhan\\Downloads\\185289.jpg"));
+		lblNewLabel_3.setBounds(0, 0, 673, 484);
+		contentPane.add(lblNewLabel_3);
+		
+		ImageIcon icon=new ImageIcon("563774.jpg");
+		Image imgIcon =icon.getImage();
+		Image imgScale =imgIcon.getScaledInstance(lblNewLabel_3.getWidth(), lblNewLabel_3.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon scaleIcon=new ImageIcon(imgScale);
+		lblNewLabel_3.setIcon(scaleIcon);
 	}
 	public void autoID() {
 		
@@ -315,5 +328,4 @@ public class Dangky_taikhoan_nhanvien extends JFrame {
 
 		}  
 	}
-
 }

@@ -13,8 +13,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JSeparator;
 import java.awt.event.ActionListener;
@@ -187,13 +191,19 @@ public class them_khuyenmai extends JFrame {
 		separator.setBounds(10, 72, 582, 2);
 		contentPane.add(separator);
 		
-		JSeparator separator_1 = new JSeparator();
-		separator_1.setBounds(10, 350, 592, 2);
-		contentPane.add(separator_1);
-		
 		 lb_id = new JLabel("New label");
 		lb_id.setBounds(212, 94, 203, 25);
 		contentPane.add(lb_id);
+		
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setBounds(0, 0, 541, 462);
+		contentPane.add(lblNewLabel);
+		
+		ImageIcon icon=new ImageIcon("anh1.jpg");
+		Image imgIcon =icon.getImage();
+		Image imgScale =imgIcon.getScaledInstance(lblNewLabel.getWidth(), lblNewLabel.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon scaleIcon=new ImageIcon(imgScale);
+		lblNewLabel.setIcon(scaleIcon);
 	}
 	public void autoID() {
 		

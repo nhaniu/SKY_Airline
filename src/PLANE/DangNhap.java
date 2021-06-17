@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.security.auth.login.LoginContext;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
@@ -25,7 +26,9 @@ import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.JSeparator;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Toolkit;
+import javax.swing.border.LineBorder;
 
 public class DangNhap extends JFrame {
 
@@ -63,7 +66,7 @@ public class DangNhap extends JFrame {
 		setVisible(true);
 		setTitle("SKY Airline");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 170, 387, 269);
+		setBounds(100, 170, 531, 436);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(240, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -71,25 +74,28 @@ public class DangNhap extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lb_taikhoan = new JLabel("Tài khoản:");
-		lb_taikhoan.setBounds(56, 67, 70, 29);
+		lb_taikhoan.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lb_taikhoan.setBounds(78, 133, 92, 29);
 		contentPane.add(lb_taikhoan);
 		
 		textField_taikhoan = new JTextField();
-		textField_taikhoan.setBounds(171, 71, 132, 20);
+		textField_taikhoan.setBounds(180, 137, 168, 20);
 		contentPane.add(textField_taikhoan);
 		textField_taikhoan.setColumns(10);
 		
 		JLabel lb_matkhau = new JLabel("Mật khẩu:");
-		lb_matkhau.setBounds(56, 107, 70, 14);
+		lb_matkhau.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lb_matkhau.setBounds(78, 193, 92, 20);
 		contentPane.add(lb_matkhau);
 		
 		passwordField_matkhau = new JPasswordField();
-		passwordField_matkhau.setBounds(171, 104, 132, 20);
+		passwordField_matkhau.setBounds(180, 193, 168, 20);
 		contentPane.add(passwordField_matkhau);
 
 		
 		JButton bt_dangnhap = new JButton("Đăng nhập");
-		bt_dangnhap.setBackground(new Color(0, 191, 255));
+		bt_dangnhap.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		bt_dangnhap.setBackground(new Color(255, 228, 225));
 		bt_dangnhap.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -142,35 +148,57 @@ public class DangNhap extends JFrame {
 					
 			}
 		});
-		bt_dangnhap.setBounds(56, 176, 100, 23);
+		bt_dangnhap.setBounds(180, 271, 168, 23);
 		contentPane.add(bt_dangnhap);
 		
-		JButton bt_exit = new JButton("Thoát");
-		bt_exit.setBackground(new Color(0, 191, 255));
-		bt_exit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JFrame frmLogin = new JFrame("Exit");
-				if (JOptionPane.showConfirmDialog(frmLogin, "Xác nhận nếu bạn muốn thoát", "LoginContext System", JOptionPane.YES_NO_OPTION)==JOptionPane.YES_NO_OPTION)					
-					setVisible(false);
-
-			}
-		});
-		bt_exit.setBounds(223, 176, 80, 23);
-		contentPane.add(bt_exit);
-		
-		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 150, 353, 2);
-		contentPane.add(separator);
-		
 		JLabel lb_title = new JLabel("Đăng nhập");
-		lb_title.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lb_title.setFont(new Font("Times New Roman", Font.BOLD, 25));
 		lb_title.setHorizontalAlignment(SwingConstants.CENTER);
-		lb_title.setBounds(105, 11, 142, 20);
+		lb_title.setBounds(181, 77, 142, 29);
 		contentPane.add(lb_title);
 		
-		JSeparator separator_1 = new JSeparator();
-		separator_1.setBounds(10, 47, 353, 2);
-		contentPane.add(separator_1);
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setBounds(366, 186, 32, 25);
+		contentPane.add(lblNewLabel);
+		ImageIcon icon=new ImageIcon("icons8-lock-500.png");
+		Image imgIcon =icon.getImage();
+		Image imgScale =imgIcon.getScaledInstance(lblNewLabel.getWidth(), lblNewLabel.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon scaleIcon=new ImageIcon(imgScale);
+		lblNewLabel.setIcon(scaleIcon);
+		
+		JLabel lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setBounds(366, 133, 32, 27);
+		contentPane.add(lblNewLabel_1);
+		
+		ImageIcon icon1=new ImageIcon("icons8-male-user-250.png");
+		Image imgIcon1 =icon1.getImage();
+		Image imgScale1 =imgIcon1.getScaledInstance(lblNewLabel_1.getWidth(), lblNewLabel_1.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon scaleIcon1=new ImageIcon(imgScale1);
+		lblNewLabel_1.setIcon(scaleIcon1);
+		
+		JLabel lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.setBorder(new LineBorder(null, 1, true));
+		lblNewLabel_2.setBounds(50, 52, 407, 300);
+		contentPane.add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_3 = new JLabel("New label");
+		lblNewLabel_3.setBounds(235, 11, 49, 41);
+		contentPane.add(lblNewLabel_3);
+		ImageIcon icon12=new ImageIcon("icons8-male-user-144.png");
+		Image imgIcon12 =icon12.getImage();
+		Image imgScale12 =imgIcon12.getScaledInstance(lblNewLabel_3.getWidth(), lblNewLabel_3.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon scaleIcon12=new ImageIcon(imgScale12);
+		lblNewLabel_3.setIcon(scaleIcon12);
+		
+		JLabel lblNewLabel_4 = new JLabel("New label");
+		lblNewLabel_4.setBounds(0, 0, 531, 414);
+		contentPane.add(lblNewLabel_4);
+		ImageIcon icon123=new ImageIcon("563774.jpg");
+		Image imgIcon123 =icon123.getImage();
+		Image imgScale123 =imgIcon123.getScaledInstance(lblNewLabel_4.getWidth(), lblNewLabel_4.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon scaleIcon123=new ImageIcon(imgScale123);
+		lblNewLabel_4.setIcon(scaleIcon123);
+		
 		
 	}
 }

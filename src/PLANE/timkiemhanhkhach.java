@@ -41,6 +41,7 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.ImageIcon;
 
 public class timkiemhanhkhach extends JFrame {
 
@@ -99,21 +100,21 @@ public class timkiemhanhkhach extends JFrame {
 		
 		JLabel lb_maCB = new JLabel("Mã chuyến bay:");
 		lb_maCB.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lb_maCB.setBounds(22, 11, 122, 30);
+		lb_maCB.setBounds(95, 11, 122, 30);
 		panel.add(lb_maCB);
 		
 		textField_CB = new JTextField();
-		textField_CB.setBounds(154, 17, 163, 20);
+		textField_CB.setBounds(227, 17, 163, 20);
 		panel.add(textField_CB);
 		textField_CB.setColumns(10);
 		
 		JLabel lb_maDC = new JLabel(" Mã đặt chỗ:");
 		lb_maDC.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lb_maDC.setBounds(372, 17, 115, 18);
+		lb_maDC.setBounds(490, 17, 122, 18);
 		panel.add(lb_maDC);
 		
 		textField_MaDC = new JTextField();
-		textField_MaDC.setBounds(497, 17, 163, 20);
+		textField_MaDC.setBounds(626, 17, 163, 20);
 		panel.add(textField_MaDC);
 		textField_MaDC.setColumns(10);
 		JScrollPane scrollPane = new JScrollPane();
@@ -125,7 +126,7 @@ public class timkiemhanhkhach extends JFrame {
 		
 		JPanel panel_sua = new JPanel();
 		panel_sua.setBorder(null);
-		panel_sua.setBackground(new Color(240, 255, 255));
+		panel_sua.setBackground(new Color(51, 204, 255));
 		panel_sua.setBounds(185, 144, 532, 305);
 		panel.add(panel_sua);
 		panel_sua.setLayout(null);
@@ -185,7 +186,7 @@ public class timkiemhanhkhach extends JFrame {
 					}
 					
 					ResultSet rs= st.executeQuery(search);
-					while(rs.next()) {
+					if(rs.next()) {
 						String ID =rs.getString(1);
 						String hoten =rs.getString(2);
 						String ngaysinh =rs.getString(3);
@@ -204,6 +205,9 @@ public class timkiemhanhkhach extends JFrame {
 						//bt_Sua.setVisible(true);
 
 					}
+					else {
+						JOptionPane.showMessageDialog(null, "Không tìm thấy hành khách");
+					}
 					
 					con.close();
 
@@ -216,7 +220,7 @@ public class timkiemhanhkhach extends JFrame {
 
 			}
 		});
-		bt_timkiem.setBackground(new Color(135, 206, 250));
+		bt_timkiem.setBackground(new Color(255, 255, 224));
 		bt_timkiem.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		bt_timkiem.setBounds(169, 62, 115, 20);
 		panel.add(bt_timkiem);
@@ -369,7 +373,7 @@ public class timkiemhanhkhach extends JFrame {
 				
 			
 		});
-		btnNewButton.setBackground(new Color(135, 206, 250));
+		btnNewButton.setBackground(new Color(255, 255, 224));
 		btnNewButton.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		btnNewButton.setBounds(368, 82, 114, 23);
 		panel_sua.add(btnNewButton);
@@ -380,7 +384,7 @@ public class timkiemhanhkhach extends JFrame {
 				setVisible(false);
 			}
 		});
-		btnNewButton_1.setBackground(new Color(135, 206, 250));
+		btnNewButton_1.setBackground(new Color(255, 255, 224));
 		btnNewButton_1.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		btnNewButton_1.setBounds(368, 141, 114, 23);
 		panel_sua.add(btnNewButton_1);
@@ -395,14 +399,24 @@ public class timkiemhanhkhach extends JFrame {
 				
 			}
 		});
-		bt_Sua.setBackground(new Color(135, 206, 250));
+		bt_Sua.setBackground(new Color(255, 255, 224));
 		bt_Sua.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		
+		JLabel lblNewLabel_3 = new JLabel("New label");
+		lblNewLabel_3.setIcon(new ImageIcon("anh.jpg"));
+		lblNewLabel_3.setBounds(0, 0, 912, 491);
+		panel.add(lblNewLabel_3);
 		
 
 		
 		JSeparator separator = new JSeparator();
 		separator.setBounds(23, 64, 889, 2);
 		contentPane.add(separator);
+		
+		JLabel lblNewLabel_2 = new JLabel("New label");
+		lblNewLabel_2.setIcon(new ImageIcon("anh.jpg"));
+		lblNewLabel_2.setBounds(0, 0, 912, 488);
+		contentPane.add(lblNewLabel_2);
 		
 		table.addMouseListener(new MouseAdapter() {
 			@Override

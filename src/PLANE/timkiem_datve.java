@@ -14,11 +14,14 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.SwingConstants;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -114,17 +117,6 @@ public class timkiem_datve extends JFrame {
 		
 		scrollPane.setViewportView(table);
 		
-		JButton bt_thoat = new JButton("Thoát");
-		bt_thoat.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-			}
-		});
-		bt_thoat.setBackground(new Color(135, 206, 250));
-		bt_thoat.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		bt_thoat.setBounds(528, 289, 104, 23);
-		contentPane.add(bt_thoat);
-		
 		JButton bt_timkiem = new JButton("Tìm kiếm");
 		bt_timkiem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -149,7 +141,7 @@ try {
 					}
 					
 					ResultSet rs= st.executeQuery(search);
-					while(rs.next()) {
+					if(rs.next()) {
 						String ID =rs.getString(1);
 						String vemaybayid =rs.getString(2);
 						String hanhkhachid =rs.getString(3);
@@ -169,9 +161,10 @@ try {
 						scrollPane.setVisible(true);
 						bt_timkiem.setVisible(true);
 						table.setVisible(true);
-
 					}
-					
+					else {
+						JOptionPane.showMessageDialog(null, "Mã đặt vé không tồn tại");
+					}
 					con.close();
 
 					
@@ -190,5 +183,15 @@ try {
 		bt_timkiem.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		bt_timkiem.setBounds(558, 111, 122, 23);
 		contentPane.add(bt_timkiem);
+		
+		JLabel lblNewLabel_3 = new JLabel("New label");
+		lblNewLabel_3.setBounds(-15, 0, 808, 345);
+		contentPane.add(lblNewLabel_3);
+		
+		ImageIcon icon=new ImageIcon("563774.jpg");
+		Image imgIcon =icon.getImage();
+		Image imgScale =imgIcon.getScaledInstance(lblNewLabel_3.getWidth(), lblNewLabel_3.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon scaleIcon=new ImageIcon(imgScale);
+		lblNewLabel_3.setIcon(scaleIcon);
 	}
 }

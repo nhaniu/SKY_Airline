@@ -10,6 +10,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.SwingConstants;
 import javax.swing.JSeparator;
 import java.awt.Color;
@@ -35,14 +37,14 @@ import javax.swing.DefaultComboBoxModel;
 import com.toedter.calendar.JDateChooser;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.ImageIcon;
+import javax.swing.JTextArea;
 
 public class dv_muathem_hanhly extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField_MaDC;
 	private JTable table;
-	private JTextField textField;
-	private JTextField textField_1;
 	public dv_muathem_hanhly() {
 		initcomponents();
 		//isCellEditable(ERROR, ABORT);
@@ -71,7 +73,7 @@ public class dv_muathem_hanhly extends JFrame {
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBackground(new Color(240, 255, 255));
-		setBounds(100, 170, 819, 494);
+		setBounds(100, 170, 833, 494);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(240, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -100,6 +102,7 @@ public class dv_muathem_hanhly extends JFrame {
 		
 
 		JPanel panel_1 = new JPanel();
+		panel_1.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel_1.setBackground(new Color(240, 255, 255));
 		panel_1.setBounds(468, 66, 327, 382);
 		contentPane.add(panel_1);
@@ -108,7 +111,8 @@ public class dv_muathem_hanhly extends JFrame {
 		
 		
 		JLabel lb_tien = new JLabel("New label");
-		lb_tien.setBounds(125, 291, 139, 24);
+		lb_tien.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		lb_tien.setBounds(125, 291, 94, 24);
 		panel_1.add(lb_tien);
 		
 		JPanel panel = new JPanel();
@@ -127,12 +131,13 @@ public class dv_muathem_hanhly extends JFrame {
 		separator_1.setBounds(10, 35, 377, 9);
 		panel.add(separator_1);
 		
-		JLabel lblNewLabel_5 = new JLabel("ID:");
+		JLabel lblNewLabel_5 = new JLabel("ID dịch vụ:");
 		lblNewLabel_5.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		lblNewLabel_5.setBounds(10, 214, 94, 21);
 		panel_1.add(lblNewLabel_5);
 		
 		JLabel lb_id = new JLabel("New label");
+		lb_id.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		lb_id.setBounds(125, 215, 133, 21);
 		panel_1.add(lb_id);
 		
@@ -142,15 +147,35 @@ public class dv_muathem_hanhly extends JFrame {
 		panel_1.add(lblNewLabel_6);
 		
 		JLabel lb_dv = new JLabel("New label");
+		lb_dv.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		lb_dv.setBounds(125, 247, 154, 24);
 		panel_1.add(lb_dv);
+		
+		JLabel lb_madv = new JLabel("New label");
+		lb_madv.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		lb_madv.setBounds(146, 25, 133, 24);
+		panel_1.add(lb_madv);
+		
+		JLabel lb_tenhk = new JLabel("New label");
+		lb_tenhk.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		lb_tenhk.setBounds(146, 70, 133, 21);
+		panel_1.add(lb_tenhk);
+		
+		JLabel lb_noidi = new JLabel("New label");
+		lb_noidi.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		lb_noidi.setBounds(95, 113, 222, 24);
+		panel_1.add(lb_noidi);
+		
+		JLabel lb_noiden = new JLabel("New label");
+		lb_noiden.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		lb_noiden.setBounds(95, 160, 222, 21);
+		panel_1.add(lb_noiden);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(20, 55, 356, 100);
 		panel.add(scrollPane);
 		
 		table = new JTable();
-		//table.setEditable(false);
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -160,9 +185,10 @@ public class dv_muathem_hanhly extends JFrame {
 				lb_id.setText(model.getValueAt(i, 0).toString());
 				lb_tien.setText(model.getValueAt(i, 2).toString());
 				lb_dv.setText(model.getValueAt(i, 1).toString());
-
+				
 			}
 		});
+
 		scrollPane.setViewportView(table);
 		final DefaultTableModel tableModel = new DefaultTableModel();
 		
@@ -213,86 +239,86 @@ public class dv_muathem_hanhly extends JFrame {
 		}								
 
 		
-		JButton bt_thanhtoan = new JButton("Thanh toán");
+		JButton bt_thanhtoan = new JButton("Xác nhận thông tin");
 		bt_thanhtoan.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				panel_1.setVisible(true);
+			
 				if (textField_MaDC.getText().isEmpty()) {
 					 JOptionPane.showMessageDialog(null, "vui lòng nhập mã đặt vé");
 					 textField_MaDC.requestFocus();
 					 return; 
 					}
-				
-				try {
-					Class.forName("oracle.jdbc.OracleDriver");
-					Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
-					Statement st=con.createStatement(); 
-
-					String search="select ID from DATVEBAY where ID="+textField_MaDC.getText()+"";				
-				
-					ResultSet rs= st.executeQuery(search);
-					if(rs.next()) {
-						 final String id =rs.getString(1);
-						System.out.println(id);	
-					}
-					else
-						JOptionPane.showMessageDialog(null, " Mã đặt vé không tồn tại");
-
+				else {
+		
+					try {
+						Class.forName("oracle.jdbc.OracleDriver");
+						Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+						Statement st=con.createStatement(); 
+	
+						String search="select ID from DATVEBAY where ID="+textField_MaDC.getText()+"";				
 					
-					con.close();
-					
-				} catch (ClassNotFoundException e1) {
-					e1.printStackTrace();
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}				
-				
+						ResultSet rs= st.executeQuery(search);
+						if(rs.next()) {
+							 final String id =rs.getString(1);
+							
+							String timkiem="SELECT  HK.HOTEN, CB.SANBAYDI, CB.SANBAYDEN\r\n"
+									+ "FROM DATVEBAY DV, HANHKHACH HK, VEMAYBAY VE, CHUYENBAY CB\r\n"
+									+ "WHERE DV.HANHKHACH_ID=HK.ID AND DV.VEMAYBAY_ID=VE.ID AND VE.CHUYENBAY_ID=CB.ID and DV.ID="+textField_MaDC.getText()+"";
+							ResultSet rs1= st.executeQuery(timkiem);
+							rs1.next();
+							String hoten =rs1.getString(1);
+							String noidi =rs1.getString(2);
+							String noiden =rs1.getString(3);
+							
+							lb_madv.setText(id);
+							lb_tenhk.setText(hoten);
+							lb_noidi.setText(noidi);
+							lb_noiden.setText(noiden);
+
+							panel_1.setVisible(true);
+							rs1.close();
+	
+						}
+						else
+							JOptionPane.showMessageDialog(null, " Mã đặt vé không tồn tại");
+	
+						rs.close();
+
+						con.close();
+						
+					} catch (ClassNotFoundException e1) {
+						e1.printStackTrace();
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}				
+				}
 			}
 		});
 		bt_thanhtoan.setBackground(new Color(135, 206, 250));
 		bt_thanhtoan.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		bt_thanhtoan.setBounds(51, 335, 127, 22);
+		bt_thanhtoan.setBounds(51, 335, 165, 22);
 		contentPane.add(bt_thanhtoan);
 		
 		
-		JLabel lblNewLabel = new JLabel("Ngân hàng:");
+		JLabel lblNewLabel = new JLabel("Mã đặt vé:");
 		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		lblNewLabel.setBounds(10, 25, 94, 24);
 		panel_1.add(lblNewLabel);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Agribank", "ABC", "MB bank", "Vietcombank", "ViettinBank"}));
-		comboBox.setBounds(125, 27, 139, 24);
-		panel_1.add(comboBox);
-		
-		JLabel lblNewLabel_1 = new JLabel("Số tài khoản:");
+		JLabel lblNewLabel_1 = new JLabel("Tên hành khách:");
 		lblNewLabel_1.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lblNewLabel_1.setBounds(10, 68, 94, 24);
+		lblNewLabel_1.setBounds(10, 68, 133, 24);
 		panel_1.add(lblNewLabel_1);
 		
-		textField = new JTextField();
-		textField.setBounds(125, 71, 139, 21);
-		panel_1.add(textField);
-		textField.setColumns(10);
-		
-		JLabel lblNewLabel_2 = new JLabel("Tên chủ thẻ:");
+		JLabel lblNewLabel_2 = new JLabel("Nơi đi:");
 		lblNewLabel_2.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		lblNewLabel_2.setBounds(10, 113, 104, 24);
 		panel_1.add(lblNewLabel_2);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(125, 116, 139, 21);
-		panel_1.add(textField_1);
-		textField_1.setColumns(10);
-		
-		JLabel lblNewLabel_3 = new JLabel("Ngày phát hành:");
+		JLabel lblNewLabel_3 = new JLabel("Nơi đến:");
 		lblNewLabel_3.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		lblNewLabel_3.setBounds(10, 163, 118, 21);
 		panel_1.add(lblNewLabel_3);
-		
-		JDateChooser dateChooser = new JDateChooser();
-		dateChooser.setBounds(125, 164, 139, 20);
-		panel_1.add(dateChooser);
 		
 		JLabel lblNewLabel_4 = new JLabel("Tiền dịch vụ:");
 		lblNewLabel_4.setFont(new Font("Times New Roman", Font.BOLD, 15));
@@ -304,89 +330,118 @@ public class dv_muathem_hanhly extends JFrame {
 		JButton btnNewButton = new JButton("Xác nhận");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				if (textField.getText().isEmpty()) {
-					 JOptionPane.showMessageDialog(null, "vui lòng nhập đầy đủ thông tin");
-					 textField.requestFocus();
-					 return; 
-					}
-				if (textField_1.getText().isEmpty()) {
-						 JOptionPane.showMessageDialog(null, "vui lòng nhập đầy đủ thông tin");
-						 textField_1.requestFocus();
-						 return; 
-					}
-				
-				
-				try {
+								
+				int confirm =JOptionPane.showConfirmDialog(null, "Khách hàng đã thanh toán thành công","Xác nhận",JOptionPane.YES_NO_OPTION);
+				if(confirm==JOptionPane.YES_OPTION) {
+					try {
+						
+						Class.forName("oracle.jdbc.OracleDriver");
+						Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+						Statement st=con.createStatement(); 
+						
+					
+						String search="select TONGTIEN, TAIKHOAN_ID from DATVEBAY where ID="+textField_MaDC.getText();					
+											
+						ResultSet rs= st.executeQuery(search);
+						rs.next() ;
+							String tongtienve =rs.getString(1);
+							int tongtien=Integer.parseInt(tongtienve);
+							
+							String tiendv=lb_tien.getText();
+							int tiendvbt=Integer.parseInt(tiendv);
+
+							int tongtiendatve=tongtien+tiendvbt;
+							System.out.println("đặt vé "+tongtien+" "+tiendvbt+" "+tongtiendatve);
+							
+							String id_taikhoan=rs.getString(2);
+							int id_tk=Integer.parseInt(id_taikhoan);
+							System.out.println(id_tk);
+
+							String update ="update DATVEBAY set DICHVUBOTRO_ID="+lb_id.getText()+",TONGTIEN="+tongtiendatve+" where ID="+textField_MaDC.getText()+"";
+							PreparedStatement pst = con.prepareStatement(update);
+							pst= con.prepareStatement(update);
+							pst.execute();
+							
+							
+							String C= "select DT.ID, DT.TONGTIENBANVE,DT.TONGDOANHTHU \r\n"
+									+ "from DOANHTHUCHUYENBAY DT, VEMAYBAY VE, DATVEBAY DV \r\n"
+									+ "WHERE   DT.CHUYENBAY_ID=VE.CHUYENBAY_ID AND VE.ID=DV.VEMAYBAY_ID AND DV.ID="+textField_MaDC.getText();
+							ResultSet rs2= st.executeQuery(C);
+
+							rs2.next();
+												
+							String id_dt =rs2.getString(1);
+							String tongtienbv=rs2.getString(2);
+							float ttbv=Float.parseFloat(tongtienbv);
+							float tongtbv=ttbv+tiendvbt;
+							
+							String tongdt =rs2.getString(3);	
+							float tdt=Float.parseFloat(tongdt);
+							float tongdoanhthu=tdt+tiendvbt;
+
+						
+							
+							System.out.println("ok");
+							
+							DangNhap dNhap=null;
+							String a=dNhap.tendn;
+							String b=dNhap.mk;
+							
+							System.out.println(a+" "+b);
+							if(dNhap.tendn!=null) {
+								
+								String searchtk="select TONGTIENMUAVE from TAIKHOAN where TENDANGNHAP='"+a+"' and MATKHAU='"+b+"'";					
+								ResultSet rs1= st.executeQuery(search);
+								rs1.next();
+									String tongtientk =rs1.getString(1);	
 									
-					Class.forName("oracle.jdbc.OracleDriver");
-					Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
-					Statement st=con.createStatement(); 
-					
-				
-					String search="select TONGTIEN, TAIKHOAN_ID from DATVEBAY where ID="+textField_MaDC.getText();					
+									int tttk=Integer.parseInt(tongtientk);
+									int tongtienupdate=tttk+tiendvbt;
+									
+									int diem=tongtienupdate/500000;
+									String hang = null;
+									if(diem>=30 &&diem<40) {
+										hang="Hạng bạc";
+									}
+									else if (diem>=40&&diem<50) {
+										hang="Hạng vàng";
 										
-					ResultSet rs= st.executeQuery(search);
-					rs.next() ;
-						String tongtienve =rs.getString(1);
-						int tongtien=Integer.parseInt(tongtienve);
-						
-						String tiendv=lb_tien.getText();
-						int tiendvbt=Integer.parseInt(tiendv);
+									}
+									else if (diem>=50) {
+										hang="Hạng kim cương";
+									}
+									else if (diem<30) {
+										hang="Hạng thường";
+									}
+									
+									System.out.println("hạng: "+" "+"Diem: "+diem);
+									PreparedStatement pst2= con.prepareStatement("update TAIKHOAN set TONGTIENMUAVE="+tongtienupdate+", DIEM="+diem+",HANG='"+hang+"' where TENDANGNHAP= '"+a+"' AND MATKHAU='"+b+"'");		
+									pst2.execute();
+									pst2.close();
+							}
+							
+							
+							PreparedStatement pst1= con.prepareStatement("update DOANHTHUCHUYENBAY set TONGTIENBANVE="+tongtbv+", TONGDOANHTHU="+tongdoanhthu+" where ID= "+id_dt+"");		
+							pst1.execute();
+							System.out.println("update doanh thu ok");
+							pst1.close();
+							rs2.close();
+							rs.close();
+							pst.close();
 
-						int tongtiendatve=tongtien+tiendvbt;
-						System.out.println("đặt vé "+tongtien+" "+tiendvbt+" "+tongtiendatve);
+						con.close();
+						JOptionPane.showMessageDialog(null, "Mua thành công");
 						
-						String id_taikhoan=rs.getString(2);
-						int id_tk=Integer.parseInt(id_taikhoan);
-						System.out.println(id_tk);
+					} catch (ClassNotFoundException e1) {
+						JOptionPane.showMessageDialog(null, "thất bại");
 
-						String update ="update DATVEBAY set DICHVUBOTRO_ID="+lb_id.getText()+",TONGTIEN="+tongtiendatve+" where ID="+textField_MaDC.getText()+"";
-						PreparedStatement pst = con.prepareStatement(update);
-						pst= con.prepareStatement(update);
-						pst.execute();
-						
-						
-						String C= "select DT.ID, DT.TONGTIENBANVE,DT.TONGDOANHTHU \r\n"
-								+ "from DOANHTHUCHUYENBAY DT, VEMAYBAY VE, DATVEBAY DV \r\n"
-								+ "WHERE   DT.CHUYENBAY_ID=VE.CHUYENBAY_ID AND VE.ID=DV.VEMAYBAY_ID AND DV.ID="+textField_MaDC.getText();
-						ResultSet rs2= st.executeQuery(C);
-
-						rs2.next();
-						
-					
-						String id_dt =rs2.getString(1);
-						String tongtienbv=rs2.getString(2);
-						float ttbv=Float.parseFloat(tongtienbv);
-						float tongtbv=ttbv+tiendvbt;
-						
-						String tongdt =rs2.getString(3);	
-						float tdt=Float.parseFloat(tongdt);
-						float tongdoanhthu=tdt+tiendvbt;
-
-
-						
-						
-						PreparedStatement pst1= con.prepareStatement("update DOANHTHUCHUYENBAY set TONGTIENBANVE="+tongtbv+", TONGDOANHTHU="+tongdoanhthu+" where ID= "+id_dt+"");		
-						pst1.execute();
-						
-						
-						
-						
-						
-						rs.close();
-						pst.close();
-
-					con.close();
-					JOptionPane.showMessageDialog(null, "mua thành công");
-					
-				} catch (ClassNotFoundException e1) {
-					JOptionPane.showMessageDialog(null, "thất bại");
-
-					e1.printStackTrace();
-				} catch (SQLException e2) {
-					e2.printStackTrace();
+						e1.printStackTrace();
+					} catch (SQLException e2) {
+						e2.printStackTrace();
+					}
 				}
+				
+			
 				
 				
 				
@@ -398,6 +453,41 @@ public class dv_muathem_hanhly extends JFrame {
 		btnNewButton.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		btnNewButton.setBounds(161, 342, 118, 23);
 		panel_1.add(btnNewButton);
+		
+		JLabel lblNewLabel_8 = new JLabel("VND");
+		lblNewLabel_8.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		lblNewLabel_8.setBounds(196, 295, 59, 17);
+		panel_1.add(lblNewLabel_8);
+		
+	
+		
+		JLabel lblNewLabel_7 = new JLabel("New label");
+		lblNewLabel_7.setBorder(new LineBorder(new Color(255, 192, 203), 3, true));
+		//lblNewLabel_7.setIcon(new ImageIcon("C:\\Users\\nguyen thi nhan\\Downloads\\212330.jpg"));
+		lblNewLabel_7.setBounds(0, 0, 819, 457);
+		contentPane.add(lblNewLabel_7);
+		
+
+		ImageIcon icon=new ImageIcon("anh1.jpg");
+		Image imgIcon =icon.getImage();
+		Image imgScale =imgIcon.getScaledInstance(lblNewLabel_7.getWidth(), lblNewLabel_7.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon scaleIcon=new ImageIcon(imgScale);
+		lblNewLabel_7.setIcon(scaleIcon);
+		
+		JTextArea txtrKhchHngTin = new JTextArea();
+		txtrKhchHngTin.setBorder(new LineBorder(new Color(255, 215, 0), 1, true));
+		txtrKhchHngTin.setEditable(false);
+		txtrKhchHngTin.setBackground(new Color(255, 255, 240));
+		txtrKhchHngTin.setForeground(Color.RED);
+		txtrKhchHngTin.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 18));
+		txtrKhchHngTin.setLineWrap(true);
+		txtrKhchHngTin.setWrapStyleWord(true);
+		txtrKhchHngTin.setText("   Khách hàng tiến hành thanh toán tiền cho nhân   viên thu ngân ");
+		txtrKhchHngTin.setBounds(25, 378, 413, 52);
+		lblNewLabel_7.add(txtrKhchHngTin);
+		
+		
+		
 		
 
 	}

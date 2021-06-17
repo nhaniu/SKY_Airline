@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Image;
 
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
@@ -22,6 +23,8 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.JSeparator;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+
 import java.awt.event.ActionListener;
 
 import java.sql.DriverManager;
@@ -197,19 +200,6 @@ public class update_chuyenbay extends JFrame {
         Date date3 = (Date) Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
 		dateChooser_hc.setDate(date3);
 		
-
-		
-		JButton bt_thoat = new JButton("Thoát");
-		bt_thoat.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-			}
-		});
-		bt_thoat.setBackground(new Color(0, 191, 255));
-		bt_thoat.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		bt_thoat.setBounds(559, 346, 102, 23);
-		contentPane.add(bt_thoat);
-		
 		JSeparator separator = new JSeparator();
 		separator.setBounds(10, 60, 700, 2);
 		contentPane.add(separator);
@@ -278,11 +268,23 @@ public class update_chuyenbay extends JFrame {
 		contentPane.add(bt_capnhat);
 		
 		textField_ID = new JTextField();
+		textField_ID.setEditable(false);
 		textField_ID.setBounds(172, 86, 151, 21);
 		contentPane.add(textField_ID);
 		textField_ID.setColumns(10);
 		
 		textField_ID.setText(id);
+		
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setBounds(0, 0, 796, 453);
+		contentPane.add(lblNewLabel);
+		
+		ImageIcon icon=new ImageIcon("anh1.jpg");
+		Image imgIcon =icon.getImage();
+		Image imgScale =imgIcon.getScaledInstance(lblNewLabel.getWidth(), lblNewLabel.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon scaleIcon=new ImageIcon(imgScale);
+		lblNewLabel.setIcon(scaleIcon);
+
 		
 		bt_capnhat.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -315,10 +317,12 @@ public class update_chuyenbay extends JFrame {
 					PreparedStatement pst = DB_AIRLINE.prepareStatement(update);
 					pst= DB_AIRLINE.prepareStatement(update);
 					pst.execute();
+				
 	
 					JOptionPane.showMessageDialog(null, "Cập nhật thành công");
 					pst.close();
 					DB_AIRLINE.close();
+					setVisible(false);
 
 				} catch (ClassNotFoundException e1) {
 					Component a=null;

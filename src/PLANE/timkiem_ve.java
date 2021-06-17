@@ -14,9 +14,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.SwingConstants;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -103,9 +106,7 @@ public class timkiem_ve extends JFrame {
 		 Theader.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		Theader.setBackground(new Color(255, 255, 255));
 		table.setModel(tableModel);
-		
-		JButton bt_thoat = new JButton("Thoát");
-		bt_thoat.setVisible(false);
+		Theader.setBackground(new Color(135, 206, 250));
 		
 		JButton bt_timkiem = new JButton("Tìm kiếm");
 		bt_timkiem.addActionListener(new ActionListener() {
@@ -132,7 +133,8 @@ public class timkiem_ve extends JFrame {
 					}
 					
 					ResultSet rs= st.executeQuery(search);
-					while(rs.next()) {
+					
+					if(rs.next()) {
 						String ID =rs.getString(1);
 						String hangveid =rs.getString(2);
 						String chuyenbayid =rs.getString(3);
@@ -144,9 +146,10 @@ public class timkiem_ve extends JFrame {
 						table.setModel(tableModel);
 						scrollPane.setVisible(true);
 						table.setVisible(true);
-						bt_thoat.setVisible(true);
 						
-
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "Vé không tồn tại");
 					}
 					
 					con.close();
@@ -167,27 +170,19 @@ public class timkiem_ve extends JFrame {
 		bt_timkiem.setBounds(462, 96, 110, 23);
 		contentPane.add(bt_timkiem);
 		
-
-		bt_thoat.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-			}
-		});
-		
-
-		
-		
-		
-		
-
-		bt_thoat.setBackground(new Color(135, 206, 250));
-		bt_thoat.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		bt_thoat.setBounds(427, 282, 89, 23);
-		contentPane.add(bt_thoat);
-		
 		JLabel lblNewLabel_2 = new JLabel("(ví dụ: 8001)");
 		lblNewLabel_2.setFont(new Font("Times New Roman", Font.ITALIC, 14));
 		lblNewLabel_2.setBounds(319, 100, 100, 15);
 		contentPane.add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_3 = new JLabel("New label");
+		lblNewLabel_3.setBounds(-14, 0, 672, 356);
+		contentPane.add(lblNewLabel_3);
+		
+		ImageIcon icon=new ImageIcon("anh1.jpg");
+		Image imgIcon =icon.getImage();
+		Image imgScale =imgIcon.getScaledInstance(lblNewLabel_3.getWidth(), lblNewLabel_3.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon scaleIcon=new ImageIcon(imgScale);
+		lblNewLabel_3.setIcon(scaleIcon);
 	}
 }

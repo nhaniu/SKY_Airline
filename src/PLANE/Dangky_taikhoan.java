@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.awt.Image;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -30,6 +31,8 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
+import javax.swing.ImageIcon;
+import javax.swing.border.LineBorder;
 
 public class Dangky_taikhoan extends JFrame {
 
@@ -68,7 +71,7 @@ public class Dangky_taikhoan extends JFrame {
 		setVisible(true);
 		
 		setBackground(new Color(240, 255, 255));
-		setBounds(100, 100, 395, 427);
+		setBounds(100, 100, 482, 484);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(240, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -78,61 +81,57 @@ public class Dangky_taikhoan extends JFrame {
 		JLabel lblNewLabel = new JLabel("Đăng ký tài khoản");
 		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 25));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(34, 18, 319, 41);
+		lblNewLabel.setBounds(75, 11, 319, 41);
 		contentPane.add(lblNewLabel);
-		
-		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 70, 343, 15);
-		contentPane.add(separator);
 		
 		JLabel lblNewLabel_1 = new JLabel("ID:");
 		lblNewLabel_1.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lblNewLabel_1.setBounds(34, 96, 51, 34);
+		lblNewLabel_1.setBounds(83, 104, 51, 34);
 		contentPane.add(lblNewLabel_1);
 		
 		 lb_id = new JLabel("New label");
 		lb_id.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		lb_id.setBounds(149, 103, 135, 21);
+		lb_id.setBounds(198, 111, 135, 21);
 		contentPane.add(lb_id);
 		
 		JLabel lblNewLabel_2 = new JLabel("Tên đăng nhập:");
 		lblNewLabel_2.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lblNewLabel_2.setBounds(34, 141, 110, 20);
+		lblNewLabel_2.setBounds(83, 149, 110, 20);
 		contentPane.add(lblNewLabel_2);
 		
 		textField_tendn = new JTextField();
-		textField_tendn.setBounds(159, 141, 158, 22);
+		textField_tendn.setBounds(208, 149, 158, 22);
 		contentPane.add(textField_tendn);
 		textField_tendn.setColumns(10);
 		
 		JLabel lblNewLabel_3 = new JLabel("Mật khẩu:");
 		lblNewLabel_3.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lblNewLabel_3.setBounds(34, 183, 101, 21);
+		lblNewLabel_3.setBounds(83, 191, 101, 21);
 		contentPane.add(lblNewLabel_3);
 		
 		JLabel lblNewLabel_5 = new JLabel("SĐT:");
 		lblNewLabel_5.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lblNewLabel_5.setBounds(34, 228, 108, 21);
+		lblNewLabel_5.setBounds(83, 236, 108, 21);
 		contentPane.add(lblNewLabel_5);
 		
 		textField_sdt = new JTextField();
-		textField_sdt.setBounds(159, 228, 158, 22);
+		textField_sdt.setBounds(208, 236, 158, 22);
 		contentPane.add(textField_sdt);
 		textField_sdt.setColumns(10);
 		
 		JLabel lblNewLabel_6 = new JLabel("Email:");
 		lblNewLabel_6.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lblNewLabel_6.setBounds(34, 272, 83, 15);
+		lblNewLabel_6.setBounds(83, 280, 83, 15);
 		contentPane.add(lblNewLabel_6);
 		
 		textField_email = new JTextField();
-		textField_email.setBounds(159, 270, 158, 21);
+		textField_email.setBounds(208, 278, 158, 21);
 		contentPane.add(textField_email);
 		textField_email.setColumns(10);
 		
 		
 		passwordField = new JPasswordField();
-		passwordField.setBounds(159, 184, 158, 22);
+		passwordField.setBounds(208, 192, 158, 22);
 		contentPane.add(passwordField);
 		
 		JButton bt_dangky = new JButton("Đăng ký");
@@ -188,10 +187,35 @@ public class Dangky_taikhoan extends JFrame {
 			}
 			}
 		});
-		bt_dangky.setBackground(new Color(135, 206, 250));
+		bt_dangky.setBackground(new Color(255, 228, 225));
 		bt_dangky.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		bt_dangky.setBounds(76, 345, 89, 23);
+		bt_dangky.setBounds(144, 353, 158, 23);
 		contentPane.add(bt_dangky);
+		
+		JLabel lblNewLabel_4 = new JLabel("New label");
+		lblNewLabel_4.setIcon(new ImageIcon("563774.jpg"));
+		lblNewLabel_4.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		lblNewLabel_4.setBounds(44, 79, 375, 329);
+		contentPane.add(lblNewLabel_4);
+		
+		ImageIcon icon=new ImageIcon("563774.jpg");
+		Image imgIcon =icon.getImage();
+		Image imgScale =imgIcon.getScaledInstance(lblNewLabel_4.getWidth(), lblNewLabel_4.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon scaleIcon=new ImageIcon(imgScale);
+		lblNewLabel_4.setIcon(scaleIcon);
+		
+		JLabel lblNewLabel_7 = new JLabel("New label");
+		lblNewLabel_7.setBounds(0, 0, 467, 460);
+		contentPane.add(lblNewLabel_7);
+		
+		ImageIcon icon1=new ImageIcon("563774.jpg");
+		Image imgIcon1 =icon1.getImage();
+		Image imgScale1 =imgIcon1.getScaledInstance(lblNewLabel_7.getWidth(), lblNewLabel_7.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon scaleIcon1=new ImageIcon(imgScale1);
+		lblNewLabel_7.setIcon(scaleIcon1);
+		
+
+
 
 	}
 public void autoID() {

@@ -11,6 +11,7 @@ import javax.swing.table.JTableHeader;
 
 import java.awt.FlowLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import com.toedter.calendar.JDayChooser;
@@ -29,10 +30,13 @@ import javax.swing.JSeparator;
 import javax.swing.JTable;
 
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.SwingConstants;
 import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
+import javax.swing.ImageIcon;
 
 public class timkiem_chuyenbay extends JFrame {
 
@@ -164,7 +168,7 @@ public class timkiem_chuyenbay extends JFrame {
 					}
 					
 					ResultSet rs= st.executeQuery(search);
-					while(rs.next()) {
+					if(rs.next()) {
 						String ID =rs.getString(1);
 						String ttmaybayid =rs.getString(2);
 						String sanbaydi =rs.getString(3);
@@ -183,10 +187,17 @@ public class timkiem_chuyenbay extends JFrame {
 						tableModel.addRow(new Object[] {ID,ttmaybayid,sanbaydi,sanbayden,ngaygiokh,ngaygiohc,tongsove,ID_NQL});
 
 						table.setModel(tableModel);
-						
 						scrollPane.setVisible(true);
 						table.setVisible(true);
 					
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "Không tìm thấy chuyến bay");
+							
+							
+					
+					
+						
 
 					}
 					
@@ -207,16 +218,16 @@ public class timkiem_chuyenbay extends JFrame {
 		btnNewButton.setBounds(603, 159, 105, 22);
 		contentPane.add(btnNewButton);
 		
-		JButton bt_thoat = new JButton("Thoát");
-		bt_thoat.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-			}
-		});
-		bt_thoat.setBackground(new Color(135, 206, 250));
-		bt_thoat.setBounds(661, 387, 89, 23);
-		contentPane.add(bt_thoat);
-		
+		JLabel lblNewLabel_4 = new JLabel("New label");
+		//lblNewLabel_4.setIcon(new ImageIcon("C:\\Users\\nguyen thi nhan\\Downloads\\444575.jpg"));
+		lblNewLabel_4.setBounds(0, 0, 919, 451);
+		contentPane.add(lblNewLabel_4);
+
+		ImageIcon icon=new ImageIcon("anh3.jpg");
+		Image imgIcon =icon.getImage();
+		Image imgScale =imgIcon.getScaledInstance(lblNewLabel_4.getWidth(), lblNewLabel_4.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon scaleIcon=new ImageIcon(imgScale);
+		lblNewLabel_4.setIcon(scaleIcon);
 
 		
 		comboBox_noidi.addActionListener(new ActionListener() {

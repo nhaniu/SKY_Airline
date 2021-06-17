@@ -26,6 +26,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
 
 public class Quanly_taikhoan extends JFrame {
 
@@ -63,7 +64,7 @@ public class Quanly_taikhoan extends JFrame {
 		contentPane.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(21, 135, 1016, 192);
+		scrollPane.setBounds(21, 120, 1016, 192);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
@@ -84,15 +85,17 @@ public class Quanly_taikhoan extends JFrame {
 		 Theader.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		Theader.setBackground(new Color(255, 255, 255));
 		table.setModel(model);
+		Theader.setBackground(new Color(230, 255, 255));
+
 		
 		JLabel lblNewLabel = new JLabel("Quản lý tài khoản");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 25));
-		lblNewLabel.setBounds(392, 11, 325, 36);
+		lblNewLabel.setBounds(393, 21, 325, 36);
 		contentPane.add(lblNewLabel);
 		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 51, 1027, 9);
+		separator.setBounds(10, 77, 1027, 9);
 		contentPane.add(separator);
 		table.setVisible(false);
 		scrollPane.setVisible(false);
@@ -104,7 +107,7 @@ public class Quanly_taikhoan extends JFrame {
 				new timkiemtaikhoan();
 			}
 		});
-		bt_timkiem.setBackground(new Color(135, 206, 250));
+		bt_timkiem.setBackground(new Color(255, 255, 224));
 		bt_timkiem.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		bt_timkiem.setBounds(219, 362, 130, 23);
 		contentPane.add(bt_timkiem);
@@ -116,6 +119,9 @@ public class Quanly_taikhoan extends JFrame {
 				DefaultTableModel model=(DefaultTableModel) table.getModel();
 				int SelectedRows=table.getSelectedRow();
 				
+				if(SelectedRows==-1) {
+					JOptionPane.showMessageDialog(null, "Vui lòng chọn tài khoản muốn cập nhật");
+				}
 				String id= model.getValueAt(SelectedRows, 0).toString();
 				String tendn =model.getValueAt(SelectedRows, 1).toString();
 				String matkhau= model.getValueAt(SelectedRows, 2).toString();
@@ -133,67 +139,64 @@ public class Quanly_taikhoan extends JFrame {
 			}
 		});
 		bt_capnhat.setVisible(false);
-		bt_capnhat.setBackground(new Color(135, 206, 250));
+		bt_capnhat.setBackground(new Color(255, 255, 224));
 		bt_capnhat.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		bt_capnhat.setBounds(779, 363, 117, 22);
 		contentPane.add(bt_capnhat);
-		
-		JButton bt_httt = new JButton("Hiển thị danh sách");
-		bt_httt.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-				
-						
-					Class.forName("oracle.jdbc.OracleDriver");
-					Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
-					Statement st=con.createStatement(); 
-					
-					String search="select * from TAIKHOAN ";					
-										
-					while(model.getRowCount() > 0) 
-					{									
-						model.removeRow(0);
-					}
-					
-					ResultSet rs= st.executeQuery(search);
-					while(rs.next()) {
-						String ID =rs.getString(1);
-						String tendn =rs.getString(2);
-						String mk =rs.getString(3);
-						String ngaybd =rs.getString(4);
-						String sdt =rs.getString(5);
-						String email =rs.getString(6);
-						String tongtien =rs.getString(7);
-						String diem =rs.getString(8);
-						String hang =rs.getString(9);
-				
-						
-
-						
-						model.addRow(new Object[] {ID,tendn,mk,ngaybd,sdt,email,tongtien,diem,hang});
-
-						table.setModel(model);
-						scrollPane.setVisible(true);
-						table.setVisible(true);
-						bt_capnhat.setVisible(true);
-						bt_timkiem.setVisible(true);
-					}
-					rs.close();
-
-					con.close();
-
-					
-				} catch (ClassNotFoundException e1) {
-					e1.printStackTrace();
-				} catch (SQLException e2) {
-					e2.printStackTrace();
-				}
+		try {
+			
+			
+			Class.forName("oracle.jdbc.OracleDriver");
+			Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+			Statement st=con.createStatement(); 
+			
+			String search="select * from TAIKHOAN ";					
+								
+			while(model.getRowCount() > 0) 
+			{									
+				model.removeRow(0);
 			}
-		});
-		bt_httt.setBackground(new Color(135, 206, 250));
-		bt_httt.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		bt_httt.setBounds(826, 71, 184, 23);
-		contentPane.add(bt_httt);
+			
+			ResultSet rs= st.executeQuery(search);
+			while(rs.next()) {
+				String ID =rs.getString(1);
+				String tendn =rs.getString(2);
+				String mk =rs.getString(3);
+				String ngaybd =rs.getString(4);
+				String sdt =rs.getString(5);
+				String email =rs.getString(6);
+				String tongtien =rs.getString(7);
+				String diem =rs.getString(8);
+				String hang =rs.getString(9);
+		
+				
+
+				
+				model.addRow(new Object[] {ID,tendn,mk,ngaybd,sdt,email,tongtien,diem,hang});
+
+				table.setModel(model);
+				scrollPane.setVisible(true);
+				table.setVisible(true);
+				bt_capnhat.setVisible(true);
+				bt_timkiem.setVisible(true);
+			}
+			rs.close();
+
+			con.close();
+
+			
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		
+		JLabel lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setIcon(new ImageIcon("anh.jpg"));
+		lblNewLabel_1.setBounds(0, 0, 1079, 428);
+		contentPane.add(lblNewLabel_1);
+		
+		
 		
 	
 		

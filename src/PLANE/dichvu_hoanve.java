@@ -15,6 +15,7 @@ import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Color;
 import java.awt.Component;
 
@@ -32,6 +33,7 @@ import java.util.logging.Level;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ImageIcon;
 
 public class dichvu_hoanve extends JFrame {
 
@@ -178,7 +180,7 @@ public class dichvu_hoanve extends JFrame {
 				Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
 				Statement st=con.createStatement(); 
 	
-				String b= "select TONGTIEN from DATVEBAY   WHERE  DATVEBAY.ID="+textField_madatcho.getText();
+				String b= "select TONGTIEN, TAIKHOAN_ID from DATVEBAY   WHERE  DATVEBAY.ID="+textField_madatcho.getText();
 				ResultSet rs= st.executeQuery(b);
 				
 				rs.next();
@@ -188,9 +190,45 @@ public class dichvu_hoanve extends JFrame {
 				float phihv=(float)(0.2*tongtien);
 				float tienhoan=tongtien-phihv;
 				
+				String tk_id =rs.getString(2);
+				int id_tk=Integer.parseInt(tk_id);
+
+				
 
 				PreparedStatement pst= con.prepareStatement("insert into \"DB_AIRLINE\".\"HOANVEBAY\"  (\"ID\", \"DATVEBAY_ID\", \"LIDO\",\"NGAYHOAN\",  \"PHIHV\", \"TIENHV\", \"NHANVIEN_ID\") values("+lb_id.getText()+","+textField_madatcho.getText()+",'"+textField_lido.getText()+"',"+ngayhoan+","+phihv+","+tienhoan+","+0+")");		
 				pst.execute();
+				
+				if(tk_id!=null) {
+					String searchtk="select TONGTIENMUAVE from TAIKHOAN where ID="+id_tk+"";					
+					ResultSet rs1= st.executeQuery(searchtk);
+					rs1.next();
+						String tongtientk =rs1.getString(1);							
+						float tttk=Float.parseFloat(tongtientk);
+						float tongtienupdate=tttk-tongtien;
+						
+						float diem=tongtienupdate/500000;
+						String hang = null;
+						if(diem>=30 &&diem<40) {
+							hang="Hạng bạc";
+						}
+						else if (diem>=40&&diem<50) {
+							hang="Hạng vàng";
+							
+						}
+						else if (diem>=50) {
+							hang="Hạng kim cương";
+						}
+						else if (diem<30) {
+							hang="Hạng thường";
+						}
+						
+						System.out.println("hạng: "+" "+"Diem: "+diem);
+						PreparedStatement pst2= con.prepareStatement("update TAIKHOAN set TONGTIENMUAVE="+tongtienupdate+", DIEM="+diem+",HANG='"+hang+"' where ID="+id_tk+"");		
+						pst2.execute();
+						pst2.close();
+						
+					
+				}
 				
 				
 				String C= "select DT.ID, DT.TONGPHIHOANVE,DT.TONGDOANHTHU \r\n"
@@ -215,6 +253,7 @@ public class dichvu_hoanve extends JFrame {
 				
 				Component a=null;
 				JOptionPane.showMessageDialog(a, "Thêm thành công");
+				
 				
 				rs2.close();
 				rs.close();
@@ -247,9 +286,9 @@ public class dichvu_hoanve extends JFrame {
 				rs1.close();				
 				con.close();
 			} catch (ClassNotFoundException e1) {
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, e1);
 			} catch (SQLException e1) {
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, e1);
 			}
 				
 				
@@ -259,6 +298,17 @@ public class dichvu_hoanve extends JFrame {
 		bt_gui.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		bt_gui.setBounds(434, 159, 81, 22);
 		contentPane.add(bt_gui);
+		
+		JLabel lblNewLabel_3 = new JLabel("New label");
+		lblNewLabel_3.setBounds(0, 0, 643, 356);
+		contentPane.add(lblNewLabel_3);
+		
+		ImageIcon icon=new ImageIcon("444571.jpg");
+		Image imgIcon =icon.getImage();
+		Image imgScale =imgIcon.getScaledInstance(lblNewLabel_3.getWidth(), lblNewLabel_3.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon scaleIcon=new ImageIcon(imgScale);
+		lblNewLabel_3.setIcon(scaleIcon);
+		
 		
 		
 		

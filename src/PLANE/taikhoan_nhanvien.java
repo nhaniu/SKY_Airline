@@ -3,12 +3,14 @@ package PLANE;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Image;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -162,7 +164,18 @@ public class taikhoan_nhanvien extends JFrame {
 		JSeparator separator = new JSeparator();
 		separator.setBounds(10, 64, 416, 2);
 		contentPane.add(separator);
+		
+		JLabel lblNewLabel_2 = new JLabel("New label");
+		lblNewLabel_2.setBounds(0, 0, 453, 494);
+		contentPane.add(lblNewLabel_2);
 		lb_mk.setVisible(false);
+		
+		ImageIcon icon=new ImageIcon("anh2.jpg");
+		Image imgIcon =icon.getImage();
+		Image imgScale =imgIcon.getScaledInstance(lblNewLabel_2.getWidth(), lblNewLabel_2.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon scaleIcon=new ImageIcon(imgScale);
+		lblNewLabel_2.setIcon(scaleIcon);
+		
 		
 		try {
 			

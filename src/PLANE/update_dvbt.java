@@ -13,9 +13,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.SwingConstants;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.DriverManager;
@@ -49,9 +52,10 @@ public class update_dvbt extends JFrame {
 	 * Create the frame.
 	 */
 	public update_dvbt(String a, String b, String c) {
+		setVisible(true);
 		setBackground(new Color(240, 255, 255));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 407, 300);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		setBounds(100, 170, 407, 300);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(240, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -154,6 +158,16 @@ public class update_dvbt extends JFrame {
 		bt_thoat.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		bt_thoat.setBounds(239, 206, 89, 23);
 		contentPane.add(bt_thoat);
+		
+		JLabel lblNewLabel_4 = new JLabel("New label");
+		lblNewLabel_4.setBounds(0, 0, 406, 277);
+		contentPane.add(lblNewLabel_4);
+		
+		ImageIcon icon=new ImageIcon("anh1.jpg");
+		Image imgIcon =icon.getImage();
+		Image imgScale =imgIcon.getScaledInstance(lblNewLabel_4.getWidth(), lblNewLabel_4.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon scaleIcon=new ImageIcon(imgScale);
+		lblNewLabel_4.setIcon(scaleIcon);
 	}
 
 }

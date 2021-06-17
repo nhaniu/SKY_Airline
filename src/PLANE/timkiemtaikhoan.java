@@ -15,9 +15,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.SwingConstants;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -58,7 +61,7 @@ public class timkiemtaikhoan extends JFrame {
 		setBackground(new Color(240, 255, 255));
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 892, 317);
+		setBounds(100, 100, 892, 332);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(240, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -92,15 +95,9 @@ public class timkiemtaikhoan extends JFrame {
 		contentPane.add(lblNewLabel_2);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(30, 131, 838, 40);
+		scrollPane.setBounds(30, 162, 838, 40);
 		contentPane.add(scrollPane);
 		scrollPane.setVisible(false);
-		JButton btnNewButton = new JButton("Thoát");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-			}
-		});
 		
 		table = new JTable();
 		table.setVisible(false);
@@ -146,7 +143,7 @@ public class timkiemtaikhoan extends JFrame {
 					}
 					
 					ResultSet rs= st.executeQuery(search);
-						while(rs.next()) {
+						if(rs.next()) {
 							String ID =rs.getString(1);
 							String tendn =rs.getString(2);
 							String mk =rs.getString(3);
@@ -165,6 +162,9 @@ public class timkiemtaikhoan extends JFrame {
 				
 						
 					}
+						else {
+							JOptionPane.showMessageDialog(null, "Không tìm thấy tài khoản");
+						}
 					con.close();
 					
 				}catch (ClassNotFoundException e1) {
@@ -180,13 +180,15 @@ public class timkiemtaikhoan extends JFrame {
 		bt_timkiem.setBounds(669, 68, 131, 21);
 		contentPane.add(bt_timkiem);
 		
+		JLabel lblNewLabel_3 = new JLabel("New label");
+		lblNewLabel_3.setBounds(-11, 0, 909, 408);
+		contentPane.add(lblNewLabel_3);
 		
+		ImageIcon icon=new ImageIcon("563774.jpg");
+		Image imgIcon =icon.getImage();
+		Image imgScale =imgIcon.getScaledInstance(lblNewLabel_3.getWidth(), lblNewLabel_3.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon scaleIcon=new ImageIcon(imgScale);
+		lblNewLabel_3.setIcon(scaleIcon);
 		
-		
-	
-		btnNewButton.setBackground(new Color(135, 206, 250));
-		btnNewButton.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		btnNewButton.setBounds(711, 235, 89, 23);
-		contentPane.add(btnNewButton);
 	}
 }

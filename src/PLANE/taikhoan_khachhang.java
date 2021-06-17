@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.Image;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -26,6 +27,7 @@ import javax.swing.JButton;
 import javax.swing.JSeparator;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
 
 public class taikhoan_khachhang extends JFrame {
 
@@ -330,6 +332,18 @@ public class taikhoan_khachhang extends JFrame {
 		bt_capnhat.setBackground(new Color(135, 206, 250));
 		bt_capnhat.setBounds(56, 432, 108, 23);
 		contentPane.add(bt_capnhat);
+		
+		JLabel lblNewLabel_5 = new JLabel("New label");
+		lblNewLabel_5.setBounds(0, 0, 432, 498);
+		contentPane.add(lblNewLabel_5);
+		
+
+		ImageIcon icon=new ImageIcon("anh2.jpg");
+		Image imgIcon =icon.getImage();
+		Image imgScale =imgIcon.getScaledInstance(lblNewLabel_5.getWidth(), lblNewLabel_5.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon scaleIcon=new ImageIcon(imgScale);
+		lblNewLabel_5.setIcon(scaleIcon);
+		
 	
 	}
 }

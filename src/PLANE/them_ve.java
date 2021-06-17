@@ -13,9 +13,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JSlider;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -173,6 +176,16 @@ public class them_ve extends JFrame {
 		textField_cb.setBounds(145, 185, 159, 23);
 		contentPane.add(textField_cb);
 		textField_cb.setColumns(10);
+		
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setBounds(0, 0, 451, 339);
+		contentPane.add(lblNewLabel);
+		
+		ImageIcon icon=new ImageIcon("anh1.jpg");
+		Image imgIcon =icon.getImage();
+		Image imgScale =imgIcon.getScaledInstance(lblNewLabel.getWidth(), lblNewLabel.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon scaleIcon=new ImageIcon(imgScale);
+		lblNewLabel.setIcon(scaleIcon);
 	}
 
 public void autoID() {
@@ -207,4 +220,5 @@ public void autoID() {
 		java.util.logging.Logger.getLogger(them_hanhkhach.class.getName()).log(Level.SEVERE,null,e);
 
 	}  
-}}
+}	
+}

@@ -9,12 +9,14 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Image;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JSeparator;
+import javax.swing.ImageIcon;
 
 public class taikhoan_quanly extends JFrame {
 
@@ -143,6 +145,16 @@ public class taikhoan_quanly extends JFrame {
 		JSeparator separator = new JSeparator();
 		separator.setBounds(10, 52, 332, 2);
 		contentPane.add(separator);
+		
+		JLabel lblNewLabel_9 = new JLabel("New label");
+		lblNewLabel_9.setBounds(0, 0, 374, 376);
+		contentPane.add(lblNewLabel_9);
+		
+		ImageIcon icon=new ImageIcon("anh2.jpg");
+		Image imgIcon =icon.getImage();
+		Image imgScale =imgIcon.getScaledInstance(lblNewLabel_9.getWidth(), lblNewLabel_9.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon scaleIcon=new ImageIcon(imgScale);
+		lblNewLabel_9.setIcon(scaleIcon);
 		
 try {
 			

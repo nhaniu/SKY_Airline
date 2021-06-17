@@ -29,6 +29,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.ImageIcon;
 
 public class QuanLy_DatVe extends JFrame {
 
@@ -94,7 +95,9 @@ public class QuanLy_DatVe extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel model=(DefaultTableModel) table.getModel();
 				int SelectedRows=table.getSelectedRow();
-				System.out.println(SelectedRows);
+				if(SelectedRows==-1) {
+					JOptionPane.showMessageDialog(null, "Vui lòng chọn vé muốn cập nhật ở trong bảng");
+				}
 				
 				String id= model.getValueAt(SelectedRows, 0).toString();
 				String vemaybayid =model.getValueAt(SelectedRows, 1).toString();
@@ -233,6 +236,11 @@ public class QuanLy_DatVe extends JFrame {
 		bt_timcb.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		bt_timcb.setBounds(701, 125, 127, 23);
 		contentPane.add(bt_timcb);
+		
+		JLabel lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setIcon(new ImageIcon("anh.jpg"));
+		lblNewLabel_1.setBounds(0, 0, 926, 483);
+		contentPane.add(lblNewLabel_1);
 		
 	}
 }

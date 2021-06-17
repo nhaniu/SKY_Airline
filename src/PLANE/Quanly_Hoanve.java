@@ -36,6 +36,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JSeparator;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.ImageIcon;
 
 public class Quanly_Hoanve extends JFrame {
 
@@ -103,19 +104,7 @@ public class Quanly_Hoanve extends JFrame {
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
-		table.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				DefaultTableModel model=(DefaultTableModel)table.getModel();
-				int i=table.getSelectedRow();
-				
-				textField_id.setText(model.getValueAt(i, 0).toString());
-				textField_iddatve.setText(model.getValueAt(i, 1).toString());
-				textField_idnhanvien.setText(model.getValueAt(i, 6).toString());
-				comboBox.setSelectedItem(model.getValueAt(i, 7).toString());
-
-			}
-		});
+		
 		scrollPane.setViewportView(table);
 		
 		final DefaultTableModel tableModel = new DefaultTableModel();
@@ -140,10 +129,22 @@ public class Quanly_Hoanve extends JFrame {
 		JButton bt_capnhat = new JButton("Cập nhật ");
 		bt_capnhat.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				DefaultTableModel model=(DefaultTableModel)table.getModel();
+				int i=table.getSelectedRow();
+				if(i==-1) {
+					JOptionPane.showMessageDialog(null, "Chọn vé cần cập nhật");
+				}
+				
+				textField_id.setText(model.getValueAt(i, 0).toString());
+				textField_iddatve.setText(model.getValueAt(i, 1).toString());
+				textField_idnhanvien.setText(model.getValueAt(i, 6).toString());
+				comboBox.setSelectedItem(model.getValueAt(i, 7).toString());
+
+				
 				panel.setVisible(true);
 			}
 		});
-		bt_capnhat.setBackground(new Color(135, 206, 250));
+		bt_capnhat.setBackground(new Color(255, 255, 224));
 		bt_capnhat.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		bt_capnhat.setBounds(526, 250, 104, 29);
 		contentPane.add(bt_capnhat);
@@ -223,7 +224,7 @@ public class Quanly_Hoanve extends JFrame {
 		e1.printStackTrace();
 	}
 		JButton bt_xacnhan = new JButton("Xác nhận");
-		bt_xacnhan.setBackground(new Color(135, 206, 250));
+		bt_xacnhan.setBackground(new Color(255, 255, 224));
 		bt_xacnhan.setBounds(522, 114, 104, 27);
 		panel.add(bt_xacnhan);
 		bt_xacnhan.addActionListener(new ActionListener() {
@@ -295,6 +296,11 @@ public class Quanly_Hoanve extends JFrame {
 		JSeparator separator = new JSeparator();
 		separator.setBounds(25, 56, 679, 9);
 		contentPane.add(separator);
+		
+		JLabel lblNewLabel_5 = new JLabel("New label");
+		lblNewLabel_5.setIcon(new ImageIcon("anh.jpg"));
+		lblNewLabel_5.setBounds(0, 0, 726, 473);
+		contentPane.add(lblNewLabel_5);
 
 	}
 }

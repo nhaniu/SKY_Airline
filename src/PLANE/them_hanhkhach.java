@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Color;
 import java.awt.Component;
 
@@ -42,6 +43,7 @@ import javax.swing.table.DefaultTableModel;
 import org.xml.sax.ext.Locator2Impl;
 
 import javax.swing.JScrollPane;
+import javax.swing.ImageIcon;
 
 public class them_hanhkhach extends JFrame {
 
@@ -227,7 +229,7 @@ public them_hanhkhach() {
 
 					
 					Class.forName("oracle.jdbc.OracleDriver");
-					java.sql.Connection DB_AIRLINE= DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","1");  		
+					java.sql.Connection DB_AIRLINE= DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");  		
 					//System.out.println(texString);
 					PreparedStatement pst1 = DB_AIRLINE.prepareStatement("insert into \"DB_AIRLINE\".\"HANHKHACH\" (\"ID\", \"HOTEN\", \"NGAYSINH\", \"QUOCTICH\", \"GIOITINH\", \"SDT\", \"EMAIL\", \"TAIKHOAN_ID\") values("+lb_id.getText()+",'"+textField_hoten.getText()+"',"+texString+",'"+textField__quoctich.getText()+"','"+comboBox.getSelectedItem()+"',"+textField_sdt.getText()+",'"+textField_email.getText()+"',"+textField_taikhoan_id.getText()+")");
   
@@ -274,6 +276,17 @@ public them_hanhkhach() {
 		btnNewButton.setBounds(225, 421, 96, 25);
 		contentPane.add(btnNewButton);
 		
+		JLabel lblNewLabel = new JLabel("New label");
+		//lblNewLabel.setIcon(new ImageIcon("C:\\Users\\nguyen thi nhan\\Downloads\\anh2.jpg"));
+		lblNewLabel.setBounds(0, 0, 452, 490);
+		contentPane.add(lblNewLabel);
+		
+		ImageIcon icon=new ImageIcon("anh2.jpg");
+		Image imgIcon =icon.getImage();
+		Image imgScale =imgIcon.getScaledInstance(lblNewLabel.getWidth(), lblNewLabel.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon scaleIcon=new ImageIcon(imgScale);
+		lblNewLabel.setIcon(scaleIcon);
+		
 
 
 	}
@@ -287,7 +300,7 @@ public them_hanhkhach() {
 		
 		try {
 			Class.forName("oracle.jdbc.OracleDriver");
-			java.sql.Connection DB_AIRLINE= DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","1");  		
+			java.sql.Connection DB_AIRLINE= DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");  		
 			
 			Statement stmt=(Statement) ((java.sql.Connection) DB_AIRLINE).createStatement();  	
 			ResultSet rs=((java.sql.Statement) stmt).executeQuery("select MAX(ID) from HANHKHACH");  

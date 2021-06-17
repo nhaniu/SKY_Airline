@@ -12,6 +12,7 @@ import javax.swing.table.JTableHeader;
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Image;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -23,6 +24,7 @@ import javax.swing.JSeparator;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JButton;
+import javax.swing.ImageIcon;
 
 public class thongke_chuyenbay extends JFrame {
 
@@ -89,6 +91,17 @@ public class thongke_chuyenbay extends JFrame {
 		 Theader.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		Theader.setBackground(new Color(255, 255, 255));
 		table.setModel(tableModel);
+		
+		JLabel lblNewLabel_1 = new JLabel("New label");
+		//lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\nguyen thi nhan\\Downloads\\488401.jpg"));
+		lblNewLabel_1.setBounds(0, 0, 638, 306);
+		contentPane.add(lblNewLabel_1);
+		
+		ImageIcon icon=new ImageIcon("anh.jpg");
+		Image imgIcon =icon.getImage();
+		Image imgScale =imgIcon.getScaledInstance(lblNewLabel_1.getWidth(), lblNewLabel_1.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon scaleIcon=new ImageIcon(imgScale);
+		lblNewLabel_1.setIcon(scaleIcon);
 		
 		try {
 			Class.forName("oracle.jdbc.OracleDriver");

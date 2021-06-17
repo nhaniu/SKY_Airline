@@ -11,6 +11,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.JButton;
 import javax.swing.JSeparator;
 import javax.swing.JScrollPane;
@@ -52,6 +54,7 @@ import net.sf.jasperreports.engine.design.JRDesignQuery;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
+import javax.swing.ImageIcon;
 
 public class Quanly_taichinh extends JFrame {
 
@@ -143,6 +146,8 @@ public class Quanly_taichinh extends JFrame {
 		 Theader.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		Theader.setBackground(new Color(255, 255, 255));
 		table.setModel(tableModel);
+		Theader.setBackground(new Color(255, 255, 224));
+
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(31, 370, 780, 39);
@@ -176,6 +181,7 @@ public class Quanly_taichinh extends JFrame {
 		dateChooser2.setVisible(false);
 		
 		JButton bt_1ngay = new JButton("1 ngày");
+		bt_1ngay.setBackground(new Color(255, 255, 224));
 		bt_1ngay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				kt=1;
@@ -189,6 +195,7 @@ public class Quanly_taichinh extends JFrame {
 		contentPane.add(bt_1ngay);
 		
 		JButton bt_1thang = new JButton("Nhiều ngày");
+		bt_1thang.setBackground(new Color(255, 255, 224));
 		bt_1thang.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				kt=2;
@@ -206,6 +213,8 @@ public class Quanly_taichinh extends JFrame {
 		table_1.setVisible(false);
 		
 		JButton bt_xuatfile = new JButton("Xuất file");
+		bt_xuatfile.setVisible(false);
+		bt_xuatfile.setBackground(new Color(255, 255, 224));
 		bt_xuatfile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -216,8 +225,10 @@ public class Quanly_taichinh extends JFrame {
 		JButton bt_thongke = new JButton("Thống kê theo chuyến bay");
 		bt_thongke.addActionListener(new ActionListener() {
 			private String date;
+			
 
 			public void actionPerformed(ActionEvent e) {
+				bt_xuatfile.setVisible(true);
 				scrollPane.setVisible(true);
 				table.setVisible(true);
 				scrollPane_1.setVisible(true);
@@ -301,6 +312,8 @@ public class Quanly_taichinh extends JFrame {
 						 Theader1.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 						Theader1.setBackground(new Color(255, 255, 255));
 						table_1.setModel(model);
+						Theader1.setBackground(new Color(255, 255, 224));
+
 						
 						while(model.getRowCount() > 0) 
 						{									
@@ -335,22 +348,13 @@ public class Quanly_taichinh extends JFrame {
 					bt_xuatfile.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
 							try {
-							
 								
+								Class.forName("oracle.jdbc.OracleDriver");
+								 con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+								
+						
 								FileInputStream in=new FileInputStream(new File("C:\\Users\\nguyen thi nhan\\Documents\\SKY_Airline\\src\\PLANE\\BC.jrxml"));
 								JasperDesign jd=JRXmlLoader.load(in);
-							
-								String sqlString="SELECT DISTINCT *FROM COPYDOANHTHU";				
-								JRDesignQuery newQuery=new JRDesignQuery();
-								newQuery.setText(sqlString);
-								jd.setQuery(newQuery);
-								JasperReport jr=JasperCompileManager.compileReport(jd);
-								HashMap para=new HashMap();
-								JasperPrint j=JasperFillManager.fillReport(jr, para,con);
-								JasperViewer.viewReport(j,false);
-								java.io.OutputStream os=new FileOutputStream(new File("C:\\Users\\nguyen thi nhan\\Documents\\Report"));
-								JasperExportManager.exportReportToPdfStream(j, os);
-								
 								
 								JasperDesign jd1=JRXmlLoader.load(in);
 								String sql="SELECT COUNT(CHUYENBAY_ID),SUM(TONGTIENBANVE),SUM(TONGPHIHOANVE),SUM(TONGDOANHTHU)\r\n"
@@ -364,7 +368,22 @@ public class Quanly_taichinh extends JFrame {
 								JasperViewer.viewReport(j1,false);
 								java.io.OutputStream os1=new FileOutputStream(new File("C:\\Users\\nguyen thi nhan\\Documents\\Report"));
 								JasperExportManager.exportReportToPdfStream(j1, os1);
+							
+								String sqlString="SELECT DISTINCT *FROM COPYDOANHTHU";				
+								JRDesignQuery newQuery=new JRDesignQuery();
+								newQuery.setText(sqlString);
+								jd.setQuery(newQuery);
+								JasperReport jr=JasperCompileManager.compileReport(jd);
+								HashMap para=new HashMap();
+								JasperPrint j=JasperFillManager.fillReport(jr, para,con);
+								JasperViewer.viewReport(j,false);
+								java.io.OutputStream os=new FileOutputStream(new File("C:\\Users\\nguyen thi nhan\\Documents\\Report"));
+								JasperExportManager.exportReportToPdfStream(j, os);
 								
+								
+								
+								
+								in.close();
 								con.close();
 
 							} catch (Exception e2) {
@@ -373,8 +392,7 @@ public class Quanly_taichinh extends JFrame {
 
 						}
 					});
-					
-					
+			
 					
 				}
 				
@@ -442,6 +460,8 @@ public class Quanly_taichinh extends JFrame {
 						 Theader1.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 						Theader1.setBackground(new Color(255, 255, 255));
 						table_1.setModel(model);
+						Theader1.setBackground(new Color(255, 255, 224));
+
 						
 						while(model.getRowCount() > 0) 
 						{									
@@ -483,6 +503,8 @@ public class Quanly_taichinh extends JFrame {
 													
 							FileInputStream in=new FileInputStream(new File("C:\\Users\\nguyen thi nhan\\Documents\\SKY_Airline\\src\\PLANE\\BaoCao.jrxml"));
 							JasperDesign jd=JRXmlLoader.load(in);
+							
+							
 						
 							String sqlString="SELECT DISTINCT *FROM COPYDOANHTHU";				
 							JRDesignQuery newQuery=new JRDesignQuery();
@@ -494,7 +516,6 @@ public class Quanly_taichinh extends JFrame {
 							JasperViewer.viewReport(j,false);
 							java.io.OutputStream os=new FileOutputStream(new File("C:\\Users\\nguyen thi nhan\\Documents\\Report1"));
 							JasperExportManager.exportReportToPdfStream(j, os);
-							//in.close();
 							
 							JasperDesign jd1=JRXmlLoader.load(in);
 							String sql="SELECT DISTINCT COUNT(CHUYENBAY_ID),SUM(TONGTIENBANVE),SUM(TONGPHIHOANVE),SUM(TONGDOANHTHU)\r\n"
@@ -508,6 +529,9 @@ public class Quanly_taichinh extends JFrame {
 							JasperViewer.viewReport(j1,false);
 							java.io.OutputStream os1=new FileOutputStream(new File("C:\\Users\\nguyen thi nhan\\Documents\\Report1"));
 							JasperExportManager.exportReportToPdfStream(j1, os1);
+							
+							
+						
 							
 							in.close();
 							con.close();
@@ -526,7 +550,7 @@ public class Quanly_taichinh extends JFrame {
 				
 			}
 		});
-		bt_thongke.setBackground(new Color(135, 206, 250));
+		bt_thongke.setBackground(new Color(255, 255, 224));
 		bt_thongke.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		bt_thongke.setBounds(583, 157, 235, 23);
 		contentPane.add(bt_thongke);
@@ -536,6 +560,10 @@ public class Quanly_taichinh extends JFrame {
 		bt_xuatfile.setBounds(614, 452, 99, 23);
 		contentPane.add(bt_xuatfile);
 		
-
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setIcon(new ImageIcon("anh.jpg"));
+		lblNewLabel.setBounds(0, 0, 850, 511);
+		contentPane.add(lblNewLabel);
+		
 	}
 }

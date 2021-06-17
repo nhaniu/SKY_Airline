@@ -13,6 +13,7 @@ import javax.swing.table.JTableHeader;
 
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 
@@ -30,6 +31,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
+import javax.swing.ImageIcon;
 
 public class Quanly_dv_muathemhanhly extends JFrame {
 
@@ -73,7 +75,7 @@ public class Quanly_dv_muathemhanhly extends JFrame {
 		contentPane.add(lb_title);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 149, 475, 87);
+		scrollPane.setBounds(10, 111, 475, 155);
 		contentPane.add(scrollPane);
 		scrollPane.setVisible(false);
 		
@@ -100,7 +102,7 @@ public class Quanly_dv_muathemhanhly extends JFrame {
 			
 			}
 		});
-		bt_them.setBackground(new Color(0, 191, 255));
+		bt_them.setBackground(new Color(255, 255, 224));
 		bt_them.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		bt_them.setBounds(61, 313, 99, 23);
 		contentPane.add(bt_them);
@@ -120,6 +122,10 @@ public class Quanly_dv_muathemhanhly extends JFrame {
 				int SelectedRows=table.getSelectedRow();
 				System.out.println(SelectedRows);
 				
+				if(SelectedRows==-1) {
+					JOptionPane.showMessageDialog(null, "Chọn dịch vụ cần cập nhật");
+				}
+				
 				String id= model.getValueAt(SelectedRows, 0).toString();
 				String noidung =model.getValueAt(SelectedRows, 1).toString();
 				String gia= model.getValueAt(SelectedRows, 2).toString();
@@ -129,60 +135,56 @@ public class Quanly_dv_muathemhanhly extends JFrame {
 				update.setVisible(true);
 			}
 		});
-		bt_sua.setBackground(new Color(135, 206, 250));
+		bt_sua.setBackground(new Color(255, 255, 224));
 		bt_sua.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		bt_sua.setBounds(326, 313, 99, 23);
 		contentPane.add(bt_sua);
 		
-		JButton bt_httt = new JButton("Hiển thị thông tin");
-		bt_httt.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					Class.forName("oracle.jdbc.OracleDriver");
-					Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
-					Statement st=con.createStatement(); 
-					
+		try {
+			Class.forName("oracle.jdbc.OracleDriver");
+			Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+			Statement st=con.createStatement(); 
+			
 
 
-					String search="select * from DICHVUBOTRO";				
-					while(tableModel.getRowCount() > 0) 
-					{									
-						tableModel.removeRow(0);
-					}
-					
-					ResultSet rs= st.executeQuery(search);
-					while(rs.next()) {
-						String ID =rs.getString(1);
-						String noidung =rs.getString(2);
-						String giatien =rs.getString(3);
-						
-				
-						
-
-						
-						tableModel.addRow(new Object[] {ID,noidung,giatien});
-
-						table.setModel(tableModel);
-						scrollPane.setVisible(true);
-						bt_them.setVisible(true);
-						bt_sua.setVisible(true);
-						table.setVisible(true);
-
-					}
-					
-					con.close();
-					
-				} catch (ClassNotFoundException e1) {
-					e1.printStackTrace();
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
+			String search="select * from DICHVUBOTRO";				
+			while(tableModel.getRowCount() > 0) 
+			{									
+				tableModel.removeRow(0);
 			}
-		});
-		bt_httt.setBackground(new Color(135, 206, 250));
-		bt_httt.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		bt_httt.setBounds(286, 86, 188, 23);
-		contentPane.add(bt_httt);
+			
+			ResultSet rs= st.executeQuery(search);
+			while(rs.next()) {
+				String ID =rs.getString(1);
+				String noidung =rs.getString(2);
+				String giatien =rs.getString(3);
+				
+		
+				
+
+				
+				tableModel.addRow(new Object[] {ID,noidung,giatien});
+
+				table.setModel(tableModel);
+				scrollPane.setVisible(true);
+				bt_them.setVisible(true);
+				bt_sua.setVisible(true);
+				table.setVisible(true);
+
+			}
+			
+			con.close();
+			
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setIcon(new ImageIcon("anh.jpg"));
+		lblNewLabel.setBounds(0, 0, 526, 385);
+		contentPane.add(lblNewLabel);
 		
 		
 	

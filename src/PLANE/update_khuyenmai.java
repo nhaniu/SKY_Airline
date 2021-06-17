@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Image;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -21,6 +22,7 @@ import javax.swing.SwingConstants;
 import javax.swing.JSeparator;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JTextField;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.DriverManager;
@@ -57,7 +59,7 @@ public class update_khuyenmai extends JFrame {
 		setBackground(new Color(240, 255, 255));
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 498, 433);
+		setBounds(100, 170, 498, 433);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(240, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -202,5 +204,15 @@ public class update_khuyenmai extends JFrame {
 		btnNewButton_1.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		btnNewButton_1.setBounds(313, 328, 89, 23);
 		contentPane.add(btnNewButton_1);
+		
+		JLabel lblNewLabel_2 = new JLabel("New label");
+		lblNewLabel_2.setBounds(0, 0, 498, 409);
+		contentPane.add(lblNewLabel_2);
+		
+		ImageIcon icon=new ImageIcon("anh1.jpg");
+		Image imgIcon =icon.getImage();
+		Image imgScale =imgIcon.getScaledInstance(lblNewLabel_2.getWidth(), lblNewLabel_2.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon scaleIcon=new ImageIcon(imgScale);
+		lblNewLabel_2.setIcon(scaleIcon);
 	}
 }

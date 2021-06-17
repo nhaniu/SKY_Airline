@@ -13,6 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
@@ -26,6 +28,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
 
 public class them_changdung extends JFrame {
 
@@ -172,6 +175,17 @@ public class them_changdung extends JFrame {
 		btnNewButton_1.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		btnNewButton_1.setBounds(279, 397, 89, 23);
 		contentPane.add(btnNewButton_1);
+		
+		JLabel lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setBounds(0, 0, 445, 487);
+		contentPane.add(lblNewLabel_1);
+
+		ImageIcon icon=new ImageIcon("anh1.jpg");
+		Image imgIcon =icon.getImage();
+		Image imgScale =imgIcon.getScaledInstance(lblNewLabel_1.getWidth(), lblNewLabel_1.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon scaleIcon=new ImageIcon(imgScale);
+		lblNewLabel_1.setIcon(scaleIcon);
+		
 	}
 	public void autoID() {
 		

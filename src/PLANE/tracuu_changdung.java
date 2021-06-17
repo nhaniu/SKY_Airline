@@ -11,11 +11,16 @@ import javax.swing.table.JTableHeader;
 
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.SwingConstants;
 import javax.swing.JSeparator;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -138,6 +143,7 @@ public class tracuu_changdung extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(24, 239, 659, 70);
 		contentPane.add(scrollPane);
+		scrollPane.setVisible(false);
 		
 		table = new JTable();
 		scrollPane.setViewportView(table);
@@ -158,6 +164,7 @@ public class tracuu_changdung extends JFrame {
 		JButton bt_tracuu = new JButton("Tra cứu");
 		bt_tracuu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				scrollPane.setVisible(true);
 				try {
 					Class.forName("oracle.jdbc.OracleDriver");
 					Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
@@ -171,7 +178,7 @@ public class tracuu_changdung extends JFrame {
 					}
 					
 					ResultSet rs= st.executeQuery(search);
-					while(rs.next()) {
+					if(rs.next()) {
 						String sanbaydi =rs.getString(1);
 						String sanbayden =rs.getString(2);
 						String diadiemdung =rs.getString(3);					
@@ -181,6 +188,9 @@ public class tracuu_changdung extends JFrame {
 						table.setVisible(true);
 						scrollPane.setVisible(true);
 
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "Không tìm thấy chặng dừng");
 					}
 					
 					con.close();
@@ -197,6 +207,18 @@ public class tracuu_changdung extends JFrame {
 		bt_tracuu.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		bt_tracuu.setBounds(110, 154, 116, 30);
 		contentPane.add(bt_tracuu);
+		
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setBounds(-15, 0, 728, 365);
+		contentPane.add(lblNewLabel);
+		
+		ImageIcon icon=new ImageIcon("anh3.jpg");
+		Image imgIcon =icon.getImage();
+		Image imgScale =imgIcon.getScaledInstance(lblNewLabel.getWidth(), lblNewLabel.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon scaleIcon=new ImageIcon(imgScale);
+		lblNewLabel.setIcon(scaleIcon);
+		
+		
 	}
 
 }
