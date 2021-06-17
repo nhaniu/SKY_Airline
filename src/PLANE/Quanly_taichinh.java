@@ -380,9 +380,6 @@ public class Quanly_taichinh extends JFrame {
 								java.io.OutputStream os=new FileOutputStream(new File("C:\\Users\\nguyen thi nhan\\Documents\\Report"));
 								JasperExportManager.exportReportToPdfStream(j, os);
 								
-								
-								
-								
 								in.close();
 								con.close();
 

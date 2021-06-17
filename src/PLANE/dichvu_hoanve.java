@@ -168,6 +168,10 @@ public class dichvu_hoanve extends JFrame {
 					 textField_madatcho.requestFocus();
 					 return; 
 					}
+				
+				int confirm =JOptionPane.showConfirmDialog(null, "Xác nhận nếu bạn muốn hoàn vé","Xác nhận",JOptionPane.YES_NO_OPTION);
+				if(confirm==JOptionPane.YES_OPTION) {
+					
 			
 				try {
 					
@@ -180,7 +184,7 @@ public class dichvu_hoanve extends JFrame {
 				Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
 				Statement st=con.createStatement(); 
 	
-				String b= "select TONGTIEN, TAIKHOAN_ID from DATVEBAY   WHERE  DATVEBAY.ID="+textField_madatcho.getText();
+				String b= "select TONGTIEN, TAIKHOAN_ID, ID from DATVEBAY   WHERE  DATVEBAY.ID="+textField_madatcho.getText();
 				ResultSet rs= st.executeQuery(b);
 				
 				rs.next();
@@ -192,6 +196,8 @@ public class dichvu_hoanve extends JFrame {
 				
 				String tk_id =rs.getString(2);
 				int id_tk=Integer.parseInt(tk_id);
+				String idString=rs.getString(3);
+				
 
 				
 
@@ -292,7 +298,7 @@ public class dichvu_hoanve extends JFrame {
 			}
 				
 				
-			}
+			}}
 		});
 		bt_gui.setBackground(new Color(0, 191, 255));
 		bt_gui.setFont(new Font("Times New Roman", Font.BOLD, 15));
