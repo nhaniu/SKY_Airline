@@ -131,14 +131,6 @@ public class quanly_ve extends JFrame {
 		bt_capnhat.setVisible(false);
 		
 		table = new JTable();
-		
-		JButton bt_them = new JButton("Thêm");
-		bt_them.setVisible(false);
-		bt_them.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new them_ve();
-			}
-		});
 
 	
 		
@@ -198,7 +190,6 @@ public class quanly_ve extends JFrame {
 						table.setModel(tableModel);
 						scrollPane.setVisible(true);
 						bt_capnhat.setVisible(true);
-						bt_them.setVisible(true);
 						bt_timkiem.setVisible(true);
 						table.setVisible(true);
 
@@ -220,12 +211,6 @@ public class quanly_ve extends JFrame {
 		btnNewButton.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		btnNewButton.setBounds(499, 125, 127, 23);
 		contentPane.add(btnNewButton);
-		
-		
-		bt_them.setBackground(new Color(255, 255, 224));
-		bt_them.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		bt_them.setBounds(294, 404, 116, 31);
-		contentPane.add(bt_them);
 		
 		JLabel lblNewLabel = new JLabel("(Ví dụ: 601)");
 		lblNewLabel.setFont(new Font("Times New Roman", Font.ITALIC, 15));

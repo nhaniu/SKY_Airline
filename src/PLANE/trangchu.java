@@ -59,6 +59,7 @@ import javax.swing.JTextPane;
 import javax.swing.SpringLayout;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
+import java.awt.SystemColor;
 
 public class trangchu extends JFrame {
 
@@ -134,7 +135,7 @@ public class trangchu extends JFrame {
 		lblNewLabel.setForeground(new Color(220, 20, 60));
 		lblNewLabel.setFont(new Font("UTM French Vanilla", Font.BOLD, 30));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(510, 26, 463, 44);
+		lblNewLabel.setBounds(571, 26, 463, 44);
 		panel.add(lblNewLabel);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -195,14 +196,14 @@ public class trangchu extends JFrame {
 		});
 		menu_muave.add(item_khuhoi);
 		
-		JMenuItem item_nhieuchang = new JMenuItem("Nhiều chặng");
-		item_nhieuchang.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new muave_nhieuchang();
-			}
-		});
-		item_nhieuchang.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		menu_muave.add(item_nhieuchang);
+//		JMenuItem item_nhieuchang = new JMenuItem("Nhiều chặng");
+//		item_nhieuchang.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				new muave_nhieuchang();
+//			}
+//		});
+//		item_nhieuchang.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+//		menu_muave.add(item_nhieuchang);
 		
 		JMenu menu_thongtin = new JMenu("Thông tin");
 		menu_thongtin.setFont(new Font("Segoe UI", Font.BOLD, 15));
@@ -255,6 +256,11 @@ public class trangchu extends JFrame {
 		});
 		
 		JMenuItem menuItem_khuyenmai_khtt = new JMenuItem("Thông tin khuyến mãi cho khách hàng thân thiết");
+		menuItem_khuyenmai_khtt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new khuyenmai_khachhang_thanthiet();
+			}
+		});
 		menuItem_khuyenmai_khtt.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		menu_thongtin.add(menuItem_khuyenmai_khtt);
 		menu_thongtin.add(item_quydinh);
@@ -457,6 +463,15 @@ public class trangchu extends JFrame {
 		lb_tt_cskh.setBounds(38, 80, 238, 22);
 		panel_chamsockhachhang.add(lb_tt_cskh);
 		
+		JTextArea txtrThcHinThng = new JTextArea();
+		txtrThcHinThng.setBackground(SystemColor.info);
+		txtrThcHinThng.setWrapStyleWord(true);
+		txtrThcHinThng.setLineWrap(true);
+		txtrThcHinThng.setFont(new Font("SVN-Androgyne", Font.PLAIN, 26));
+		txtrThcHinThng.setText("Thực hiện thông điệp 5k để phòng chống dịch Covid\r\n");
+		txtrThcHinThng.setBounds(10, 124, 302, 87);
+		panel_chamsockhachhang.add(txtrThcHinThng);
+		
 		
 		menu_NV.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		menu_NV.setBounds(509, 108, 113, 27);
@@ -534,6 +549,7 @@ public class trangchu extends JFrame {
 		menu_NQL.add(menuItem_QLCB);
 		
 		JMenuItem menuItem_QLCD = new JMenuItem("Quản lý chặng dừng");
+		menuItem_QLCD.setVisible(false);
 		menuItem_QLCD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new quanly_changdung();
@@ -644,6 +660,7 @@ public class trangchu extends JFrame {
 				menuBar.add(menu_changdung);
 				menu_changdung.setFont(new Font("Segoe UI", Font.BOLD, 15));
 				menu_changdung.setBounds(264, 96, 103, 42);
+				menu_changdung.setVisible(false);
 				
 				JMenuItem menu_tracuuCD = new JMenuItem("Tra cứu");
 				menu_tracuuCD.addActionListener(new ActionListener() {

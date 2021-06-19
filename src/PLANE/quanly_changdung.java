@@ -76,7 +76,7 @@ public class quanly_changdung extends JFrame {
 		separator.setBounds(10, 60, 810, 15);
 		contentPane.add(separator);
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(29, 182, 773, 182);
+		scrollPane.setBounds(28, 144, 773, 182);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
@@ -109,7 +109,7 @@ public class quanly_changdung extends JFrame {
 		});
 		bt_them.setBackground(new Color(255, 255, 224));
 		bt_them.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		bt_them.setBounds(93, 409, 163, 29);
+		bt_them.setBounds(91, 386, 163, 29);
 		contentPane.add(bt_them);
 		
 		JButton bt_xoa = new JButton("Xóa chặng dừng");
@@ -148,55 +148,46 @@ public class quanly_changdung extends JFrame {
 		});
 		bt_xoa.setBackground(new Color(255, 255, 224));
 		bt_xoa.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		bt_xoa.setBounds(568, 411, 146, 25);
+		bt_xoa.setBounds(568, 388, 146, 25);
 		contentPane.add(bt_xoa);
 		bt_them.setVisible(false);
 		bt_xoa.setVisible(false);
-		JButton bt_hienthi = new JButton("Hiện thị danh sách");
-		bt_hienthi.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				try {
-					Class.forName("oracle.jdbc.OracleDriver");
-					Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
-					Statement st=con.createStatement(); 
-					
+		
+		try {
+			Class.forName("oracle.jdbc.OracleDriver");
+			Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+			Statement st=con.createStatement(); 
+			
 
-					String search="select * from CHANGDUNG";				
-					while(tableModel.getRowCount() > 0) 
-					{									
-						tableModel.removeRow(0);
-					}
-					
-					ResultSet rs= st.executeQuery(search);
-					while(rs.next()) {
-						String ID =rs.getString(1);
-						String sanbaydi =rs.getString(2);
-						String sanbayden =rs.getString(3);
-						String diadiemdung =rs.getString(4);					
-						
-						tableModel.addRow(new Object[] {ID,sanbaydi,sanbayden,diadiemdung});
-						table.setModel(tableModel);
-						table.setVisible(true);
-						scrollPane.setVisible(true);
-						bt_them.setVisible(true);
-						bt_xoa.setVisible(true);
-
-					}
-					
-					con.close();
-					
-				} catch (ClassNotFoundException e1) {
-					e1.printStackTrace();
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
+			String search="select * from CHANGDUNG";				
+			while(tableModel.getRowCount() > 0) 
+			{									
+				tableModel.removeRow(0);
 			}
-		});
-		bt_hienthi.setBackground(new Color(255, 255, 224));
-		bt_hienthi.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		bt_hienthi.setBounds(591, 101, 181, 23);
-		contentPane.add(bt_hienthi);
+			
+			ResultSet rs= st.executeQuery(search);
+			while(rs.next()) {
+				String ID =rs.getString(1);
+				String sanbaydi =rs.getString(2);
+				String sanbayden =rs.getString(3);
+				String diadiemdung =rs.getString(4);					
+				
+				tableModel.addRow(new Object[] {ID,sanbaydi,sanbayden,diadiemdung});
+				table.setModel(tableModel);
+				table.setVisible(true);
+				scrollPane.setVisible(true);
+				bt_them.setVisible(true);
+				bt_xoa.setVisible(true);
+
+			}
+			
+			con.close();
+			
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon("anh.jpg"));

@@ -7,7 +7,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableModel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import com.toedter.calendar.JDateChooser;
@@ -17,18 +20,24 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.beans.Statement;
 import java.nio.channels.SelectableChannel;
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.sql.*;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.UIManager;
+import java.sql.Date;
 
 public class muave_motchieu extends JFrame {
 
 	private JPanel contentPane;
-//	private String NoiDi=null, NoiDen=null, GiaVe=null ;
-//	//private int GiaVe=0;
 	private JTable table;
+	public static String idhv;
+	public static String idcb;
+
 	
 	/**
 	 * Launch the application.
@@ -54,7 +63,7 @@ public class muave_motchieu extends JFrame {
 		setVisible(true);
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
 		setBackground(new Color(240, 255, 255));
-		setBounds(100, 170, 658, 693);
+		setBounds(100, 170, 659, 514);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(240, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -151,73 +160,153 @@ public class muave_motchieu extends JFrame {
 		contentPane.add(comboBox_noidi);
 		
 		
-		
-		JDateChooser dateChooser = new JDateChooser();
+		final JDateChooser dateChooser = new JDateChooser();
 		dateChooser.setBounds(69, 69, 162, 20);
 		contentPane.add(dateChooser);
 		
-		JLabel lb_nguoi_lon = new JLabel("Số lượng: ");
-		lb_nguoi_lon.setBounds(10, 102, 66, 24);
-		contentPane.add(lb_nguoi_lon);
-		
-		JComboBox comboBox_nguoi_lon = new JComboBox();
-		comboBox_nguoi_lon.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9"}));
-		comboBox_nguoi_lon.setBounds(100, 103, 49, 22);
-		contentPane.add(comboBox_nguoi_lon);
-		
-
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(40, 284, 581, 304);
+		final JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(53, 214, 557, 103);
 		contentPane.add(scrollPane);
+		scrollPane.setVisible(false);
 		
 		table = new JTable();
+		table.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		table.setVisible(false);
+		
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Giờ khởi hành ", "Giờ hạ cánh", "Hạng vé ", "Giá vé"
+			}
+			
+		));
 		scrollPane.setViewportView(table);
-		DefaultTableModel model= new DefaultTableModel();
-		model.addColumn("Nơi đi");
-		model.addColumn("Nơi đến");
-		model.addColumn("Ngày đi");
-		model.addColumn("Giá vé");
-		table.setModel(model);
+		
+		
+		final JButton button_chonmua = new JButton("Chọn mua ");
+		button_chonmua.setForeground(new Color(0, 0, 0));
+		button_chonmua.setBackground(new Color(124, 252, 0));
+		button_chonmua.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		button_chonmua.setVisible(false);
 		
 		JButton bt_tim_chuyen_bay = new JButton("Tìm chuyến bay");
+		bt_tim_chuyen_bay.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		bt_tim_chuyen_bay.setBackground(new Color(0, 191, 255));
-//		bt_tim_chuyen_bay.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				try{  
-//					comboBox_noidi.getSelectedItem();
-//					
-//					//step1 load the driver class  
-//					Class.forName("oracle.jdbc.OracleDriver");  
-//					  
-//					//step2 create  the connection object  
-//					java.sql.Connection con= DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","doan","doan");  
-//					
-//					  String select="";
-//					//step3 create the statement object  
-//					Statement stmt=(Statement) ((java.sql.Connection) con).createStatement();  	
-//					  
-//					//step4 execute query  
-//					
-//					ResultSet rs=((java.sql.Statement) stmt).executeQuery(select);  
-//					while(rs.next())  
-//				{ 	
-//					
-//				
-//					
-//				}
-//					
-//					
-//					//step5 close the connection object  
-//					con.close();  
-//					  
-//					}
-//					catch(Exception e1){ System.out.println(e1);}  
-//					  
-//					}
-//			
-//		});
-		bt_tim_chuyen_bay.setBounds(28, 204, 134, 23);
+		bt_tim_chuyen_bay.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			 
+				try {
+					Class.forName("oracle.jdbc.driver.OracleDriver");
+					Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "DB_AIRLINE", "123");
+					java.sql.Statement st = conn.createStatement();
+					
+					String day = new String();
+					String month = new String();
+					String year = new String();
+					String date = new String();
+					
+					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+					String tgString=formatter.format(dateChooser.getDate());
+					day = tgString.substring(8,10);
+					month = tgString.substring(5,7);
+					year = tgString.substring(0,4);
+					date = tgString.substring(0,10);
+					
+					//String texString="TO_DATE('"+tgString+"','DD-MM-RR HH24:MI:SS')";
+					String sql = "select distinct c.ID, c.NGAY_GIO_KH, c.NGAY_GIO_HC, h.TENHV, h.GIA, h.ID"
+							+ " from CHUYENBAY c JOIN VEMAYBAY v ON c.ID = v.CHUYENBAY_ID JOIN HANGVE h ON h.ID = v.HANGVE_ID "
+							+ "where c.SANBAYDI = " + "'"+comboBox_noidi.getSelectedItem()+"'"+" and c.SANBAYDEN = "+"'"+comboBox_noiden.getSelectedItem()+"'"
+							+ " and EXTRACT( DAY FROM c.NGAY_GIO_KH)= "+"'"+day+"'"+" and EXTRACT( MONTH FROM c.NGAY_GIO_KH)= "+"'"+month+"'"+" and EXTRACT(YEAR FROM c.NGAY_GIO_KH)= "+"'"+year+"'";
+				
+					
+					System.out.println(day);
+					System.out.println(month);
+					System.out.println(year);
+					System.out.println(date);
+					System.out.println(sql);
+					
+			
+					ResultSet rs =  ((java.sql.Statement) st).executeQuery(sql);
+					while(rs.next()) 
+					{
+						 idcb = rs.getString(1);
+						String giokh = rs.getString(2);
+						String giohc = rs.getString(3);
+						String hv = rs.getString(4);
+						String gv = rs.getString(5);
+						idhv = rs.getString(6);
+
+						
+						
+
+						String tbData[] = {giokh, giohc, hv, gv};
+							DefaultTableModel tblModel = (DefaultTableModel)table.getModel();
+							System.out.print(giokh+giohc+hv+gv);
+
+							tblModel.addRow(tbData);
+							scrollPane.setVisible(true);
+							table.setVisible(true);
+							button_chonmua.setVisible(true);
+							
+					}
+					
+						
+					conn.close();
+				}
+				
+				catch(Exception e1 )
+				{
+					System.out.println("Không tìm thấy chuyến bay!");
+					JOptionPane.showMessageDialog(null, "Không tìm thấy chuyến bay!");
+				}
+				
+
+			}
+		});
+		
+		bt_tim_chuyen_bay.setBounds(252, 122, 137, 24);
 		contentPane.add(bt_tim_chuyen_bay);
+		
+		
+
+		button_chonmua.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				int i = table.getSelectedRow();
+				System.out.println(i);
+				 String gio_kh_di = new String();
+				 String gio_hc_di = new String();
+				 String h_ve_di = new String();
+				 String gia_ve_di = new String();
+				 String noi_di = new String();
+				 String noi_den = new String();
+				 String gio_kh_ve= new String();
+				 String gio_hc_ve = new String();
+				 String h_ve_ve = new String();
+				 String gia_ve_ve = new String();
+					
+				TableModel model = table.getModel();
+				
+				noi_di = comboBox_noidi.getSelectedItem().toString();
+				noi_den = comboBox_noiden.getSelectedItem().toString();
+				gio_kh_di = model.getValueAt(i, 0).toString();
+				gio_hc_di= model.getValueAt(i, 1).toString();
+				h_ve_di = model.getValueAt(i, 2).toString();
+				gia_ve_di = model.getValueAt(i, 3).toString();
+				
+				nhapthongtin_mv1chieu obj = new nhapthongtin_mv1chieu(gio_kh_di, gio_hc_di, h_ve_di, gia_ve_di, noi_di, noi_den, gio_kh_ve, gio_hc_ve, h_ve_ve, gia_ve_ve);
+				obj.setVisible(true);
+				dispose();
+				
+				
+			}
+		});
+		JTableHeader theJTableHeader = table.getTableHeader();
+		theJTableHeader.setBackground(new Color(135, 206, 250));
+		
+		button_chonmua.setBounds(266, 380, 122, 22);
+		contentPane.add(button_chonmua);
 		
 	}
 }

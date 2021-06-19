@@ -150,7 +150,7 @@ public class taikhoan_quanly extends JFrame {
 		lblNewLabel_9.setBounds(0, 0, 374, 376);
 		contentPane.add(lblNewLabel_9);
 		
-		ImageIcon icon=new ImageIcon("anh2.jpg");
+		ImageIcon icon=new ImageIcon("anh1.jpg");
 		Image imgIcon =icon.getImage();
 		Image imgScale =imgIcon.getScaledInstance(lblNewLabel_9.getWidth(), lblNewLabel_9.getHeight(), Image.SCALE_SMOOTH);
 		ImageIcon scaleIcon=new ImageIcon(imgScale);

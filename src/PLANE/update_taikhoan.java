@@ -102,15 +102,18 @@ public class update_taikhoan extends JFrame {
 		
 		JLabel lblNewLabel_4 = new JLabel("Mật khẩu:");
 		lblNewLabel_4.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lblNewLabel_4.setBounds(34, 134, 92, 22);
+		lblNewLabel_4.setBounds(338, 267, 92, 22);
 		contentPane.add(lblNewLabel_4);
+		lblNewLabel_4.setVisible(false);
 		
 		textField_mk = new JTextField();
+		textField_mk.setEnabled(false);
 		textField_mk.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		textField_mk.setBounds(126, 136, 119, 20);
+		textField_mk.setBounds(467, 268, 119, 20);
 		contentPane.add(textField_mk);
 		textField_mk.setColumns(10);
 		textField_mk.setText(c);
+		textField_mk.setVisible(false);
 		
 		JLabel lblNewLabel_5 = new JLabel("Ngày bắt đầu:");
 		lblNewLabel_5.setFont(new Font("Times New Roman", Font.BOLD, 15));
@@ -172,12 +175,12 @@ public class update_taikhoan extends JFrame {
 		
 		JLabel lblNewLabel_10 = new JLabel("Hạng:");
 		lblNewLabel_10.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lblNewLabel_10.setBounds(34, 283, 75, 22);
+		lblNewLabel_10.setBounds(34, 139, 75, 22);
 		contentPane.add(lblNewLabel_10);
 		
 		JLabel lb_hang = new JLabel("New label");
 		lb_hang.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		lb_hang.setBounds(126, 283, 126, 22);
+		lb_hang.setBounds(126, 139, 126, 22);
 		contentPane.add(lb_hang);
 		lb_hang.setText(i);
 		

@@ -170,7 +170,7 @@ public class taikhoan_nhanvien extends JFrame {
 		contentPane.add(lblNewLabel_2);
 		lb_mk.setVisible(false);
 		
-		ImageIcon icon=new ImageIcon("anh2.jpg");
+		ImageIcon icon=new ImageIcon("anh1.jpg");
 		Image imgIcon =icon.getImage();
 		Image imgScale =imgIcon.getScaledInstance(lblNewLabel_2.getWidth(), lblNewLabel_2.getHeight(), Image.SCALE_SMOOTH);
 		ImageIcon scaleIcon=new ImageIcon(imgScale);

@@ -116,7 +116,7 @@ public class QuanLy_DatVe extends JFrame {
 				update.setVisible(true);
 			}
 		});
-		bt_sua.setBackground(new Color(135, 206, 250));
+		bt_sua.setBackground(new Color(255, 255, 224));
 		bt_sua.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		bt_sua.setBounds(660, 408, 111, 23);
 		contentPane.add(bt_sua);
@@ -128,7 +128,7 @@ public class QuanLy_DatVe extends JFrame {
 				new timkiem_datve();
 			}
 		});
-		bt_timkiem.setBackground(new Color(135, 206, 250));
+		bt_timkiem.setBackground(new Color(255, 255, 224));
 		bt_timkiem.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		bt_timkiem.setBounds(151, 408, 117, 23);
 		contentPane.add(bt_timkiem);
@@ -232,7 +232,7 @@ public class QuanLy_DatVe extends JFrame {
 				
 			
 		});
-		bt_timcb.setBackground(new Color(135, 206, 250));
+		bt_timcb.setBackground(new Color(255, 255, 224));
 		bt_timcb.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		bt_timcb.setBounds(701, 125, 127, 23);
 		contentPane.add(bt_timcb);

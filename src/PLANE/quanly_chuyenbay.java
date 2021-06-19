@@ -209,9 +209,6 @@ public class quanly_chuyenbay extends JFrame {
 						int id=Integer.parseInt(model.getValueAt(SelectedRows, 0).toString());
 						int deleteItem =JOptionPane.showConfirmDialog(null, "Xác nhận nếu bạn muốn xóa","Warning",JOptionPane.YES_NO_OPTION);
 						if(deleteItem==JOptionPane.YES_OPTION) {
-												
-					
-
 																											
 							Class.forName("oracle.jdbc.OracleDriver");
 							java.sql.Connection DB_AIRLINE= DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");  		
@@ -240,15 +237,11 @@ public class quanly_chuyenbay extends JFrame {
 			Class.forName("oracle.jdbc.OracleDriver");
 			Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
 			Statement st=con.createStatement(); 
-			
-
-
 			String search="select * from CHUYENBAY";				
 			while(tableModel.getRowCount() > 0) 
 			{									
 				tableModel.removeRow(0);
-			}
-			
+			}			
 			ResultSet rs= st.executeQuery(search);
 			while(rs.next()) {
 				String ID =rs.getString(1);
@@ -260,10 +253,6 @@ public class quanly_chuyenbay extends JFrame {
 				String tongsove=rs.getString(7);
 				String ID_NQL =rs.getString(8);
 
-				
-
-				//System.out.print(ID_NQL+sovetrong+sovedat+sovedat+tongsove+sanbayden+ngaygiohc+ngaygiokh+sanbaydi+ttmaybayid+ID+"\n");
-				
 				tableModel.addRow(new Object[] {ID,ttmaybayid,sanbaydi,sanbayden,ngaygiokh,ngaygiohc,tongsove,ID_NQL});
 
 				table.setModel(tableModel);
@@ -272,9 +261,7 @@ public class quanly_chuyenbay extends JFrame {
 				bt_sua.setVisible(true);
 				bt_timkiem.setVisible(true);
 				bt_xoa.setVisible(true);
-
-			}
-			
+			}			
 			con.close();
 			
 		} catch (ClassNotFoundException e1) {

@@ -18,7 +18,6 @@ import javax.swing.JTextArea;
 public class thongthi_phi extends JFrame {
 
 	private JPanel contentPane;
-	private JTable table;
 	private JTable table_1;
 	private JTable table_2;
 
@@ -53,37 +52,12 @@ public class thongthi_phi extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JScrollPane scrollPane_A = new JScrollPane();
-		scrollPane_A.setBounds(10, 161, 357, 87);
-		contentPane.add(scrollPane_A);
-		
-		table = new JTable();
-		table.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"               10 kg", "        150 000"},
-				{"               15 kg", "        200 000"},
-				{"               20 kg", "        250 000"},
-				{"               25 kg", "        300 000"},
-			},
-			new String[] {
-				"G\u00F3i h\u00E0nh l\u00FD", "Ph\u00ED (vnd)"
-			}
-		));
-		table.getColumnModel().getColumn(0).setPreferredWidth(116);
-		scrollPane_A.setViewportView(table);
-		
 		JLabel lb_tieu_de = new JLabel("PHÍ VÀ LỆ PHÍ");
 		lb_tieu_de.setHorizontalAlignment(SwingConstants.CENTER);
 		lb_tieu_de.setForeground(new Color(255, 0, 0));
 		lb_tieu_de.setFont(new Font("Times New Roman", Font.BOLD, 20));
 		lb_tieu_de.setBounds(302, 11, 419, 48);
 		contentPane.add(lb_tieu_de);
-		
-		JLabel lb_mua_truoc = new JLabel("A. Mua trước qua website/ Đại lý/ Phòng vé\r\n\r\n");
-		lb_mua_truoc.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lb_mua_truoc.setBounds(10, 108, 390, 31);
-		contentPane.add(lb_mua_truoc);
 		
 		JLabel lb_mua_tai_san_bay = new JLabel("B. Mua tại sân bay\r\n");
 		lb_mua_tai_san_bay.setFont(new Font("Times New Roman", Font.BOLD, 15));
@@ -118,11 +92,11 @@ public class thongthi_phi extends JFrame {
 		text_luu_y.setText("*Lưu ý:\r\n\r\n(*) Chỉ áp dụng cho hành khách đã có hành lý ký gửi\r\n(**) Hành khách được ký gửi tối đa 2 kiện quá khổ/chặng bay:\r\nDịch vụ Hành lý quá khổ chỉ được áp dụng sau khi mua gói hành lý ký gửi");
 		text_luu_y.setWrapStyleWord(true);
 		text_luu_y.setLineWrap(true);
-		text_luu_y.setBounds(509, 284, 491, 114);
+		text_luu_y.setBounds(10, 286, 491, 114);
 		contentPane.add(text_luu_y);
 		
 		JScrollPane scrollPane_C = new JScrollPane();
-		scrollPane_C.setBounds(10, 356, 357, 39);
+		scrollPane_C.setBounds(27, 161, 357, 39);
 		contentPane.add(scrollPane_C);
 		
 		table_2 = new JTable();
@@ -137,10 +111,10 @@ public class thongthi_phi extends JFrame {
 		table_2.getColumnModel().getColumn(0).setPreferredWidth(122);
 		scrollPane_C.setViewportView(table_2);
 		
-		JLabel lb_denmuon = new JLabel("C. Phụ thu đến muộn");
+		JLabel lb_denmuon = new JLabel("A. Phụ thu đến muộn");
 		lb_denmuon.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		lb_denmuon.setForeground(new Color(0, 0, 0));
-		lb_denmuon.setBounds(10, 312, 325, 31);
+		lb_denmuon.setBounds(27, 108, 325, 31);
 		contentPane.add(lb_denmuon);
 	}
 

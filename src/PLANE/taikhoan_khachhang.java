@@ -338,7 +338,7 @@ public class taikhoan_khachhang extends JFrame {
 		contentPane.add(lblNewLabel_5);
 		
 
-		ImageIcon icon=new ImageIcon("anh2.jpg");
+		ImageIcon icon=new ImageIcon("anh1.jpg");
 		Image imgIcon =icon.getImage();
 		Image imgScale =imgIcon.getScaledInstance(lblNewLabel_5.getWidth(), lblNewLabel_5.getHeight(), Image.SCALE_SMOOTH);
 		ImageIcon scaleIcon=new ImageIcon(imgScale);

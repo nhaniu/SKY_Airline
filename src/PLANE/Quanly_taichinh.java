@@ -264,9 +264,7 @@ public class Quanly_taichinh extends JFrame {
 						System.out.println(thoigian1);
 						
 						System.out.println(thoigian);
-						
-						
-												
+	
 						while(tableModel.getRowCount() > 0) 
 						{									
 							tableModel.removeRow(0);

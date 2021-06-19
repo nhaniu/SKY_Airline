@@ -298,7 +298,9 @@ public class dichvu_hoanve extends JFrame {
 			}
 				
 				
-			}}
+			}
+				
+			}
 		});
 		bt_gui.setBackground(new Color(0, 191, 255));
 		bt_gui.setFont(new Font("Times New Roman", Font.BOLD, 15));
