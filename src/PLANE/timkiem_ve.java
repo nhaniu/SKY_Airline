@@ -160,7 +160,6 @@ public class timkiem_ve extends JFrame {
 				} catch (SQLException e2) {
 					e2.printStackTrace();
 				}
-
 			
 			}
 			

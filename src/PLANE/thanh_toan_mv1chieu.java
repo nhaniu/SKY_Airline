@@ -126,7 +126,7 @@ public class thanh_toan_mv1chieu extends JFrame {
 		setBackground(new Color(224, 255, 255));
 		setTitle("SKY Airline");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 1282, 680);
+		setBounds(0, 0, 1282, 680);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(224, 255, 255));
 		contentPane.setBorder(new CompoundBorder());

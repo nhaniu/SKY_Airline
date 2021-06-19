@@ -123,17 +123,17 @@ public class update_ve extends JFrame {
 					}
 			
 				try {
-					
-					String update ="update VEMAYBAY set ID= "+lb_id.getText()+",HANGVE_ID="+textField_idhv.getText()+",CHUYENBAY_ID="+textField_idcb.getText()+" where ID="+lb_id.getText()+"";
 					Class.forName("oracle.jdbc.OracleDriver");
-					java.sql.Connection DB_AIRLINE= DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");  		
-					PreparedStatement pst = DB_AIRLINE.prepareStatement(update);
-					pst= DB_AIRLINE.prepareStatement(update);
+					java.sql.Connection con= DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123"); 
+					
+					String update ="update VEMAYBAY set ID= "+lb_id.getText()+",HANGVE_ID="+textField_idhv.getText()+",CHUYENBAY_ID="+textField_idcb.getText()+" where ID="+lb_id.getText()+""; 		
+					PreparedStatement pst = con.prepareStatement(update);
+					pst= con.prepareStatement(update);
 					pst.execute();
 	
 					JOptionPane.showMessageDialog(null, "Cập nhật thành công");
 					pst.close();
-					DB_AIRLINE.close();
+					con.close();
 
 				} catch (ClassNotFoundException e1) {
 					Component a=null;

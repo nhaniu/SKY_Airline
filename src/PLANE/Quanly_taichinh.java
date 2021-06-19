@@ -255,7 +255,8 @@ public class Quanly_taichinh extends JFrame {
 						Class.forName("oracle.jdbc.OracleDriver");
 						 con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
 						Statement st=con.createStatement(); 
-						
+						con.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+						con.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
 
 						SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-YY");		
 						String tgString=formatter.format(dateChooser1.getDate());	
@@ -268,8 +269,7 @@ public class Quanly_taichinh extends JFrame {
 						while(tableModel.getRowCount() > 0) 
 						{									
 							tableModel.removeRow(0);
-						}
-									
+						}									
 						String search1=" SELECT DISTINCT DT.ID, CB.ID, CB.NGAY_GIO_KH, DT.TONGTIENBANVE, DT.TONGPHIHOANVE, DT.TONGDOANHTHU\r\n"
 								+ "FROM  CHUYENBAY CB, DOANHTHUCHUYENBAY DT\r\n"
 								+ "WHERE CB.ID= DT.CHUYENBAY_ID and CB.NGAY_GIO_KH>="+thoigian+" and  CB.NGAY_GIO_KH<="+thoigian1+"";

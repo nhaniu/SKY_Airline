@@ -98,8 +98,8 @@ public class nhapthongtin_mvkhuhoi extends JFrame {
 		
 		setBackground(new Color(224, 255, 255));
 		setTitle("SKY Airline ");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1203, 678);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		setBounds(0, 0, 1203, 678);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(224, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -184,7 +184,7 @@ public class nhapthongtin_mvkhuhoi extends JFrame {
 		contentPane.add(label_quoctich);
 		
 		final JComboBox comboBox_quoctich = new JComboBox();
-		comboBox_quoctich.setModel(new DefaultComboBoxModel(new String[] {"VIỆT NAM", "ENGLISH", "OTHER"}));
+		comboBox_quoctich.setModel(new DefaultComboBoxModel(new String[] {"VIỆT NAM", "ENGLAND", "OTHER"}));
 		comboBox_quoctich.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		comboBox_quoctich.setBounds(230, 293, 154, 21);
 		contentPane.add(comboBox_quoctich);

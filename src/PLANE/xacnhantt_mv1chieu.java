@@ -139,7 +139,7 @@ public class xacnhantt_mv1chieu extends JFrame {
 		setBackground(new Color(224, 255, 255));
 		setTitle("SKY Airline");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100,50, 1230, 657);
+		setBounds(0,0, 1230, 657);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(224, 255, 255));
 		contentPane.setBorder(new CompoundBorder());
@@ -473,11 +473,10 @@ public class xacnhantt_mv1chieu extends JFrame {
 						
 						Class.forName("oracle.jdbc.OracleDriver");
 						Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
-			
+						//bắt đầu transaction 1
 						
 						Statement stmt=(Statement) ((java.sql.Connection) con).createStatement();  	
-
-						////Max(ID) Đặt vé bay
+						//// lấy Max(ID) Đặt vé bay
 						ResultSet rs=((java.sql.Statement) stmt).executeQuery("select MAX(ID) from DATVEBAY");  						
 						rs.next();
 						System.out.println(rs.getString("MAX(ID)"));
@@ -491,10 +490,11 @@ public class xacnhantt_mv1chieu extends JFrame {
 							iddv++;
 						}
 						System.out.println("\nid đặt vé: "+iddv);
-						
-						//////////// Max(id) vé máy bay
-						
+						rs.close(); // kết thúc transaction 1
+						//tuy transaction 1 kết thúc nhưng biến "con" vẫn hoạt động vì mình chưa close nó 						
+						//tiếp tục transaction 2
 						ResultSet rs1=((java.sql.Statement) stmt).executeQuery("select MAX(ID) from VEMAYBAY");  						
+						//Lệnh executeQuery không làm kết thúc transaction 
 						rs1.next();
 						System.out.println(rs1.getString("MAX(ID)"));
 						int idve=8000;
@@ -521,7 +521,6 @@ public class xacnhantt_mv1chieu extends JFrame {
 							idhk++;
 						}
 						
-
 
 
 						 String insert_ve="insert into \"DB_AIRLINE\".\"VEMAYBAY\"  (\"ID\",  \"HANGVE_ID\",\"CHUYENBAY_ID\") values("+idve+","+idhve+","+id_cb+")";
@@ -633,10 +632,11 @@ public class xacnhantt_mv1chieu extends JFrame {
 							String ttdv_update =rs3.getString(1);
 							float ttdv_daupdate=Float.parseFloat(ttdv_update);
 							
-							
+
+							//bắt đầu transaction 1
 							String search1="SELECT SOLUONGVECON,SOLUONGVEBAN FROM THONGKECHUYENBAY WHERE CHUYENBAY_ID="+id_cb+"";					
 							
-							ResultSet rs4= st.executeQuery(search1);
+							ResultSet rs4= st.executeQuery(search1); //executeQuery không làm kết thúc transaction
 							if(rs4.next()) {
 								String slvc =rs4.getString(1);
 								String slvb =rs4.getString(2);
@@ -646,14 +646,14 @@ public class xacnhantt_mv1chieu extends JFrame {
 								
 								int slvecon_update=slvecon-1;
 								int slveban_update=slveban+1;
-								
+								//bắt đầu transaction 2
 								String updatetk ="update THONGKECHUYENBAY set SOLUONGVECON="+slvecon_update+",SOLUONGVEBAN="+slveban_update+" where CHUYENBAY_ID="+id_cb+"";
 								PreparedStatement pst4 = con.prepareStatement(updatetk);
 								pst4= con.prepareStatement(updatetk);
-								pst4.execute();
+								pst4.execute();  // lệnh execute() làm kết thúc transaction 2
 								
 								System.out.println("update thong ke thanh cong");
-								
+
 							}
 							else {
 								
@@ -680,20 +680,14 @@ public class xacnhantt_mv1chieu extends JFrame {
 									
 								//thoigian lấy thông tin giờ hiện tại ở phía trên ngày đặt vé
 									
+								//con.setAutoCommit(false);   // tắt chế độ tự động commit
 								PreparedStatement pst3= con.prepareStatement("insert into \"DB_AIRLINE\".\"THONGKECHUYENBAY\"  (\"ID\", \"CHUYENBAY_ID\", \"THOIGIAN\",\"SOLUONGVECON\",  \"SOLUONGVEBAN\",\"NGUOIQUANLY_ID\") values("+idtk+","+id_cb+","+ngaydatve+","+sovecon+","+1+","+0+")");		
 								pst3.execute();
-								
+								// lúc này không được commit nên transaction 1 vẫn tiếp tục thực hiện
 								System.out.println("\ninsert thong ke thanh cong");
 
-							}
-							
-//							String search4="SELECT TONGTIEN FROM DATVEBAY WHERE ID="+iddv+"";					
-//							
-//							ResultSet rs8= st.executeQuery(search4);
-//							if(rs8.next()) {
-//								String tongtiendv =rs8.getString(1);
-//								 float ttdv=Float.parseFloat(tongtiendv);
-//							
+							}		
+						
 							String search3="SELECT TONGTIENBANVE,TONGDOANHTHU FROM DOANHTHUCHUYENBAY WHERE CHUYENBAY_ID="+id_cb+"";					
 							
 							ResultSet rs7= st.executeQuery(search3);
@@ -712,7 +706,6 @@ public class xacnhantt_mv1chieu extends JFrame {
 								pst4= con.prepareStatement(updatedt);
 								pst4.execute();
 								System.out.println("update doanh thu thanh cong");
-
 							}
 							else {
 								ResultSet rs5=((java.sql.Statement) stmt).executeQuery("select MAX(ID) from DOANHTHUCHUYENBAY");  						

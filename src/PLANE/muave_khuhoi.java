@@ -60,7 +60,7 @@ public class muave_khuhoi extends JFrame {
 		setVisible(true);
 		setBackground(new Color(240, 255, 255));
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 170, 832, 620);
+		setBounds(100, 100, 832, 620);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(240, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

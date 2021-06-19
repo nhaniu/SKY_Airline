@@ -344,9 +344,7 @@ public class timkiemhanhkhach extends JFrame {
 					String texString="TO_DATE('"+tgString+"','DD-MM-RR HH24:MI:SS')";
 					System.out.println(texString);
 					
-					String update ="update HANHKHACH set ID= "+textField_ID.getText()+", HOTEN='"+ textField_hoten.getText()+"',NGAYSINH="+texString+",QUOCTICH='"+textField_quoctich.getText()+"',GIOITINH='"+comboBox.getSelectedItem()+"',SDT="+textField_sdt.getText()+",EMAIL='"+textField_email.getText()+"',TAIKHOAN_ID="+textField_taikhoan_id.getText()+" where ID="+ textField_ID.getText()+"";
-												
-						
+					String update ="update HANHKHACH set ID= "+textField_ID.getText()+", HOTEN='"+ textField_hoten.getText()+"',NGAYSINH="+texString+",QUOCTICH='"+textField_quoctich.getText()+"',GIOITINH='"+comboBox.getSelectedItem()+"',SDT="+textField_sdt.getText()+",EMAIL='"+textField_email.getText()+"',TAIKHOAN_ID="+textField_taikhoan_id.getText()+" where ID="+ textField_ID.getText()+"";					
 					Class.forName("oracle.jdbc.OracleDriver");
 					java.sql.Connection DB_AIRLINE= DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");  		
 					PreparedStatement pst = DB_AIRLINE.prepareStatement(update);

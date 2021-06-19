@@ -100,8 +100,8 @@ public class nhapthongtin_mv1chieu extends JFrame {
 		
 		setBackground(new Color(224, 255, 255));
 		setTitle("SKY Airline ");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1203, 678);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		setBounds(0, 0, 1203, 678);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(224, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

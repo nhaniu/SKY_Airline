@@ -98,7 +98,7 @@ public class mv1chieu_dichvu_botro extends JFrame {
 		setTitle("SKY ");
 		setBackground(new Color(224, 255, 255));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 884, 447);
+		setBounds(0, 0, 884, 447);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(224, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

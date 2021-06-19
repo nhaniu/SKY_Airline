@@ -211,13 +211,25 @@ public class quanly_chuyenbay extends JFrame {
 						if(deleteItem==JOptionPane.YES_OPTION) {
 																											
 							Class.forName("oracle.jdbc.OracleDriver");
-							java.sql.Connection DB_AIRLINE= DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");  		
-							PreparedStatement pst = DB_AIRLINE.prepareStatement("delete from CHUYENBAY where ID=?");
+							java.sql.Connection con= DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");  		
+							con.setAutoCommit(false);   // tắt chế độ tự động commit
+							PreparedStatement pst = con.prepareStatement("delete from CHUYENBAY where ID=?");
 							pst.setInt(1, id);
-							pst.executeUpdate();
+							pst.executeUpdate(); // lúc này không đc commit nên transaction vẫn tiếp tục thực hiện
 							JOptionPane.showMessageDialog(null, "Xóa thành công");
-						
-						
+////--						test transaction 
+//							Statement st=con.createStatement(); 
+//							String search="select * from CHUYENBAY";				
+//							while(tableModel.getRowCount() > 0) 
+//							{									
+//								tableModel.removeRow(0);
+//							}			
+//							ResultSet rs= st.executeQuery(search);
+//							while(rs.next()) {
+//								String ID =rs.getString(1);
+//								}
+//							con.commit();
+//							con.close();
 					}
 				} catch (ClassNotFoundException e1) {
 					e1.printStackTrace();
@@ -227,11 +239,7 @@ public class quanly_chuyenbay extends JFrame {
 				
 			}
 		});
-		bt_xoa.setBackground(new Color(255, 255, 224));
-		bt_xoa.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		bt_xoa.setBounds(676, 398, 89, 23);
-		contentPane.add(bt_xoa);
-		bt_xoa.setVisible(false);
+
 		
 		try {
 			Class.forName("oracle.jdbc.OracleDriver");
@@ -271,6 +279,11 @@ public class quanly_chuyenbay extends JFrame {
 		}
 
 		scrollPane.setVisible(true);
+		bt_xoa.setBackground(new Color(255, 255, 224));
+		bt_xoa.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		bt_xoa.setBounds(676, 398, 89, 23);
+		contentPane.add(bt_xoa);
+		bt_xoa.setVisible(false);
 		
 		try {
 			Class.forName("oracle.jdbc.OracleDriver");

@@ -153,7 +153,7 @@ public class mvkhuhoi_xacnhantt extends JFrame {
 		setBackground(new Color(224, 255, 255));
 		setTitle("SKY Airline ");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 1243, 681);
+		setBounds(0, 0, 1243, 681);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(224, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -496,6 +496,7 @@ public class mvkhuhoi_xacnhantt extends JFrame {
 		
 		JButton btnXcNhnThanh = new JButton("Xác nhận thanh toán ");
 		btnXcNhnThanh.addActionListener(new ActionListener() {
+			@SuppressWarnings("resource")
 			public void actionPerformed(ActionEvent arg0) {
 				
 				try {																									
@@ -1037,6 +1038,7 @@ public class mvkhuhoi_xacnhantt extends JFrame {
 								
 
 								btnNewButton.setVisible(true);
+								JOptionPane.showMessageDialog(null, "Mua vé thành công");
 
 								btnNewButton.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent e) {
