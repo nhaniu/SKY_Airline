@@ -32,6 +32,7 @@ public class Quanly_taikhoan extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
+	public static String ngaybd;
 
 	/**
 	 * Launch the application.
@@ -125,7 +126,7 @@ public class Quanly_taikhoan extends JFrame {
 				String id= model.getValueAt(SelectedRows, 0).toString();
 				String tendn =model.getValueAt(SelectedRows, 1).toString();
 				String matkhau= model.getValueAt(SelectedRows, 2).toString();
-				String ngaybd= model.getValueAt(SelectedRows, 3).toString();
+				 ngaybd= model.getValueAt(SelectedRows, 3).toString();
 				String sdt=model.getValueAt( SelectedRows, 4).toString();
 				String email=model.getValueAt( SelectedRows, 5).toString();
 				String tongtien=model.getValueAt( SelectedRows, 6).toString();				

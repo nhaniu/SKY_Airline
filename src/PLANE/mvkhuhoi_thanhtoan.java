@@ -55,6 +55,8 @@ public class mvkhuhoi_thanhtoan extends JFrame {
 	static String quoctich = new String();
 	static String goihanhly = new String();
 	static String giatien = new String();
+	static String iddvbt = new String();
+
 	
 
 	
@@ -65,7 +67,7 @@ public class mvkhuhoi_thanhtoan extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					mvkhuhoi_thanhtoan frame = new mvkhuhoi_thanhtoan(gio_kh_di, gio_hc_di, h_ve_di, gia_ve_di, noi_di, noi_den, gio_kh_ve, gio_hc_ve, h_ve_ve, gia_ve_ve, danh_xung, hoten_hk, ngaysinh, sodt, email, quoctich, goihanhly, giatien);
+					mvkhuhoi_thanhtoan frame = new mvkhuhoi_thanhtoan(gio_kh_di, gio_hc_di, h_ve_di, gia_ve_di, noi_di, noi_den, gio_kh_ve, gio_hc_ve, h_ve_ve, gia_ve_ve, danh_xung, hoten_hk, ngaysinh, sodt, email, quoctich, goihanhly, giatien,iddvbt);
 					frame.setVisible(true);
 					
 				} catch (Exception e) {
@@ -79,7 +81,7 @@ public class mvkhuhoi_thanhtoan extends JFrame {
 	 * Create the frame.
 	 */
 	@SuppressWarnings("unchecked")
-	public mvkhuhoi_thanhtoan(String a, String b, String c, String d, String e, String f, String g, String h, String i, String k, final String l, String m,  Date b2, String c2, String d2, String e2, String n, String o) {
+	public mvkhuhoi_thanhtoan(String a, String b, String c, String d, String e, String f, String g, String h, String i, String k, final String l, String m,  Date b2, String c2, String d2, String e2, String n, String o,String r) {
 		gio_kh_di = a;
 		gio_hc_di = b;
 		h_ve_di = c;
@@ -98,6 +100,7 @@ public class mvkhuhoi_thanhtoan extends JFrame {
 		quoctich = e2;
 		goihanhly = n;
 		giatien = o;
+		iddvbt = r;
 		
 		setBackground(new Color(224, 255, 255));
 		setTitle("SKY Airline ");
@@ -338,8 +341,8 @@ public class mvkhuhoi_thanhtoan extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				
-				String makm = new String();
-				String matk = new String();
+				String makm = null;
+				String matk = null;
 				String gioitinh = new String();
 				
 				if (l.toString() == "Ông")
@@ -350,24 +353,25 @@ public class mvkhuhoi_thanhtoan extends JFrame {
 					gioitinh = "NỮ";
 				}
 				System.out.print(gioitinh);
+						
 				
-				if (textField_makm.getText().toString() != null)
+				if (!textField_makm.getText().toString().equals(""))
 			    {
 			    	 makm = textField_makm.getText().toString();
 			    }
-			    else 
+			    else if(textField_makm.getText().toString().equals(""))
 			    {
-			    	makm = "None";
+			    	makm ="null";  
 			    }
-			    if (textField_matk.getText().toString() != null)
+			    if (!textField_matk.getText().toString().equals(""))
 			    {
 			    	matk = textField_matk.getText().toString();
 			    }
-			    else {
-					matk = "None";
+			    else if(textField_matk.getText().toString().equals("")) {
+					matk ="null";
 				}
 			    
-			    mvkhuhoi_xacnhantt obj = new mvkhuhoi_xacnhantt(gio_kh_di, gio_hc_di, h_ve_di, gia_ve_di, noi_di, noi_den, gio_kh_ve, gio_hc_ve, h_ve_ve, gia_ve_ve, danh_xung, hoten_hk, ngaysinh, sodt, email, quoctich, goihanhly, giatien, makm, matk, gioitinh);
+			    mvkhuhoi_xacnhantt obj = new mvkhuhoi_xacnhantt(gio_kh_di, gio_hc_di, h_ve_di, gia_ve_di, noi_di, noi_den, gio_kh_ve, gio_hc_ve, h_ve_ve, gia_ve_ve, danh_xung, hoten_hk, ngaysinh, sodt, email, quoctich, goihanhly, giatien, makm, matk, gioitinh,iddvbt);
 				obj.setVisible(true);
 				dispose();
 				

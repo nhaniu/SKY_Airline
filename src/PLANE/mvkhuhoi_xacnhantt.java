@@ -78,7 +78,8 @@ public class mvkhuhoi_xacnhantt extends JFrame {
 	static String makm = new String();
 	static String matk = new String();
 	static String gioitinh = new String();
-	
+	static String iddvbt = new String();
+
 	/**
 	 * Launch the application.
 	 */
@@ -86,7 +87,7 @@ public class mvkhuhoi_xacnhantt extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					mvkhuhoi_xacnhantt frame = new mvkhuhoi_xacnhantt(gio_kh_di, gio_hc_di, h_ve_di, gia_ve_di, noi_di, noi_den, gio_kh_ve, gio_hc_ve, h_ve_ve, gia_ve_ve, danh_xung, hoten_hk, ngaysinh, sodt, email, quoctich, goihanhly, giatien, makm, matk, gioitinh);
+					mvkhuhoi_xacnhantt frame = new mvkhuhoi_xacnhantt(gio_kh_di, gio_hc_di, h_ve_di, gia_ve_di, noi_di, noi_den, gio_kh_ve, gio_hc_ve, h_ve_ve, gia_ve_ve, danh_xung, hoten_hk, ngaysinh, sodt, email, quoctich, goihanhly, giatien, makm, matk, gioitinh,iddvbt);
 					frame.setVisible(true);
 					
 				} catch (Exception e) {
@@ -100,7 +101,7 @@ public class mvkhuhoi_xacnhantt extends JFrame {
 	 * Create the frame.
 	 */
 	@SuppressWarnings("unchecked")
-	public mvkhuhoi_xacnhantt(String a, String b, String c, String d, String e, String f, String g, String h, String i, String k, String l, String m, Date b2, String c2, String d2, String e2, String n, String o, String a5, String a6, String a7) {
+	public mvkhuhoi_xacnhantt(String a, String b, String c, String d, String e, String f, String g, String h, String i, String k, String l, String m, Date b2, String c2, String d2, String e2, String n, String o, String a5, String a6, String a7,String r) {
 		gio_kh_di = a;
 		gio_hc_di = b;
 		h_ve_di = c;
@@ -122,7 +123,7 @@ public class mvkhuhoi_xacnhantt extends JFrame {
 		makm = a5;
 		matk = a6;
 		gioitinh = a7;
-		
+		iddvbt=r;
 		
 		
 //		float p = Float.parseFloat(d);
@@ -136,9 +137,9 @@ public class mvkhuhoi_xacnhantt extends JFrame {
 		System.out.print(p);
 		float q = Float.parseFloat(d);
 		System.out.print(q);
-		float r = Float.parseFloat(k);
+		float x = Float.parseFloat(k);
 		System.out.print(r);
-		float t = (float)(p + q + r);
+		float t = (float)(p + q + x);
 		
 //		float p1=Float.parseFloat(o.substring(0,o.length()-4));
 //		float p = Float.parseFloat(d);
@@ -397,13 +398,13 @@ public class mvkhuhoi_xacnhantt extends JFrame {
 				String noidung = rs.getString(1);
 				String phantram = rs.getString(2);
 				
-				float x = Float.parseFloat(d);
+				float xx = Float.parseFloat(d);
 				System.out.print(p);
 				float x1 = Float.parseFloat(k);
 				System.out.print(r);
 				float x2 = Float.parseFloat(phantram);
 				System.out.print(q);
-				float x3 = (float)(x + x1) * x2;
+				float x3 = (float)(xx + x1) * x2;
 				tiengiamkm = String.valueOf(x3 + " VND");
 				
 					System.out.println(noidung);
@@ -614,100 +615,109 @@ public class mvkhuhoi_xacnhantt extends JFrame {
 							String insert_datve;
 							PreparedStatement pst=null;
 							
-							mvkhuhoi_dvbotro dvbtkh=null;
-							String dvbt=dvbtkh.iddvbt;
-							
+//							mvkhuhoi_dvbotro dvbtkh=null;
+//							String dvbt=dvbtkh.iddvbt;
+//							
+							int dd=Integer.parseInt(d);
+							int kk=Integer.parseInt(k);
+							int tien=dd+kk;
 							////Chuyến đi
-							if(dvbt!=null&&a5!=null&&a6!=null) {
-								insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddv+","+idve+","+idhk+","+a5+","+dvbt+","+ngaydatve+","+s+",'Đã thanh toán',"+a6+")";
+							 if (iddvbt.equals("null")&&!a5.equals("null")&&!a6.equals("null")) {
+									insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddv+","+idve+","+idhk+","+a5+","+null+","+ngaydatve+","+s+",'Đã thanh toán',"+a6+")";
+									 pst = con.prepareStatement(insert_datve);
+									pst.execute();
+									System.out.println("2");
+								}
+								else if (iddvbt.equals("null")&&a5.equals("null")&&!a6.equals("null")) {
+									insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddv+","+idve+","+idhk+","+null+","+null+","+ngaydatve+","+s+",'Đã thanh toán',"+a6+")";
+									 pst = con.prepareStatement(insert_datve);
+									pst.execute();
+								}
+								else if(!iddvbt.equals("null")&&!a5.equals("null")&&!a6.equals("null")) {
+										insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddv+","+idve+","+idhk+","+a5+","+iddvbt+","+ngaydatve+","+s+",'Đã thanh toán',"+a6+")";
 
+										 pst = con.prepareStatement(insert_datve);
+										pst.execute();
+									}
+								else if(!iddvbt.equals("null")&&a5.equals("null")&&!a6.equals("null")) {
+									insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddv+","+idve+","+idhk+","+null+","+iddvbt+","+ngaydatve+","+s+",'Đã thanh toán',"+a6+")";
+									 pst = con.prepareStatement(insert_datve);
+									pst.execute();
+								}
+								else if (iddvbt.equals("null")&&a5.equals("null")&&a6.equals("null")) {
+									
+								insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddv+","+idve+","+idhk+","+null+","+null+","+ngaydatve+","+tien+",'Đã thanh toán',"+null+")";
 								 pst = con.prepareStatement(insert_datve);
 								pst.execute();
-							}
-							else if (dvbt==null&&a5!=null&&a6!=null) {
-								insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddv+","+idve+","+idhk+","+a5+","+0+","+ngaydatve+","+s+",'Đã thanh toán',"+a6+")";
-								 pst = con.prepareStatement(insert_datve);
-								pst.execute();
-							}
-							else if (dvbt==null&&a5==null&&a6!=null) {
-								insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddv+","+idve+","+idhk+","+0+","+0+","+ngaydatve+","+s+",'Đã thanh toán',"+a6+")";
-								 pst = con.prepareStatement(insert_datve);
-								pst.execute();
-							}
-							else if(dvbt!=null&&a5==null&&a6!=null) {
-								insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddv+","+idve+","+idhk+","+0+","+dvbt+","+ngaydatve+","+s+",'Đã thanh toán',"+a6+")";
-								 pst = con.prepareStatement(insert_datve);
-								pst.execute();
-							}
-							else if (dvbt==null&&a5==null&&a6==null) {
-							insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddv+","+idve+","+idhk+","+0+","+0+","+ngaydatve+","+(d+k)+",'Đã thanh toán',"+0+")";
-							 pst = con.prepareStatement(insert_datve);
-							pst.execute();
-						 	}
-							else if (dvbt==null&&a5!=null&&a6==null) {
-								insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddv+","+idve+","+idhk+","+a5+","+0+","+ngaydatve+","+s+",'Đã thanh toán',"+0+")";
-								 pst = con.prepareStatement(insert_datve);
-								pst.execute();
-							}
-							else if(dvbt!=null&&a5==null&&a6==null) {
-								insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddv+","+idve+","+idhk+","+0+","+dvbt+","+ngaydatve+","+t+",'Đã thanh toán',"+0+")";
-								 pst = con.prepareStatement(insert_datve);
-								pst.execute();
-							}
-							
-							else if(dvbt!=null&&a5!=null&&a6==null) {
-								insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddv+","+idve+","+idhk+","+a5+","+dvbt+","+ngaydatve+","+s+",'Đã thanh toán',"+0+")";
-								 pst = con.prepareStatement(insert_datve);
-								pst.execute();
-							}
+							 	}
+								else if (iddvbt.equals("null")&&!a5.equals("null")&&a6.equals("null")) {
+									insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddv+","+idve+","+idhk+","+a5+","+null+","+ngaydatve+","+s+",'Đã thanh toán',"+null+")";
+									 pst = con.prepareStatement(insert_datve);
+									pst.execute();
+								}
+								else if(!iddvbt.equals("null")&&a5.equals("null")&&a6.equals("null")) {
+									insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddv+","+idve+","+idhk+","+null+","+iddvbt+","+ngaydatve+","+t+",'Đã thanh toán',"+null+")";
+									 pst = con.prepareStatement(insert_datve);
+									pst.execute();
+								}
+								
+								else if(!iddvbt.equals("null")&&!a5.equals("null")&&a6.equals("null")) {
+									insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddv+","+idve+","+idhk+","+a5+","+iddvbt+","+ngaydatve+","+s+",'Đã thanh toán',"+null+")";
+									 pst = con.prepareStatement(insert_datve);
+									pst.execute();
+								}
+								
 							
 							
 							
 							
 							////Chuyến khứ hồi
 							
-							if(dvbt!=null&&a5!=null&&a6!=null) {
-								insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddvkh+","+idvekh+","+idhkkh+","+a5+","+dvbt+","+ngaydatve+","+s+",'Đã thanh toán',"+a6+")";
+							 if (iddvbt.equals("null")&&!a5.equals("null")&&!a6.equals("null")) {
+									insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddvkh+","+idvekh+","+idhkkh+","+a5+","+null+","+ngaydatve+","+s+",'Đã thanh toán',"+a6+")";
+									 pst = con.prepareStatement(insert_datve);
+									pst.execute();
+									System.out.println("2");
+								}
+								else if (iddvbt.equals("null")&&a5.equals("null")&&!a6.equals("null")) {
+									insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddvkh+","+idvekh+","+idhkkh+","+null+","+null+","+ngaydatve+","+s+",'Đã thanh toán',"+a6+")";
+									 pst = con.prepareStatement(insert_datve);
+									pst.execute();
+								}
+								else if(!iddvbt.equals("null")&&!a5.equals("null")&&!a6.equals("null")) {
+										insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddvkh+","+idvekh+","+idhkkh+","+a5+","+iddvbt+","+ngaydatve+","+s+",'Đã thanh toán',"+a6+")";
 
+										 pst = con.prepareStatement(insert_datve);
+										pst.execute();
+									}
+								else if(!iddvbt.equals("null")&&a5.equals("null")&&!a6.equals("null")) {
+									insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddvkh+","+idvekh+","+idhkkh+","+null+","+iddvbt+","+ngaydatve+","+s+",'Đã thanh toán',"+a6+")";
+									 pst = con.prepareStatement(insert_datve);
+									pst.execute();
+								}
+								else if (iddvbt.equals("null")&&a5.equals("null")&&a6.equals("null")) {
+									
+								insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddvkh+","+idvekh+","+idhkkh+","+null+","+null+","+ngaydatve+","+tien+",'Đã thanh toán',"+null+")";
 								 pst = con.prepareStatement(insert_datve);
 								pst.execute();
-							}
-							else if (dvbt==null&&a5!=null&&a6!=null) {
-								insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddvkh+","+idvekh+","+idhkkh+","+a5+","+0+","+ngaydatve+","+s+",'Đã thanh toán',"+a6+")";
-								 pst = con.prepareStatement(insert_datve);
-								pst.execute();
-							}
-							else if (dvbt==null&&a5==null&&a6!=null) {
-								insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddvkh+","+idvekh+","+idhkkh+","+0+","+0+","+ngaydatve+","+s+",'Đã thanh toán',"+a6+")";
-								 pst = con.prepareStatement(insert_datve);
-								pst.execute();
-							}
-							else if(dvbt!=null&&a5==null&&a6!=null) {
-								insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddvkh+","+idvekh+","+idhkkh+","+0+","+dvbt+","+ngaydatve+","+s+",'Đã thanh toán',"+a6+")";
-								 pst = con.prepareStatement(insert_datve);
-								pst.execute();
-							}
-							else if (dvbt==null&&a5==null&&a6==null) {
-							insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddvkh+","+idvekh+","+idhkkh+","+0+","+0+","+ngaydatve+","+d+k+",'Đã thanh toán',"+0+")";
-							 pst = con.prepareStatement(insert_datve);
-							pst.execute();
-						 	}
-							else if (dvbt==null&&a5!=null&&a6==null) {
-								insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddvkh+","+idvekh+","+idhkkh+","+a5+","+0+","+ngaydatve+","+s+",'Đã thanh toán',"+0+")";
-								 pst = con.prepareStatement(insert_datve);
-								pst.execute();
-							}
-							else if(dvbt!=null&&a5==null&&a6==null) {
-								insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddvkh+","+idvekh+","+idhkkh+","+0+","+dvbt+","+ngaydatve+","+t+",'Đã thanh toán',"+0+")";
-								 pst = con.prepareStatement(insert_datve);
-								pst.execute();
-							}
-							
-							else if(dvbt!=null&&a5!=null&&a6==null) {
-								insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddvkh+","+idvekh+","+idhkkh+","+a5+","+dvbt+","+ngaydatve+","+s+",'Đã thanh toán',"+0+")";
-								 pst = con.prepareStatement(insert_datve);
-								pst.execute();
-							}
+							 	}
+								else if (iddvbt.equals("null")&&!a5.equals("null")&&a6.equals("null")) {
+									insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddvkh+","+idvekh+","+idhkkh+","+a5+","+null+","+ngaydatve+","+s+",'Đã thanh toán',"+null+")";
+									 pst = con.prepareStatement(insert_datve);
+									pst.execute();
+								}
+								else if(!iddvbt.equals("null")&&a5.equals("null")&&a6.equals("null")) {
+									insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddvkh+","+idvekh+","+idhkkh+","+null+","+iddvbt+","+ngaydatve+","+t+",'Đã thanh toán',"+null+")";
+									 pst = con.prepareStatement(insert_datve);
+									pst.execute();
+								}
+								
+								else if(!iddvbt.equals("null")&&!a5.equals("null")&&a6.equals("null")) {
+									insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddvkh+","+idvekh+","+idhkkh+","+a5+","+iddvbt+","+ngaydatve+","+s+",'Đã thanh toán',"+null+")";
+									 pst = con.prepareStatement(insert_datve);
+									pst.execute();
+								}
+								
 							
 							
 							
@@ -732,12 +742,12 @@ public class mvkhuhoi_xacnhantt extends JFrame {
 									System.out.println("insert hanh khach  co tai khoan thanh cong");
 									
 							}
-							else if (a6==null) {
+							else if (a6.equals("null")) {
 								SimpleDateFormat formatter1 = new SimpleDateFormat("dd-MM-YY hh:mm:ss");
 								String tgString1=formatter1.format(ngaysinh);
 								 String ngsinh = "TO_DATE('"+tgString1+"','yyyy-mm-dd HH24:MI:SS')";
 
-								 insert_hanhkhach="insert into \"DB_AIRLINE\".\"HANHKHACH\"(\"ID\", \"HOTEN\", \"NGAYSINH\",\"QUOCTICH\",  \"GIOITINH\", \"SDT\", \"EMAIL\",\"TAIKHOAN_ID\") values( "+idhk+", '"+hoten_hk+"',"+ngsinh+",'"+quoctich+"','"+gioitinh+"',"+sodt+",'"+email+"',"+0+")";
+								 insert_hanhkhach="insert into \"DB_AIRLINE\".\"HANHKHACH\"(\"ID\", \"HOTEN\", \"NGAYSINH\",\"QUOCTICH\",  \"GIOITINH\", \"SDT\", \"EMAIL\",\"TAIKHOAN_ID\") values( "+idhk+", '"+hoten_hk+"',"+ngsinh+",'"+quoctich+"','"+gioitinh+"',"+sodt+",'"+email+"',"+null+")";
 								  pst1 = con.prepareStatement(insert_hanhkhach);
 									pst1.execute();
 									System.out.println("insert hanh khach khong co tai khoan thanh cong");
@@ -762,12 +772,12 @@ public class mvkhuhoi_xacnhantt extends JFrame {
 									System.out.println("insert hanh khach  co tai khoan thanh cong");
 									
 							}
-							else if (a6==null) {
+							else if (a6.equals("null")) {
 								SimpleDateFormat formatter1 = new SimpleDateFormat("dd-MM-YY hh:mm:ss");
 								String tgString1=formatter1.format(ngaysinh);
 								 String ngsinh = "TO_DATE('"+tgString1+"','yyyy-mm-dd HH24:MI:SS')";
 
-								 insert_hanhkhachkh="insert into \"DB_AIRLINE\".\"HANHKHACH\"(\"ID\", \"HOTEN\", \"NGAYSINH\",\"QUOCTICH\",  \"GIOITINH\", \"SDT\", \"EMAIL\",\"TAIKHOAN_ID\") values( "+idhkkh+", '"+hoten_hk+"',"+ngsinh+",'"+quoctich+"','"+gioitinh+"',"+sodt+",'"+email+"',"+0+")";
+								 insert_hanhkhachkh="insert into \"DB_AIRLINE\".\"HANHKHACH\"(\"ID\", \"HOTEN\", \"NGAYSINH\",\"QUOCTICH\",  \"GIOITINH\", \"SDT\", \"EMAIL\",\"TAIKHOAN_ID\") values( "+idhkkh+", '"+hoten_hk+"',"+ngsinh+",'"+quoctich+"','"+gioitinh+"',"+sodt+",'"+email+"',"+null+")";
 								  pst1 = con.prepareStatement(insert_hanhkhachkh);
 									pst1.execute();
 									System.out.println("insert hanh khach khong co tai khoan thanh cong");

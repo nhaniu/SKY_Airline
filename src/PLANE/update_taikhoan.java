@@ -123,6 +123,7 @@ public class update_taikhoan extends JFrame {
 		JDateChooser dateChooser = new JDateChooser();
 		dateChooser.setBounds(467, 136, 186, 20);
 		contentPane.add(dateChooser);
+		//dateChooser.isDisplayable();
 		
 		LocalDate localDate1 = LocalDate.parse(d);
         Date date2 = (Date) Date.from(localDate1.atStartOfDay(ZoneId.systemDefault()).toInstant());;

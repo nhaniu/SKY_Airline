@@ -102,16 +102,26 @@ public class QuanLy_DatVe extends JFrame {
 				String id= model.getValueAt(SelectedRows, 0).toString();
 				String vemaybayid =model.getValueAt(SelectedRows, 1).toString();
 				String hanhkhachid= model.getValueAt(SelectedRows, 2).toString();
-				String khuyenmaiid =model.getValueAt(SelectedRows, 3).toString();
-				String dvbtid =model.getValueAt(SelectedRows, 4).toString();
+				String khuyenmaiid ="null";
+				if(model.getValueAt(SelectedRows, 3)!=null) {
+
+				 khuyenmaiid =model.getValueAt(SelectedRows, 3).toString();
+				}
+				String dvbtid ="null";
+				if(model.getValueAt(SelectedRows, 4)!=null) {
+				 dvbtid =model.getValueAt(SelectedRows, 4).toString();
+				}
 				String ngaydat =model.getValueAt(SelectedRows, 5).toString();
 				String tg1 = ngaydat.substring(0, 10);
 
 				String tongtien =model.getValueAt(SelectedRows, 6).toString();
 				String tinhtrang =model.getValueAt(SelectedRows, 7).toString();
-				String taikhoanid =model.getValueAt(SelectedRows, 8).toString();
+				String taikhoanid ="null";
+				if(model.getValueAt(SelectedRows, 8)!=null) {
 
-
+				 taikhoanid =model.getValueAt(SelectedRows, 8).toString();
+				}
+				
 				update_datve update= new update_datve(id,vemaybayid,hanhkhachid,khuyenmaiid,dvbtid,tg1,tongtien,tinhtrang,taikhoanid);
 				update.setVisible(true);
 			}

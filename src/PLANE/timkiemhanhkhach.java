@@ -310,11 +310,7 @@ public class timkiemhanhkhach extends JFrame {
 		JButton btnNewButton = new JButton("Xác nhận");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (textField_taikhoan_id.getText().isEmpty()) {
-					 JOptionPane.showMessageDialog(null, "vui lòng nhập tài khoản ID");
-					 textField_taikhoan_id.requestFocus();
-					 return; 
-					}
+				
 				if (textField_email.getText().isEmpty()) {
 					 JOptionPane.showMessageDialog(null, "vui lòng nhập email");
 					 textField_email.requestFocus();
@@ -336,23 +332,31 @@ public class timkiemhanhkhach extends JFrame {
 					 return; 
 					}
 				
-				
+//				if(textField_taikhoan_id.equals("")) {
+//					textField_taikhoan_id.setText("");
+//				}
 				try {
 										
 					SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-YY hh:mm:ss");
 					String tgString=formatter.format(dateChooser.getDate());						
 					String texString="TO_DATE('"+tgString+"','DD-MM-RR HH24:MI:SS')";
 					System.out.println(texString);
-					
-					String update ="update HANHKHACH set ID= "+textField_ID.getText()+", HOTEN='"+ textField_hoten.getText()+"',NGAYSINH="+texString+",QUOCTICH='"+textField_quoctich.getText()+"',GIOITINH='"+comboBox.getSelectedItem()+"',SDT="+textField_sdt.getText()+",EMAIL='"+textField_email.getText()+"',TAIKHOAN_ID="+textField_taikhoan_id.getText()+" where ID="+ textField_ID.getText()+"";					
+					String update;
+					if(textField_taikhoan_id.getText().equals("")) {
+						 update ="update HANHKHACH set ID= "+textField_ID.getText()+", HOTEN='"+ textField_hoten.getText()+"',NGAYSINH="+texString+",QUOCTICH='"+textField_quoctich.getText()+"',GIOITINH='"+comboBox.getSelectedItem()+"',SDT="+textField_sdt.getText()+",EMAIL='"+textField_email.getText()+"',TAIKHOAN_ID="+null+" where ID="+textField_ID.getText()+"";					
+					}
+					else 
+					{
+							 update ="update HANHKHACH set ID= "+textField_ID.getText()+", HOTEN='"+ textField_hoten.getText()+"',NGAYSINH="+texString+",QUOCTICH='"+textField_quoctich.getText()+"',GIOITINH='"+comboBox.getSelectedItem()+"',SDT="+textField_sdt.getText()+",EMAIL='"+textField_email.getText()+"',TAIKHOAN_ID="+textField_taikhoan_id.getText()+" where ID="+ textField_ID.getText()+"";					
+					}
+					System.out.println(update);
 					Class.forName("oracle.jdbc.OracleDriver");
 					java.sql.Connection DB_AIRLINE= DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");  		
 					PreparedStatement pst = DB_AIRLINE.prepareStatement(update);
 					pst= DB_AIRLINE.prepareStatement(update);
-
-
+					
 					pst.execute();
-	
+					System.out.println(11111111);
 					JOptionPane.showMessageDialog(null, "Cập nhật thành công");
 					pst.close();
 					DB_AIRLINE.close();
@@ -436,7 +440,10 @@ public class timkiemhanhkhach extends JFrame {
 				comboBox.setSelectedItem(model.getValueAt(i, 4).toString());
 				textField_sdt.setText(model.getValueAt(i, 5).toString());
 				textField_email.setText(model.getValueAt(i, 6).toString());
-				textField_taikhoan_id.setText(model.getValueAt(i, 7).toString());
+				if(model.getValueAt(i, 7)!=null) {
+					textField_taikhoan_id.setText(model.getValueAt(i, 7).toString());
+				}
+				
 
 			}
 		});

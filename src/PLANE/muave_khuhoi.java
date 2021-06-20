@@ -345,19 +345,7 @@ public class muave_khuhoi extends JFrame {
 				h_ve_ve = model1.getValueAt(iv, 2).toString();
 				gia_ve_ve = model1.getValueAt(iv, 3).toString();
 				
-				
-				
-				/*
-				if (table_di.getSelectionModel().isSelectionEmpty()) {
-					JOptionPane.showConfirmDialog(null, "Xin vui lòng chọn chuyến bay đi!");
-					table_di.requestFocus();
-					return;
-				}
-				if (table_ve.getSelectionModel().isSelectionEmpty()) {
-						JOptionPane.showConfirmDialog(null, "Xin vui lòng chọn chuyến bay về!");
-						table_ve.requestFocus();
-						return;
-					}*/
+
 				if (table_ve.getSelectionModel().isSelectionEmpty() || table_di.getSelectionModel().isSelectionEmpty()) {
 					JOptionPane.showConfirmDialog(null, "Xin vui lòng chọn chuyến bay!","Warning",JOptionPane.YES_OPTION);
 					table_di.requestFocus();

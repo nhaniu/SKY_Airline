@@ -163,6 +163,7 @@ public class update_datve extends JFrame {
 		contentPane.add(lblNewLabel_12);
 		
 		textField_idtk = new JTextField();
+		textField_idtk.setEditable(false);
 		textField_idtk.setBounds(167, 344, 142, 22);
 		contentPane.add(textField_idtk);
 		textField_idtk.setColumns(10);
@@ -198,7 +199,14 @@ public class update_datve extends JFrame {
 					String ngay_dat="TO_DATE('"+tgString+"','DD-MM-RR HH24:MI:SS')";
 	
 					//String update ="update "DB_AIRLINE"."DATVEBAY" set "TAIKHOAN_ID"=409 where "ID"=1009";
-					String update ="update DATVEBAY set ID= "+lb_id.getText()+",VEMAYBAY_ID="+lb_idve.getText()+",HANHKHACH_ID='"+lb_idhk.getText()+"',KHUYENMAI_ID='"+lb_km.getText()+"',DICHVUBOTRO_ID="+lb_dvbt.getText()+",NGAYDAT="+ngay_dat+",TONGTIEN="+lb_tongtien.getText()+",TINHTRANG='"+textField_tinhtrang.getText()+"',TAIKHOAN_ID="+textField_idtk.getText()+" where ID="+lb_id.getText()+"";
+					String update = null;
+				    String tg1=null,tg2=null,tg3= null;
+				    if (!lb_dvbt.getText().equals("null")) tg1=lb_dvbt.getText();
+				    if (!lb_km.getText().equals("null")) tg2=lb_km.getText();
+				    if(!textField_idtk.getText().equals("null")) tg3=textField_idtk.getText();
+					update ="update DATVEBAY set TINHTRANG='"+textField_tinhtrang.getText()+"' where ID="+lb_id.getText()+"";
+
+					System.out.println(update);
 																		
 					Class.forName("oracle.jdbc.OracleDriver");
 					java.sql.Connection DB_AIRLINE= DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");  		
@@ -216,7 +224,6 @@ public class update_datve extends JFrame {
 					JOptionPane.showMessageDialog(a, e1);						
 				} catch (SQLException e1) {
 					Component a=null;
-
 					JOptionPane.showMessageDialog(a, e1);						
 	
 				}

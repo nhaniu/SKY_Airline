@@ -135,10 +135,10 @@ public class mvkhuhoi_dvbotro extends JFrame {
 		table.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				
+				{null, null, null},
 			},
 			new String[] {
-				"Gói hành lý", "Giá tiền"
+				"ID", "G\u00F3i h\u00E0nh l\u00FD", "Gi\u00E1 ti\u1EC1n"
 			}
 		));
 		scrollPane.setViewportView(table);
@@ -159,7 +159,7 @@ public class mvkhuhoi_dvbotro extends JFrame {
 			Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "DB_AIRLINE", "123");
 			java.sql.Statement st = conn.createStatement();
 			
-			String sql = "select NOIDUNGDV, GIADV,ID from DICHVUBOTRO";
+			String sql = "select ID,NOIDUNGDV, GIADV from DICHVUBOTRO";
 			
 			
 			System.out.println(sql);
@@ -168,13 +168,14 @@ public class mvkhuhoi_dvbotro extends JFrame {
 			ResultSet rs =  ((java.sql.Statement) st).executeQuery(sql);
 			while(rs.next()) 
 			{
-				String goihl = rs.getString(1);
-				String giatien = rs.getString(2);
-				iddvbt = rs.getString(3);
+				iddvbt = rs.getString(1);
+
+				String goihl = rs.getString(2);
+				String giatien = rs.getString(3);
 
 				 
 				
-				String tbData[] = {goihl, giatien};
+				String tbData[] = {iddvbt,goihl, giatien};
 					DefaultTableModel tblModel = (DefaultTableModel)table.getModel();
 					System.out.print(goihl);
 					System.out.print(giatien);
@@ -210,10 +211,11 @@ public class mvkhuhoi_dvbotro extends JFrame {
 				
 				if (table.getSelectionModel().isSelectionEmpty()) {
 					giatien = "0 VND";
-					goihanhly="none";
+					goihanhly="null";
+					iddvbt="null";
 					int khongchon =JOptionPane.showConfirmDialog(null, "Bạn không chọn dịch vụ bổ trợ, bạn có muốn tiếp tục ?","Warning",JOptionPane.YES_NO_OPTION);
 					if(khongchon==JOptionPane.YES_OPTION) {
-						mvkhuhoi_thanhtoan obj = new mvkhuhoi_thanhtoan(gio_kh_di, gio_hc_di, h_ve_di, gia_ve_di, noi_di, noi_den, gio_kh_ve, gio_hc_ve, h_ve_ve, gia_ve_ve, danh_xung, hoten_hk, ngaysinh, sodt, email, quoctich, goihanhly, giatien);
+						mvkhuhoi_thanhtoan obj = new mvkhuhoi_thanhtoan(gio_kh_di, gio_hc_di, h_ve_di, gia_ve_di, noi_di, noi_den, gio_kh_ve, gio_hc_ve, h_ve_ve, gia_ve_ve, danh_xung, hoten_hk, ngaysinh, sodt, email, quoctich, goihanhly, giatien,iddvbt);
 						obj.setVisible(true);
 						dispose();
 					}
@@ -221,9 +223,11 @@ public class mvkhuhoi_dvbotro extends JFrame {
 					
 				else
 				{
-					goihanhly = model.getValueAt(i, 0).toString();
-					giatien = model.getValueAt(i, 1).toString() + " VND";
-					mvkhuhoi_thanhtoan ob = new mvkhuhoi_thanhtoan(gio_kh_di, gio_hc_di, h_ve_di, gia_ve_di, noi_di, noi_den, gio_kh_ve, gio_hc_ve, h_ve_ve, gia_ve_ve, danh_xung, hoten_hk, ngaysinh, sodt, email, quoctich, goihanhly, giatien);
+					iddvbt=model.getValueAt(i, 0).toString();
+
+					goihanhly = model.getValueAt(i, 1).toString();
+					giatien = model.getValueAt(i, 2).toString() + " VND";
+					mvkhuhoi_thanhtoan ob = new mvkhuhoi_thanhtoan(gio_kh_di, gio_hc_di, h_ve_di, gia_ve_di, noi_di, noi_den, gio_kh_ve, gio_hc_ve, h_ve_ve, gia_ve_ve, danh_xung, hoten_hk, ngaysinh, sodt, email, quoctich, goihanhly, giatien,iddvbt);
 					ob.setVisible(true);
 					dispose();
 				}

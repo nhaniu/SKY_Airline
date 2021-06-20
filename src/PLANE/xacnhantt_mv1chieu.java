@@ -82,6 +82,7 @@ public class xacnhantt_mv1chieu extends JFrame {
 	static String matk = new String();
 	static String gioitinh = new String();
 	static String iddvbt = new String();
+	public static String makmm, matkk;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -247,6 +248,7 @@ public class xacnhantt_mv1chieu extends JFrame {
 		lblNewLabel_1.setBounds(343, 391, 144, 19);
 		panel.add(lblNewLabel_1);
 		lblNewLabel_1.setText(o + " VND");
+		//lblNewLabel_1.setVisible(false);
 		
 		JLabel Label_Hoten_hk = new JLabel("<dynamic>");
 		Label_Hoten_hk.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -319,6 +321,12 @@ public class xacnhantt_mv1chieu extends JFrame {
 		panel_2.add(btnNewButton_1);
 		btnNewButton_1.setVisible(false);
 		
+		  if (iddvbt.equals("null")){
+		    	Label_DichvuBotro.setVisible(false);
+		    	lblNewLabel_1.setVisible(false);
+		    	lblNewLabel.setVisible(false);
+		    }
+		
 		
 		float p = Float.parseFloat(o.substring(0, o.length()-4));
 		System.out.print(p);
@@ -333,7 +341,7 @@ public class xacnhantt_mv1chieu extends JFrame {
 			Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "DB_AIRLINE", "123");
 			java.sql.Statement st = conn.createStatement();
 			
-			String sql = "select NOIDUNG, PHANTRAMKM from BKHUYENMAI where ID =  " + "'"+a5+"'";
+			String sql = "select ID, NOIDUNG, PHANTRAMKM from BKHUYENMAI where ID =  " + "'"+a5+"'";
 			
 			System.out.println(sql);
 			
@@ -341,8 +349,9 @@ public class xacnhantt_mv1chieu extends JFrame {
 			ResultSet rs =  ((java.sql.Statement) st).executeQuery(sql);
 			while(rs.next()) 
 			{
-				String noidung = rs.getString(1);
-				String phantram = rs.getString(2);
+				 makmm=rs.getString(1);
+				String noidung = rs.getString(2);
+				String phantram = rs.getString(3);
 				
 				float x1 = Float.parseFloat(d);
 				System.out.print(p);
@@ -375,7 +384,10 @@ public class xacnhantt_mv1chieu extends JFrame {
 			Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "DB_AIRLINE", "123");
 			java.sql.Statement st = conn.createStatement();
 			
-			String sql = "select DIEM from TAIKHOAN where ID =  " + "'"+a6+"'";
+			DangNhap dNhap=null;
+			@SuppressWarnings("static-access")
+			String tendn=dNhap.tendn;
+			String sql = "select ID, DIEM from TAIKHOAN where ID =  " + "'"+a5+"'";
 			
 			System.out.println(sql);
 			
@@ -383,7 +395,9 @@ public class xacnhantt_mv1chieu extends JFrame {
 			ResultSet rs =  ((java.sql.Statement) st).executeQuery(sql);
 			while(rs.next()) 
 			{
-				String diem = rs.getString(1);
+				matkk = rs.getString(1);
+
+				String diem = rs.getString(2);
 				
 				int x1 = Integer.parseInt(diem);
 				System.out.print(x1);
@@ -538,52 +552,59 @@ public class xacnhantt_mv1chieu extends JFrame {
 						String insert_datve;
 						PreparedStatement pst=null;
 						
-						mv1chieu_dichvu_botro mv=null;
-						String iddvbt=mv.iddvbt;
 						
+					    System.out.println(" MÃ TAI KHOAN: "+a5);
+
+					    
+					    if (iddvbt.equals("null")){
+					    	Label_DichvuBotro.setVisible(false);
+					    	lblNewLabel_1.setVisible(false);
+					    	lblNewLabel.setVisible(false);
+					    }
+					    
 						
-						
-						System.out.println("1");
-						 if (Label_DichvuBotro.getText()==null&&a5!=null&&a6!=null) {
-							insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddv+","+idve+","+idhk+","+a5+","+0+","+ngaydatve+","+s+",'Đã thanh toán',"+a6+")";
+						System.out.println("a5"+"---------------------"+a6);
+						 if (iddvbt.equals("null")&&!a5.equals("null")&&!a6.equals("null")) {
+							insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddv+","+idve+","+idhk+","+a5+","+null+","+ngaydatve+","+s+",'Đã thanh toán',"+a6+")";
 							 pst = con.prepareStatement(insert_datve);
 							pst.execute();
 							System.out.println("2");
 						}
-						else if (Label_DichvuBotro.getText()==null&&a5==null&&a6!=null) {
-							insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddv+","+idve+","+idhk+","+0+","+0+","+ngaydatve+","+s+",'Đã thanh toán',"+a6+")";
+						else if (iddvbt.equals("null")&&a5.equals("null")&&!a6.equals("null")) {
+							insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddv+","+idve+","+idhk+","+null+","+null+","+ngaydatve+","+s+",'Đã thanh toán',"+a6+")";
 							 pst = con.prepareStatement(insert_datve);
 							pst.execute();
 						}
-						else if(Label_DichvuBotro.getText()!=null&&a5!=null&&a6!=null) {
+						else if(!iddvbt.equals("null")&&!a5.equals("null")&&!a6.equals("null")) {
 								insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddv+","+idve+","+idhk+","+a5+","+iddvbt+","+ngaydatve+","+s+",'Đã thanh toán',"+a6+")";
 
 								 pst = con.prepareStatement(insert_datve);
 								pst.execute();
 							}
-						else if(Label_DichvuBotro.getText()!=null&&a5==null&&a6!=null) {
-							insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddv+","+idve+","+idhk+","+0+","+iddvbt+","+ngaydatve+","+s+",'Đã thanh toán',"+a6+")";
+						else if(!iddvbt.equals("null")&&a5.equals("null")&&!a6.equals("null")) {
+							insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddv+","+idve+","+idhk+","+null+","+iddvbt+","+ngaydatve+","+s+",'Đã thanh toán',"+a6+")";
 							 pst = con.prepareStatement(insert_datve);
 							pst.execute();
 						}
-						else if (Label_DichvuBotro.getText()==null&&a5==null&&a6==null) {
-						insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddv+","+idve+","+idhk+","+0+","+0+","+ngaydatve+","+d+",'Đã thanh toán',"+0+")";
+						else if (iddvbt.equals("null")&&a5.equals("null")&&a6.equals("null")) {
+							
+						insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddv+","+idve+","+idhk+","+null+","+null+","+ngaydatve+","+d+",'Đã thanh toán',"+null+")";
 						 pst = con.prepareStatement(insert_datve);
 						pst.execute();
 					 	}
-						else if (Label_DichvuBotro.getText()==null&&a5!=null&&a6==null) {
-							insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddv+","+idve+","+idhk+","+a5+","+0+","+ngaydatve+","+s+",'Đã thanh toán',"+0+")";
+						else if (iddvbt.equals("null")&&!a5.equals("null")&&a6.equals("null")) {
+							insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddv+","+idve+","+idhk+","+a5+","+null+","+ngaydatve+","+s+",'Đã thanh toán',"+null+")";
 							 pst = con.prepareStatement(insert_datve);
 							pst.execute();
 						}
-						else if(Label_DichvuBotro.getText()!=null&&a5==null&&a6==null) {
-							insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddv+","+idve+","+idhk+","+0+","+iddvbt+","+ngaydatve+","+t+",'Đã thanh toán',"+0+")";
+						else if(!iddvbt.equals("null")&&a5.equals("null")&&a6.equals("null")) {
+							insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddv+","+idve+","+idhk+","+null+","+iddvbt+","+ngaydatve+","+t+",'Đã thanh toán',"+null+")";
 							 pst = con.prepareStatement(insert_datve);
 							pst.execute();
 						}
 						
-						else if(Label_DichvuBotro.getText()!=null&&a5!=null&&a6==null) {
-							insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddv+","+idve+","+idhk+","+a5+","+iddvbt+","+ngaydatve+","+s+",'Đã thanh toán',"+0+")";
+						else if(!iddvbt.equals("null")&&!a5.equals("null")&&a6.equals("null")) {
+							insert_datve="insert into \"DB_AIRLINE\".\"DATVEBAY\"(\"ID\", \"VEMAYBAY_ID\", \"HANHKHACH_ID\",\"KHUYENMAI_ID\",  \"DICHVUBOTRO_ID\", \"NGAYDAT\", \"TONGTIEN\",\"TINHTRANG\",\"TAIKHOAN_ID\") values("+iddv+","+idve+","+idhk+","+a5+","+iddvbt+","+ngaydatve+","+s+",'Đã thanh toán',"+null+")";
 							 pst = con.prepareStatement(insert_datve);
 							pst.execute();
 						}
@@ -609,12 +630,12 @@ public class xacnhantt_mv1chieu extends JFrame {
 								System.out.println("insert hanh khach  co tai khoan thanh cong");
 								
 						}
-						else if (a6==null) {
+						else if (a6.equals("null")) {
 							SimpleDateFormat formatter1 = new SimpleDateFormat("dd-MM-YY hh:mm:ss");
 							String tgString1=formatter1.format(ngaysinh);
 							 String ngsinh = "TO_DATE('"+tgString1+"','yyyy-mm-dd HH24:MI:SS')";
 
-							 insert_hanhkhach="insert into \"DB_AIRLINE\".\"HANHKHACH\"(\"ID\", \"HOTEN\", \"NGAYSINH\",\"QUOCTICH\",  \"GIOITINH\", \"SDT\", \"EMAIL\",\"TAIKHOAN_ID\") values( "+idhk+", '"+hoten_hk+"',"+ngsinh+",'"+quoctich+"','"+gioitinh+"',"+sodt+",'"+email+"',"+0+")";
+							 insert_hanhkhach="insert into \"DB_AIRLINE\".\"HANHKHACH\"(\"ID\", \"HOTEN\", \"NGAYSINH\",\"QUOCTICH\",  \"GIOITINH\", \"SDT\", \"EMAIL\",\"TAIKHOAN_ID\") values( "+idhk+", '"+hoten_hk+"',"+ngsinh+",'"+quoctich+"','"+gioitinh+"',"+sodt+",'"+email+"',"+null+")";
 							  pst1 = con.prepareStatement(insert_hanhkhach);
 								pst1.execute();
 								System.out.println("insert hanh khach khong co tai khoan thanh cong");
@@ -806,6 +827,7 @@ public class xacnhantt_mv1chieu extends JFrame {
 									newQuery.setText(sqlString);
 									jd.setQuery(newQuery);
 									JasperReport jr=JasperCompileManager.compileReport(jd);
+									@SuppressWarnings("rawtypes")
 									HashMap para=new HashMap();
 									final JasperPrint j=JasperFillManager.fillReport(jr, para,con);
 									JasperViewer.viewReport(j,false);
@@ -827,8 +849,9 @@ public class xacnhantt_mv1chieu extends JFrame {
 						//JOptionPane.showMessageDialog(a, e1);						
 					} catch (SQLException e1) {
 						Component a=null;
+						e1.printStackTrace();
 
-						JOptionPane.showMessageDialog(a, e1);						
+						//JOptionPane.showMessageDialog(a, e1);						
 		
 					}
 				}}

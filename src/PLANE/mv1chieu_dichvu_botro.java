@@ -142,7 +142,7 @@ public class mv1chieu_dichvu_botro extends JFrame {
 			new Object[][] {
 			},
 			new String[] {
-				 "G\u00F3i h\u00E0nh l\u00FD", "Gi\u00E1 ti\u1EC1n"
+				 "ID","G\u00F3i h\u00E0nh l\u00FD", "Gi\u00E1 ti\u1EC1n"
 			}
 		));
 		scrollPane.setViewportView(table);
@@ -173,16 +173,17 @@ public class mv1chieu_dichvu_botro extends JFrame {
 			ResultSet rs =  ((java.sql.Statement) st).executeQuery(sql);
 			while(rs.next()) 
 			{
-				iddvbt =rs.getString(1);
+				iddvbt=rs.getString(1);
 				String goihl = rs.getString(2);
 				String giatien = rs.getString(3);   
 				
-				String tbData[] = { goihl, giatien};  
+				String tbData[] = {iddvbt, goihl, giatien};  
 					DefaultTableModel tblModel = (DefaultTableModel)table.getModel();
 					System.out.print(goihl);
 					System.out.print(giatien);
 
 					tblModel.addRow(tbData);
+					System.out.println("DỊCH VỤ BỔ TRỢ: "+iddvbt+"-------"+giatien);
 					
 			}
 			
@@ -213,6 +214,7 @@ public class mv1chieu_dichvu_botro extends JFrame {
 				
 				if (table.getSelectionModel().isSelectionEmpty()) {
 					giatien = "0 VND";
+					iddvbt="null";
 					int khongchon =JOptionPane.showConfirmDialog(null, "Bạn không chọn dịch vụ bổ trợ, bạn có muốn tiếp tục ?","Warning",JOptionPane.YES_NO_OPTION);
 					if(khongchon==JOptionPane.YES_OPTION) {
 						thanh_toan_mv1chieu ob = new thanh_toan_mv1chieu(gio_kh_di, gio_hc_di, h_ve_di, gia_ve_di, noi_di, noi_den, gio_kh_ve, gio_hc_ve, h_ve_ve, gia_ve_ve, danh_xung, hoten_hk, ngaysinh, sodt, email, quoctich, goihanhly, giatien, iddvbt);
@@ -224,8 +226,9 @@ public class mv1chieu_dichvu_botro extends JFrame {
 				else
 					
 				{  
-					goihanhly = model.getValueAt(i, 0).toString();
-					giatien = model.getValueAt(i, 1).toString() + " VND";
+					iddvbt=model.getValueAt(i, 0).toString();
+					goihanhly = model.getValueAt(i, 1).toString();
+					giatien = model.getValueAt(i, 2).toString() + " VND";
 					thanh_toan_mv1chieu ob = new thanh_toan_mv1chieu(gio_kh_di, gio_hc_di, h_ve_di, gia_ve_di, noi_di, noi_den, gio_kh_ve, gio_hc_ve, h_ve_ve, gia_ve_ve, danh_xung, hoten_hk, ngaysinh, sodt, email, quoctich, goihanhly, giatien, iddvbt);
 					ob.setVisible(true);
 					dispose();
