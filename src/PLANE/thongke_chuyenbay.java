@@ -30,7 +30,7 @@ public class thongke_chuyenbay extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
-
+	
 	/**
 	 * Launch the application.
 	 */
@@ -102,43 +102,91 @@ public class thongke_chuyenbay extends JFrame {
 		Image imgScale =imgIcon.getScaledInstance(lblNewLabel_1.getWidth(), lblNewLabel_1.getHeight(), Image.SCALE_SMOOTH);
 		ImageIcon scaleIcon=new ImageIcon(imgScale);
 		lblNewLabel_1.setIcon(scaleIcon);
-		
-		try {
-			Class.forName("oracle.jdbc.OracleDriver");
-			Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
-			Statement st=con.createStatement(); 
-			
+		quanly_chuyenbay ql=null;
 
 
-			String search="select * from THONGKECHUYENBAY";				
-			while(tableModel.getRowCount() > 0) 
-			{									
-				tableModel.removeRow(0);
+		if(ql.kt==1) {
+			try {
+				Class.forName("oracle.jdbc.OracleDriver");
+				Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+				Statement st=con.createStatement(); 
+				
+
+
+				String search="Select TK.ID, TK.CHUYENBAY_ID, CB.NGAY_GIO_KH, TK.SOLUONGVECON, TK.SOLUONGVEBAN, TK.NGUOIQUANLY_ID\r\n"
+						+ "from THONGKECHUYENBAY TK, CHUYENBAY CB\r\n"
+						+ "WHERE TK.CHUYENBAY_ID=CB.ID and NGAY_GIO_KH>="+ql.thoigian+" and  NGAY_GIO_KH<"+ql.thoigian1+" ";				
+				while(tableModel.getRowCount() > 0) 
+				{									
+					tableModel.removeRow(0);
+				}
+				
+				ResultSet rs= st.executeQuery(search);
+				while(rs.next()) {
+					String ID =rs.getString(1);
+					String id_cb =rs.getString(2);
+					String thoigian =rs.getString(3);
+					String slvecon =rs.getString(4);
+					String slveban =rs.getString(5);
+					String ID_NQL =rs.getString(6);
+
+								
+					tableModel.addRow(new Object[] {ID,id_cb,thoigian,slvecon,slveban,ID_NQL});
+
+					table.setModel(tableModel);
+
+				}
+				
+				con.close();
+				
+			} catch (ClassNotFoundException e1) {
+				e1.printStackTrace();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
 			}
 			
-			ResultSet rs= st.executeQuery(search);
-			while(rs.next()) {
-				String ID =rs.getString(1);
-				String id_cb =rs.getString(2);
-				String tg =rs.getString(3);
-				String slvecon =rs.getString(4);
-				String slveban =rs.getString(5);
-				String ID_NQL =rs.getString(6);
+		}
+		else if(ql.kt==2) {
+			try {
+				Class.forName("oracle.jdbc.OracleDriver");
+				Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+				Statement st=con.createStatement(); 
+				
 
-							
-				tableModel.addRow(new Object[] {ID,id_cb,tg,slvecon,slveban,ID_NQL});
 
-				table.setModel(tableModel);
+				String search="Select TK.ID, TK.CHUYENBAY_ID, CB.NGAY_GIO_KH, TK.SOLUONGVECON, TK.SOLUONGVEBAN, TK.NGUOIQUANLY_ID\r\n"
+						+ "from THONGKECHUYENBAY TK, CHUYENBAY CB\r\n"
+						+ "WHERE TK.CHUYENBAY_ID=CB.ID and NGAY_GIO_KH>="+ql.thoigian+" and  NGAY_GIO_KH<"+ql.thoigian1+" ";				
+				while(tableModel.getRowCount() > 0) 
+				{									
+					tableModel.removeRow(0);
+				}
+				
+				ResultSet rs= st.executeQuery(search);
+				while(rs.next()) {
+					String ID =rs.getString(1);
+					String id_cb =rs.getString(2);
+					String thoigian =rs.getString(3);
+					String slvecon =rs.getString(4);
+					String slveban =rs.getString(5);
+					String ID_NQL =rs.getString(6);
 
+								
+					tableModel.addRow(new Object[] {ID,id_cb,thoigian,slvecon,slveban,ID_NQL});
+
+					table.setModel(tableModel);
+
+				}
+				
+				con.close();
+				
+			} catch (ClassNotFoundException e1) {
+				e1.printStackTrace();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
 			}
-			
-			con.close();
-			
-		} catch (ClassNotFoundException e1) {
-			e1.printStackTrace();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
 		}
 
+		
 	}
 }

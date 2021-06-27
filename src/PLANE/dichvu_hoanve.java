@@ -236,6 +236,9 @@ public class dichvu_hoanve extends JFrame {
 					
 				}
 				
+				PreparedStatement pst2= con.prepareStatement("update DATVEBAY set TINHTRANG='Đã hoàn' where ID= "+idString+"");		
+				pst2.execute();
+				
 				
 				String C= "select DT.ID, DT.TONGPHIHOANVE,DT.TONGDOANHTHU \r\n"
 						+ "from DOANHTHUCHUYENBAY DT, VEMAYBAY VE, DATVEBAY DV \r\n"

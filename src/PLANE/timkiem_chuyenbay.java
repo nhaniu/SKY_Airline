@@ -148,19 +148,24 @@ public class timkiem_chuyenbay extends JFrame {
 					Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
 					Statement st=con.createStatement(); 
 					
-					String day = new String();
-					String month = new String();
-					String year = new String();
+//					String day = new String();
+//					String month = new String();
+//					String year = new String();
+//					
+//					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+//					String tgString=formatter.format(dateChooser.getDate());
+//					day = tgString.substring(8,10);
+//					month = tgString.substring(5,7);
+//					year = tgString.substring(0,4);
 					
-					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-					String tgString=formatter.format(dateChooser.getDate());
-					day = tgString.substring(8,10);
-					month = tgString.substring(5,7);
-					year = tgString.substring(0,4);
+					SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-YY");		
+					String tgString=formatter.format(dateChooser.getDate());	
+					 String thoigian="TO_DATE('"+tgString+"','DD-MM-RR')";
+					 String thoigian1="TO_DATE('"+tgString+" 23:59:59','DD-MM-RR HH24:MI:SS')";
 					
-					System.out.println(day+month+year);
+				//	System.out.println(day+month+year);
 					//String search="select *	from CHUYENBAY where SANBAYDI = 'Hà Nội (HAN), Việt Nam' and SANBAYDEN='Tp. Hồ Chí Minh (SGN), Việt Nam' AND and EXTRACT(DAY FROM DATE '2021-01-01'"+"'"+day+"'"+" and EXTRACT(MONTH FROM DATE '2021-01-01'"+"'"+month+"'"+" and EXTRACT(YEAR FROM DATE '2021-01-01'"+"'"+year+"'";			
-					String search="select * from CHUYENBAY where SANBAYDI = '"+comboBox_noidi.getSelectedItem()+"' and SANBAYDEN ='"+comboBox_noiden.getSelectedItem()+"' AND EXTRACT(DAY FROM NGAY_GIO_KH)="+"'"+day+"'"+" and EXTRACT(MONTH FROM NGAY_GIO_KH)="+"'"+month+"'"+" and EXTRACT(YEAR FROM NGAY_GIO_KH)="+"'"+year+"'";		
+					String search="select * from CHUYENBAY where SANBAYDI = '"+comboBox_noidi.getSelectedItem()+"' and SANBAYDEN ='"+comboBox_noiden.getSelectedItem()+"' AND NGAY_GIO_KH>="+thoigian+" and  NGAY_GIO_KH<"+thoigian1+"";		
 				
 					while(tableModel.getRowCount() > 0) 
 					{									
@@ -168,7 +173,12 @@ public class timkiem_chuyenbay extends JFrame {
 					}
 					
 					ResultSet rs= st.executeQuery(search);
-					if(rs.next()) {
+					if(!rs.next()) {
+						JOptionPane.showMessageDialog(null, "Không tìm thấy chuyến bay");
+	
+
+					}
+					while(rs.next()) {
 						String ID =rs.getString(1);
 						String ttmaybayid =rs.getString(2);
 						String sanbaydi =rs.getString(3);
@@ -191,15 +201,7 @@ public class timkiem_chuyenbay extends JFrame {
 						table.setVisible(true);
 					
 					}
-					else {
-						JOptionPane.showMessageDialog(null, "Không tìm thấy chuyến bay");
-							
-							
 					
-					
-						
-
-					}
 					
 					con.close();
 					

@@ -194,7 +194,7 @@ public class Quanly_taichinh extends JFrame {
 		bt_1ngay.setBounds(144, 81, 89, 23);
 		contentPane.add(bt_1ngay);
 		
-		JButton bt_1thang = new JButton("Nhiều ngày");
+		JButton bt_1thang = new JButton("Tùy chọn");
 		bt_1thang.setBackground(new Color(255, 255, 224));
 		bt_1thang.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -255,8 +255,6 @@ public class Quanly_taichinh extends JFrame {
 						Class.forName("oracle.jdbc.OracleDriver");
 						 con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
 						Statement st=con.createStatement(); 
-						con.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
-						con.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
 
 						SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-YY");		
 						String tgString=formatter.format(dateChooser1.getDate());	

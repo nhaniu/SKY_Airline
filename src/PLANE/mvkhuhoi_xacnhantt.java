@@ -1060,8 +1060,7 @@ public class mvkhuhoi_xacnhantt extends JFrame {
 																		
 												FileInputStream in=new FileInputStream(new File("C:\\Users\\nguyen thi nhan\\Documents\\SKY_Airline\\src\\PLANE\\XUAT_VE.jrxml"));
 												JasperDesign jd=JRXmlLoader.load(in);
-												
-												
+																								
 											
 												String sqlString="SELECT DISTINCT *FROM COPYVE";				
 												JRDesignQuery newQuery=new JRDesignQuery();

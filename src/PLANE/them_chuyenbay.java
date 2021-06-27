@@ -331,7 +331,7 @@ public class them_chuyenbay extends JFrame {
 //				Component a=null;
 //				JOptionPane.showMessageDialog(a, "Đã thêm thành công");
 
-				
+				JOptionPane.showMessageDialog(null, "Thêm chuyến bay thành công");
 				con.close();
 			} catch (ClassNotFoundException e1) {
 				JOptionPane.showMessageDialog(null, e);
