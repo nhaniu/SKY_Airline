@@ -20,16 +20,12 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.beans.Statement;
 import java.nio.channels.SelectableChannel;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.sql.*;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
-import java.sql.Date;
 
 public class muave_motchieu extends JFrame {
 
@@ -38,7 +34,17 @@ public class muave_motchieu extends JFrame {
 	public static String idhv;
 	public static String idcb;
 
-	
+	Connection con=null;
+	private JComboBox comboBox_noidi;
+	private JComboBox comboBox_noiden;
+
+
+	public muave_motchieu() {
+		initComponent();
+		loadCombobox();
+		loadCombobox1();
+
+	}
 	/**
 	 * Launch the application.
 	 */
@@ -55,10 +61,48 @@ public class muave_motchieu extends JFrame {
 		});
 	}
 
+	public void loadCombobox() {
+		try {
+			Class.forName("oracle.jdbc.OracleDriver");
+			con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+             PreparedStatement pst = con.prepareStatement("Select TENSANBAY from SANBAY");
+				ResultSet rs= pst.executeQuery();
+				while(rs.next()) {
+					comboBox_noidi.addItem(rs.getString(1));
+
+				}
+	         
+
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		
+	}
+	public void loadCombobox1() {
+		try {
+			Class.forName("oracle.jdbc.OracleDriver");
+			con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+             PreparedStatement pst = con.prepareStatement("Select TENSANBAY from SANBAY");
+				ResultSet rs= pst.executeQuery();
+				while(rs.next()) {
+					comboBox_noiden.addItem(rs.getString(1));
+
+				}
+	         
+
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		
+	}
 	/**
 	 * Create the frame.
 	 */
-	public muave_motchieu() {
+	public void initComponent() {
 		setTitle("SKY Airline");
 		setVisible(true);
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
@@ -82,80 +126,11 @@ public class muave_motchieu extends JFrame {
 		lb_ngay_di.setBounds(10, 69, 49, 14);
 		contentPane.add(lb_ngay_di);
 		
-		final JComboBox comboBox_noiden = new JComboBox();
+		comboBox_noiden = new JComboBox();
 		comboBox_noiden.setBounds(388, 30, 216, 22);
 		contentPane.add(comboBox_noiden);
 		
-		final JComboBox comboBox_noidi = new JComboBox();
-		comboBox_noidi.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(comboBox_noidi.getSelectedItem().equals("Hà Nội (HAN), Việt Nam"))
-				{
-					comboBox_noiden.removeAllItems();
-					comboBox_noiden.setSelectedItem(null);
-					comboBox_noiden.addItem("Tp. Hồ Chí Minh (SGN), Việt Nam");
-					comboBox_noiden.addItem("Đà Nẵng (DAD), Việt Nam");
-					comboBox_noiden.addItem("Phú Quốc (PQC), Việt Nam");
-					comboBox_noiden.addItem("Nha Trang (CXR), Việt Nam");
-					comboBox_noiden.addItem("Buôn Ma Thuột (BMV), Việt Nam");
-					comboBox_noiden.addItem("Đồng Hới (VDH), Việt Nam");
-					
-				}
-				else if (comboBox_noidi.getSelectedItem().equals("Tp. Hồ Chí Minh (SGN), Việt Nam")) {
-					comboBox_noiden.removeAllItems();
-					comboBox_noiden.setSelectedItem(null);
-					comboBox_noiden.addItem("Hà Nội (HAN), Việt Nam");
-					comboBox_noiden.addItem("Đà Nẵng (DAD), Việt Nam");
-					comboBox_noiden.addItem("Phú Quốc (PQC), Việt Nam");
-					comboBox_noiden.addItem("Nha Trang (CXR), Việt Nam");
-					comboBox_noiden.addItem("Buôn Ma Thuột (BMV), Việt Nam");
-					comboBox_noiden.addItem("Đồng Hới (VDH), Việt Nam");
-				}
-				else if (comboBox_noidi.getSelectedItem().equals("Đà Nẵng (DAD), Việt Nam")) {
-					comboBox_noiden.removeAllItems();
-					comboBox_noiden.setSelectedItem(null);
-					comboBox_noiden.addItem("Hà Nội (HAN), Việt Nam");
-					comboBox_noiden.addItem("Tp. Hồ Chí Minh (SGN), Việt Nam");
-					comboBox_noiden.addItem("Phú Quốc (PQC), Việt Nam");
-
-				}
-				else if (comboBox_noidi.getSelectedItem().equals("Phú Quốc (PQC), Việt Nam")) {
-					comboBox_noiden.removeAllItems();
-					comboBox_noiden.setSelectedItem(null);
-					comboBox_noiden.addItem("Hà Nội (HAN), Việt Nam");
-					comboBox_noiden.addItem("Tp. Hồ Chí Minh (SGN), Việt Nam");
-					comboBox_noiden.addItem("Đà Nẵng (DAD), Việt Nam");
-					comboBox_noiden.addItem("Nha Trang (CXR), Việt Nam");
-
-				}
-				else if (comboBox_noidi.getSelectedItem().equals("Nha Trang (CXR), Việt Nam")) {
-					comboBox_noiden.removeAllItems();
-					comboBox_noiden.setSelectedItem(null);
-					comboBox_noiden.addItem("Hà Nội (HAN), Việt Nam");
-					comboBox_noiden.addItem("Tp. Hồ Chí Minh (SGN), Việt Nam");
-					comboBox_noiden.addItem("Đồng Hới (VDH), Việt Nam");
-					comboBox_noiden.addItem("Phú Quốc (PQC), Việt Nam");
-
-				}
-				else if (comboBox_noidi.getSelectedItem().equals("Buôn Ma Thuột (BMV), Việt Nam")) {
-					comboBox_noiden.removeAllItems();
-					comboBox_noiden.setSelectedItem(null);
-					comboBox_noiden.addItem("Hà Nội (HAN), Việt Nam");
-					comboBox_noiden.addItem("Tp. Hồ Chí Minh (SGN), Việt Nam");
-
-				}
-				else if (comboBox_noidi.getSelectedItem().equals("Đồng Hới (VDH), Việt Nam")) {
-					comboBox_noiden.removeAllItems();
-					comboBox_noiden.setSelectedItem(null);
-					comboBox_noiden.addItem("Hà Nội (HAN), Việt Nam");
-					comboBox_noiden.addItem("Tp. Hồ Chí Minh (SGN), Việt Nam");
-					comboBox_noiden.addItem("Nha Trang (CXR), Việt Nam");
-
-				}
-				
-			}
-		});
-		comboBox_noidi.setModel(new DefaultComboBoxModel(new String[] {"Hà Nội (HAN), Việt Nam", "Tp. Hồ Chí Minh (SGN), Việt Nam", "Đà Nẵng (DAD), Việt Nam", "Phú Quốc (PQC), Việt Nam", "Nha Trang (CXR), Việt Nam", "Buôn Ma Thuột (BMV), Việt Nam", "Đồng Hới (VDH), Việt Nam"}));
+		comboBox_noidi = new JComboBox();
 		comboBox_noidi.setBounds(69, 30, 216, 22);
 		contentPane.add(comboBox_noidi);
 		
@@ -251,6 +226,7 @@ public class muave_motchieu extends JFrame {
 							
 					}
 					
+	
 						
 					conn.close();
 				}

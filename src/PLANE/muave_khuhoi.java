@@ -52,10 +52,59 @@ public class muave_khuhoi extends JFrame {
 		});
 	}
 
+	Connection con=null;
+	private JComboBox comboBox_noidi;
+	private JComboBox comboBox_noiden;
+
+
+	public  muave_khuhoi()  {
+		initComponent();
+		loadCombobox();
+		loadCombobox1();
+
+	}
+	public void loadCombobox() {
+		try {
+			Class.forName("oracle.jdbc.OracleDriver");
+			con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+             PreparedStatement pst = con.prepareStatement("Select TENSANBAY from SANBAY");
+				ResultSet rs= pst.executeQuery();
+				while(rs.next()) {
+					comboBox_noidi.addItem(rs.getString(1));
+
+				}
+	         
+
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		
+	}
+	public void loadCombobox1() {
+		try {
+			Class.forName("oracle.jdbc.OracleDriver");
+			con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+             PreparedStatement pst = con.prepareStatement("Select TENSANBAY from SANBAY");
+				ResultSet rs= pst.executeQuery();
+				while(rs.next()) {
+					comboBox_noiden.addItem(rs.getString(1));
+
+				}
+	         
+
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		
+	}
 	/**
 	 * Create the frame.
 	 */
-	public muave_khuhoi() {
+	public void initComponent() {
 		setTitle("SKY Airline");
 		setVisible(true);
 		setBackground(new Color(240, 255, 255));
@@ -72,8 +121,8 @@ public class muave_khuhoi extends JFrame {
 		lb_noidi.setBounds(41, 28, 49, 19);
 		contentPane.add(lb_noidi);
 		
-		final JComboBox comboBox_noidi = new JComboBox();
-		comboBox_noidi.setModel(new DefaultComboBoxModel(new String[] {"Hà Nội (HAN), Việt Nam", "Tp. Hồ Chí Minh (SGN), Việt Nam", "Đà Nẵng (DAD), Việt Nam", "Phú Quốc (PQC), Việt Nam", "Nha Trang (CXR), Việt Nam", "Buôn Ma Thuột (BMV), Việt Nam", "Đồng Hới (VDH), Việt Nam"}));
+		 comboBox_noidi = new JComboBox();
+		//comboBox_noidi.setModel(new DefaultComboBoxModel(new String[] {"Hà Nội (HAN), Việt Nam", "Tp. Hồ Chí Minh (SGN), Việt Nam", "Đà Nẵng (DAD), Việt Nam", "Phú Quốc (PQC), Việt Nam", "Nha Trang (CXR), Việt Nam", "Buôn Ma Thuột (BMV), Việt Nam", "Đồng Hới (VDH), Việt Nam"}));
 		comboBox_noidi.setBounds(100, 25, 183, 22);
 		contentPane.add(comboBox_noidi);
 		
@@ -82,8 +131,8 @@ public class muave_khuhoi extends JFrame {
 		lb_noiden.setBounds(354, 28, 68, 18);
 		contentPane.add(lb_noiden);
 		
-		final JComboBox comboBox_noiden = new JComboBox();
-		comboBox_noiden.setModel(new DefaultComboBoxModel(new String[] {"Tp. Hồ Chí Minh (SGN), Việt Nam", "Hà Nội (HAN), Việt Nam", "Đà Nẵng (DAD), Việt Nam", "Phú Quốc (PQC), Việt Nam", "Nha Trang (CXR), Việt Nam", "Buôn Ma Thuột (BMV), Việt Nam", "Đồng Hới (VDH), Việt Nam"}));
+		 comboBox_noiden = new JComboBox();
+		//comboBox_noiden.setModel(new DefaultComboBoxModel(new String[] {"Tp. Hồ Chí Minh (SGN), Việt Nam", "Hà Nội (HAN), Việt Nam", "Đà Nẵng (DAD), Việt Nam", "Phú Quốc (PQC), Việt Nam", "Nha Trang (CXR), Việt Nam", "Buôn Ma Thuột (BMV), Việt Nam", "Đồng Hới (VDH), Việt Nam"}));
 		comboBox_noiden.setBounds(419, 25, 204, 22);
 		contentPane.add(comboBox_noiden);
 		

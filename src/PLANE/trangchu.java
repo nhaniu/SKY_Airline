@@ -548,15 +548,7 @@ public class trangchu extends JFrame {
 		menuItem_QLCB.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		menu_NQL.add(menuItem_QLCB);
 		
-		JMenuItem menuItem_QLCD = new JMenuItem("Quản lý chặng dừng");
-		menuItem_QLCD.setVisible(false);
-		menuItem_QLCD.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new quanly_changdung();
-			}
-		});
-		menuItem_QLCD.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		menu_NQL.add(menuItem_QLCD);
+
 		
 		JMenuItem menuItem_QLTC = new JMenuItem("Quản lý tài chính");
 		menuItem_QLTC.addActionListener(new ActionListener() {
@@ -571,6 +563,15 @@ public class trangchu extends JFrame {
 				new Dangky_taikhoan_nhanvien();
 			}
 		});
+		
+		JMenuItem mntmNewMenuItem = new JMenuItem("Quản lý sân bay");
+		mntmNewMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new quanly_sanbay();
+			}
+		});
+		mntmNewMenuItem.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		menu_NQL.add(mntmNewMenuItem);
 		menuitem_dk_taikhoan_nv.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		menu_NQL.add(menuitem_dk_taikhoan_nv);
 		menuItem_QLTC.setFont(new Font("Segoe UI", Font.PLAIN, 14));
@@ -655,23 +656,6 @@ public class trangchu extends JFrame {
 					}
 				});
 				menu_dangnhap.add(item_quanly);
-				
-				JMenu menu_changdung = new JMenu("Chặng dừng ");
-				menuBar.add(menu_changdung);
-				menu_changdung.setFont(new Font("Segoe UI", Font.BOLD, 15));
-				menu_changdung.setBounds(264, 96, 103, 42);
-				menu_changdung.setVisible(false);
-				
-				JMenuItem menu_tracuuCD = new JMenuItem("Tra cứu");
-				menu_tracuuCD.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						new tracuu_changdung();
-					}
-					
-				});
-				menu_tracuuCD.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-				menu_tracuuCD.setHorizontalAlignment(SwingConstants.CENTER);
-				menu_changdung.add(menu_tracuuCD);
 				bt_user.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 					}

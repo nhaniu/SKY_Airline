@@ -203,10 +203,9 @@ public void autoID() {
 			rs.close();
 			DB_AIRLINE.close();
 		} catch (ClassNotFoundException e) {
-			java.util.logging.Logger.getLogger(them_hanhkhach.class.getName()).log(Level.SEVERE,null,e);
+			JOptionPane.showMessageDialog(null, e);
 		} catch (SQLException e) {
-			java.util.logging.Logger.getLogger(them_hanhkhach.class.getName()).log(Level.SEVERE,null,e);
-
+			JOptionPane.showMessageDialog(null, e);
 		}  
 	}
 }

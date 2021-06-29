@@ -142,7 +142,7 @@ public class Quanly_taikhoan extends JFrame {
 		bt_capnhat.setVisible(false);
 		bt_capnhat.setBackground(new Color(255, 255, 224));
 		bt_capnhat.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		bt_capnhat.setBounds(779, 363, 117, 22);
+		bt_capnhat.setBounds(578, 362, 117, 22);
 		contentPane.add(bt_capnhat);
 		try {
 			
@@ -192,12 +192,66 @@ public class Quanly_taikhoan extends JFrame {
 			e2.printStackTrace();
 		}
 		
+	
+		
+		JButton btnNewButton = new JButton("Refresh ");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					
+				Class.forName("oracle.jdbc.OracleDriver");
+				Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+				Statement st=con.createStatement(); 
+				
+				String search="select * from TAIKHOAN ";					
+									
+				while(model.getRowCount() > 0) 
+				{									
+					model.removeRow(0);
+				}
+				
+				ResultSet rs= st.executeQuery(search);
+				while(rs.next()) {
+					String ID =rs.getString(1);
+					String tendn =rs.getString(2);
+					String mk =rs.getString(3);
+					String ngaybd =rs.getString(4);
+					String sdt =rs.getString(5);
+					String email =rs.getString(6);
+					String tongtien =rs.getString(7);
+					String diem =rs.getString(8);
+					String hang =rs.getString(9);
+			
+					
+
+					
+					model.addRow(new Object[] {ID,tendn,mk,ngaybd,sdt,email,tongtien,diem,hang});
+
+					table.setModel(model);
+				
+				
+				}
+				rs.close();
+
+				con.close();
+
+				
+			} catch (ClassNotFoundException e1) {
+				e1.printStackTrace();
+			} catch (SQLException e2) {
+				e2.printStackTrace();
+			}
+			}
+		});
+		btnNewButton.setBackground(new Color(255, 255, 224));
+		btnNewButton.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		btnNewButton.setBounds(877, 363, 117, 23);
+		contentPane.add(btnNewButton);
+		
 		JLabel lblNewLabel_1 = new JLabel("New label");
 		lblNewLabel_1.setIcon(new ImageIcon("anh.jpg"));
 		lblNewLabel_1.setBounds(0, 0, 1079, 428);
 		contentPane.add(lblNewLabel_1);
-		
-		
 		
 	
 		

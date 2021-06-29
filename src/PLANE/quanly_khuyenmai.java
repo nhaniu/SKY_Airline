@@ -115,7 +115,7 @@ public class quanly_khuyenmai extends JFrame {
 		});
 		bt_xoa.setBackground(new Color(255, 255, 224));
 		bt_xoa.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		bt_xoa.setBounds(597, 386, 102, 23);
+		bt_xoa.setBounds(555, 386, 102, 23);
 		contentPane.add(bt_xoa);
 		bt_xoa.setVisible(false);
 		
@@ -147,7 +147,7 @@ public class quanly_khuyenmai extends JFrame {
 		});
 		bt_capnhat.setBackground(new Color(255, 255, 224));
 		bt_capnhat.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		bt_capnhat.setBounds(360, 386, 121, 23);
+		bt_capnhat.setBounds(327, 386, 121, 23);
 		contentPane.add(bt_capnhat);
 		bt_capnhat.setVisible(false);
 
@@ -220,10 +220,63 @@ public class quanly_khuyenmai extends JFrame {
 			e1.printStackTrace();
 		}
 		
+		
+		
+		JButton btnNewButton = new JButton("Refresh ");
+		contentPane.add(btnNewButton);
+		btnNewButton.setBackground(new Color(255, 255, 224));
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					Class.forName("oracle.jdbc.OracleDriver");
+					Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+					Statement st=con.createStatement(); 
+					
+
+					String search="select* from BKHUYENMAI";				
+					while(tableModel.getRowCount() > 0) 
+					{									
+						tableModel.removeRow(0);
+					}
+					
+					ResultSet rs= st.executeQuery(search);
+					while(rs.next()) {
+						String id =rs.getString(1);
+						String ngaybatdau =rs.getString(2);
+						String ngayketthuc =rs.getString(3);
+						String noidung =rs.getString(4);					
+						String phantram =rs.getString(5);					
+
+						
+						tableModel.addRow(new Object[] {id,ngaybatdau,ngayketthuc,noidung,phantram});
+						table.setModel(tableModel);
+						table.setVisible(true);
+						scrollPane.setVisible(true);
+						bt_them.setVisible(true);
+						bt_xoa.setVisible(true);
+						bt_capnhat.setVisible(true);
+						
+
+					}
+					
+					con.close();
+					
+				} catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				
+			}
+		});
+		btnNewButton.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		btnNewButton.setBounds(724, 386, 107, 23);
+		
 		JLabel lblNewLabel = new JLabel("New label");
 		lblNewLabel.setIcon(new ImageIcon("anh.jpg"));
-		lblNewLabel.setBounds(0, 0, 866, 457);
+		lblNewLabel.setBounds(10, 0, 866, 457);
 		contentPane.add(lblNewLabel);
-		
 	}
+	
 }

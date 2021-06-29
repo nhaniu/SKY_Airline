@@ -614,34 +614,7 @@ public class xacnhantt_mv1chieu extends JFrame {
 						
 						
 						
-						PreparedStatement pst1=null;
-						String insert_hanhkhach;
-						if(a6!=null) {
-	
-							SimpleDateFormat formatter1 = new SimpleDateFormat("dd-MM-YY hh:mm:ss");
-							String tgString1=formatter1.format(ngaysinh);
-							 String ngsinh = "TO_DATE('"+tgString1+"','yyyy-mm-dd HH24:MI:SS')";
-
-
-
-							 insert_hanhkhach="insert into \"DB_AIRLINE\".\"HANHKHACH\"(\"ID\", \"HOTEN\", \"NGAYSINH\",\"QUOCTICH\",  \"GIOITINH\", \"SDT\", \"EMAIL\",\"TAIKHOAN_ID\") values( "+idhk+", '"+hoten_hk+"',"+ngsinh+",'"+quoctich+"','"+gioitinh+"',"+sodt+",'"+email+"',"+matk+")";
-							  pst1 = con.prepareStatement(insert_hanhkhach);
-								pst1.execute();
-								System.out.println("insert hanh khach  co tai khoan thanh cong");
-								
-						}
-						else if (a6.equals("null")) {
-							SimpleDateFormat formatter1 = new SimpleDateFormat("dd-MM-YY hh:mm:ss");
-							String tgString1=formatter1.format(ngaysinh);
-							 String ngsinh = "TO_DATE('"+tgString1+"','yyyy-mm-dd HH24:MI:SS')";
-
-							 insert_hanhkhach="insert into \"DB_AIRLINE\".\"HANHKHACH\"(\"ID\", \"HOTEN\", \"NGAYSINH\",\"QUOCTICH\",  \"GIOITINH\", \"SDT\", \"EMAIL\",\"TAIKHOAN_ID\") values( "+idhk+", '"+hoten_hk+"',"+ngsinh+",'"+quoctich+"','"+gioitinh+"',"+sodt+",'"+email+"',"+null+")";
-							  pst1 = con.prepareStatement(insert_hanhkhach);
-								pst1.execute();
-								System.out.println("insert hanh khach khong co tai khoan thanh cong");
-
-						}
-						
+												
 						
 						
 						Statement st=con.createStatement(); 
@@ -752,12 +725,17 @@ public class xacnhantt_mv1chieu extends JFrame {
 							DangNhap dn=null;
 							String tendangnhap=dn.tendn;
 							String mkhau=dn.mk;
+						
+							PreparedStatement pst1=null;
+							String insert_hanhkhach;
 							if(tendangnhap!=null) {
 	
-									String searchtkh="select TONGTIENMUAVE from TAIKHOAN where TENDANGNHAP='"+tendangnhap+"' and MATKHAU='"+mkhau+"'";					
+									String searchtkh="select TONGTIENMUAVE, ID from TAIKHOAN where TENDANGNHAP='"+tendangnhap+"' and MATKHAU='"+mkhau+"'";					
 									ResultSet rs6= st.executeQuery(searchtkh);
 									rs6.next();
 										String tongtientk =rs6.getString(1);	
+										String idtk =rs6.getString(2);	
+
 										
 										int tttk=Integer.parseInt(tongtientk);
 										int tongtienupdate=(int) (tttk+ttdv_daupdate);
@@ -783,8 +761,32 @@ public class xacnhantt_mv1chieu extends JFrame {
 										pst4.execute();
 
 										System.out.println("update tai khoan thanh cong");
+										
+										SimpleDateFormat formatter1 = new SimpleDateFormat("dd-MM-YY hh:mm:ss");
+										String tgString1=formatter1.format(ngaysinh);
+										 String ngsinh = "TO_DATE('"+tgString1+"','yyyy-mm-dd HH24:MI:SS')";
+
+
+										
+											
+										 insert_hanhkhach="insert into \"DB_AIRLINE\".\"HANHKHACH\"(\"ID\", \"HOTEN\", \"NGAYSINH\",\"QUOCTICH\",  \"GIOITINH\", \"SDT\", \"EMAIL\",\"TAIKHOAN_ID\") values( "+idhk+", '"+hoten_hk+"',"+ngsinh+",'"+quoctich+"','"+gioitinh+"',"+sodt+",'"+email+"',"+idtk+")";
+										  pst1 = con.prepareStatement(insert_hanhkhach);
+											pst1.execute();
+											System.out.println("insert hanh khach  co tai khoan thanh cong");
 
 								}
+							else {
+								
+									SimpleDateFormat formatter1 = new SimpleDateFormat("dd-MM-YY hh:mm:ss");
+									String tgString1=formatter1.format(ngaysinh);
+									 String ngsinh = "TO_DATE('"+tgString1+"','yyyy-mm-dd HH24:MI:SS')";
+
+									 insert_hanhkhach="insert into \"DB_AIRLINE\".\"HANHKHACH\"(\"ID\", \"HOTEN\", \"NGAYSINH\",\"QUOCTICH\",  \"GIOITINH\", \"SDT\", \"EMAIL\",\"TAIKHOAN_ID\") values( "+idhk+", '"+hoten_hk+"',"+ngsinh+",'"+quoctich+"','"+gioitinh+"',"+sodt+",'"+email+"',"+null+")";
+									  pst1 = con.prepareStatement(insert_hanhkhach);
+										pst1.execute();
+										System.out.println("insert hanh khach khong co tai khoan thanh cong");
+								
+							}
 							
 							
 							 String thoigiankh = "TO_DATE('"+gio_kh_di+"','yyyy-mm-dd HH24:MI:SS')";
@@ -803,7 +805,7 @@ public class xacnhantt_mv1chieu extends JFrame {
 						rs2.close();
 						rs1.close();
 						rs.close();
-						pst1.close();
+						//pst1.close();
 						pst2.close();
 						pst.close();
 						JOptionPane.showMessageDialog(null, "Mua vé thành công");

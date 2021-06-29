@@ -137,7 +137,7 @@ public class Quanly_dv_muathemhanhly extends JFrame {
 		});
 		bt_sua.setBackground(new Color(255, 255, 224));
 		bt_sua.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		bt_sua.setBounds(326, 313, 99, 23);
+		bt_sua.setBounds(234, 313, 99, 23);
 		contentPane.add(bt_sua);
 		
 		try {
@@ -181,11 +181,58 @@ public class Quanly_dv_muathemhanhly extends JFrame {
 			e1.printStackTrace();
 		}
 		
+	
+		JButton btnNewButton = new JButton("Refresh ");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Class.forName("oracle.jdbc.OracleDriver");
+					Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+					Statement st=con.createStatement(); 
+					
+
+
+					String search="select * from DICHVUBOTRO";				
+					while(tableModel.getRowCount() > 0) 
+					{									
+						tableModel.removeRow(0);
+					}
+					
+					ResultSet rs= st.executeQuery(search);
+					while(rs.next()) {
+						String ID =rs.getString(1);
+						String noidung =rs.getString(2);
+						String giatien =rs.getString(3);
+						
+				
+						
+
+						
+						tableModel.addRow(new Object[] {ID,noidung,giatien});
+
+						table.setModel(tableModel);
+
+
+					}
+					
+					con.close();
+					
+				} catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnNewButton.setBackground(new Color(255, 255, 224));
+		btnNewButton.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		btnNewButton.setBounds(378, 314, 99, 23);
+		contentPane.add(btnNewButton);
+		
 		JLabel lblNewLabel = new JLabel("New label");
 		lblNewLabel.setIcon(new ImageIcon("anh.jpg"));
 		lblNewLabel.setBounds(0, 0, 526, 385);
 		contentPane.add(lblNewLabel);
-		
 		
 	
 		

@@ -48,13 +48,60 @@ public class them_chuyenbay extends JFrame {
 	private JTextField textField_tongsove;
 	private JTextField textField_IDmb;
 	private JLabel lb_id;
+	Connection con=null;
+	private JComboBox comboBox_noidi;
+	private JComboBox comboBox_noiden;
+
 
 	public them_chuyenbay() {
 		initComponent();
-		autoID();}
+		autoID();
+		loadCombobox();
+		loadCombobox1();
+
+	}
 	/**
 	 * Launch the application.
 	 */
+	
+	public void loadCombobox() {
+		try {
+			Class.forName("oracle.jdbc.OracleDriver");
+			con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+             PreparedStatement pst = con.prepareStatement("Select TENSANBAY from SANBAY");
+				ResultSet rs= pst.executeQuery();
+				while(rs.next()) {
+					comboBox_noidi.addItem(rs.getString(1));
+
+				}
+	         
+
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		
+	}
+	public void loadCombobox1() {
+		try {
+			Class.forName("oracle.jdbc.OracleDriver");
+			con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+             PreparedStatement pst = con.prepareStatement("Select TENSANBAY from SANBAY");
+				ResultSet rs= pst.executeQuery();
+				while(rs.next()) {
+					comboBox_noiden.addItem(rs.getString(1));
+
+				}
+	         
+
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		
+	}
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -94,82 +141,15 @@ public class them_chuyenbay extends JFrame {
 		contentPane.add(lb_sbdi);
 		
 		
-		JComboBox comboBox_noiden = new JComboBox();
+		 comboBox_noiden = new JComboBox();
+		
 		comboBox_noiden.setBounds(559, 133, 151, 21);
 		contentPane.add(comboBox_noiden);
 		
-		final JComboBox comboBox_noidi = new JComboBox();
-		comboBox_noidi.setModel(new DefaultComboBoxModel(new String[] {"Hà Nội (HAN), Việt Nam", "Tp. Hồ Chí Minh (SGN), Việt Nam", "Đà Nẵng (DAD), Việt Nam", "Phú Quốc (PQC), Việt Nam", "Nha Trang (CXR), Việt Nam", "Buôn Ma Thuột (BMV), Việt Nam", "Đồng Hới (VDH), Việt Nam"}));
+		 comboBox_noidi = new JComboBox();
 		comboBox_noidi.setBounds(172, 133, 151, 20);
 		contentPane.add(comboBox_noidi);
-		comboBox_noidi.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(comboBox_noidi.getSelectedItem().equals("Hà Nội (HAN), Việt Nam"))
-				{
-					comboBox_noiden.removeAllItems();
-					comboBox_noiden.setSelectedItem(null);
-					comboBox_noiden.addItem("Tp. Hồ Chí Minh (SGN), Việt Nam");
-					comboBox_noiden.addItem("Đà Nẵng (DAD), Việt Nam");
-					comboBox_noiden.addItem("Phú Quốc (PQC), Việt Nam");
-					comboBox_noiden.addItem("Nha Trang (CXR), Việt Nam");
-					comboBox_noiden.addItem("Buôn Ma Thuột (BMV), Việt Nam");
-					comboBox_noiden.addItem("Đồng Hới (VDH), Việt Nam");
-					
-				}
-				else if (comboBox_noidi.getSelectedItem().equals("Tp. Hồ Chí Minh (SGN), Việt Nam")) {
-					comboBox_noiden.removeAllItems();
-					comboBox_noiden.setSelectedItem(null);
-					comboBox_noiden.addItem("Hà Nội (HAN), Việt Nam");
-					comboBox_noiden.addItem("Đà Nẵng (DAD), Việt Nam");
-					comboBox_noiden.addItem("Phú Quốc (PQC), Việt Nam");
-					comboBox_noiden.addItem("Nha Trang (CXR), Việt Nam");
-					comboBox_noiden.addItem("Buôn Ma Thuột (BMV), Việt Nam");
-					comboBox_noiden.addItem("Đồng Hới (VDH), Việt Nam");
-				}
-				else if (comboBox_noidi.getSelectedItem().equals("Đà Nẵng (DAD), Việt Nam")) {
-					comboBox_noiden.removeAllItems();
-					comboBox_noiden.setSelectedItem(null);
-					comboBox_noiden.addItem("Hà Nội (HAN), Việt Nam");
-					comboBox_noiden.addItem("Tp. Hồ Chí Minh (SGN), Việt Nam");
-					comboBox_noiden.addItem("Phú Quốc (PQC), Việt Nam");
-
-				}
-				else if (comboBox_noidi.getSelectedItem().equals("Phú Quốc (PQC), Việt Nam")) {
-					comboBox_noiden.removeAllItems();
-					comboBox_noiden.setSelectedItem(null);
-					comboBox_noiden.addItem("Hà Nội (HAN), Việt Nam");
-					comboBox_noiden.addItem("Tp. Hồ Chí Minh (SGN), Việt Nam");
-					comboBox_noiden.addItem("Đà Nẵng (DAD), Việt Nam");
-					comboBox_noiden.addItem("Nha Trang (CXR), Việt Nam");
-
-				}
-				else if (comboBox_noidi.getSelectedItem().equals("Nha Trang (CXR), Việt Nam")) {
-					comboBox_noiden.removeAllItems();
-					comboBox_noiden.setSelectedItem(null);
-					comboBox_noiden.addItem("Hà Nội (HAN), Việt Nam");
-					comboBox_noiden.addItem("Tp. Hồ Chí Minh (SGN), Việt Nam");
-					comboBox_noiden.addItem("Đồng Hới (VDH), Việt Nam");
-					comboBox_noiden.addItem("Phú Quốc (PQC), Việt Nam");
-
-				}
-				else if (comboBox_noidi.getSelectedItem().equals("Buôn Ma Thuột (BMV), Việt Nam")) {
-					comboBox_noiden.removeAllItems();
-					comboBox_noiden.setSelectedItem(null);
-					comboBox_noiden.addItem("Hà Nội (HAN), Việt Nam");
-					comboBox_noiden.addItem("Tp. Hồ Chí Minh (SGN), Việt Nam");
-
-				}
-				else if (comboBox_noidi.getSelectedItem().equals("Đồng Hới (VDH), Việt Nam")) {
-					comboBox_noiden.removeAllItems();
-					comboBox_noiden.setSelectedItem(null);
-					comboBox_noiden.addItem("Hà Nội (HAN), Việt Nam");
-					comboBox_noiden.addItem("Tp. Hồ Chí Minh (SGN), Việt Nam");
-					comboBox_noiden.addItem("Nha Trang (CXR), Việt Nam");
-
-				}
-				
-			}
-		});
+		
 		
 		JLabel lb_noiden = new JLabel("Sân bay đến: ");
 		lb_noiden.setFont(new Font("Times New Roman", Font.BOLD, 15));
@@ -295,41 +275,10 @@ public class them_chuyenbay extends JFrame {
 
 
 				Class.forName("oracle.jdbc.OracleDriver");
-				Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+				con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
 				PreparedStatement pst= con.prepareStatement("insert into \"DB_AIRLINE\".\"CHUYENBAY\"  (\"ID\", \"TTMAYBAY_ID\", \"SANBAYDI\",\"SANBAYDEN\",  \"NGAY_GIO_KH\", \"NGAY_GIO_HC\", \"TONGSOVE\",\"NGUOIQUANLY_ID\") values("+lb_id.getText()+","+textField_IDmb.getText()+",'"+comboBox_noidi.getSelectedItem()+"','"+comboBox_noiden.getSelectedItem()+"',"+ngay_khoihanh+","+ngay_hacanh+","+textField_tongsove.getText()+","+textField_ID_NQL.getText()+")");		
 				pst.execute();	
 				
-				int id_thongke=6000;
-				Statement st=(Statement) ((java.sql.Connection) con).createStatement();  	
-				ResultSet rs=((java.sql.Statement) st).executeQuery("select MAX(ID) from THONGKECHUYENBAY");  			
-				rs.next();
-				
-				if(rs.getString("MAX(ID)")==null) {
-					id_thongke=6001;
-				}
-				else 
-				{
-					id_thongke = Integer.valueOf(rs.getString("MAX(ID)"));
-					id_thongke++;
-
-				}
-				
-				ResultSet rs1=((java.sql.Statement) st).executeQuery("select ID from NGUOIQUANLY"); 
-				rs1.next();
-				String ID =rs1.getString(1);
-				int id_ql=Integer.parseInt(ID);
-				int id_ql_nhap=Integer.parseInt(textField_ID_NQL.getText());
-				if(id_ql!=id_ql_nhap) {
-					JOptionPane.showMessageDialog(null, "Nhập sai ID người quản lý");
-				}
-
-
-								
-//				PreparedStatement pst1= con.prepareStatement("insert into \"DB_AIRLINE\".\"THONGKECHUYENBAY\"  (\"ID\", \"CHUYENBAY_ID\", \"THOIGIAN\",\"SOLUONGVECON\",  \"SOLUONGVEBAN\",\"NGUOIQUANLY_ID\") values("+id_thongke+","+lb_id.getText()+","+ngay_khoihanh+","+textField_tongsove.getText()+","+0+","+textField_ID_NQL.getText()+")");		
-//				pst1.execute();
-//				pst1.close();
-//				Component a=null;
-//				JOptionPane.showMessageDialog(a, "Đã thêm thành công");
 
 				JOptionPane.showMessageDialog(null, "Thêm chuyến bay thành công");
 				con.close();
@@ -376,10 +325,9 @@ public class them_chuyenbay extends JFrame {
 			rs.close();
 			DB_AIRLINE.close();
 		} catch (ClassNotFoundException e) {
-			java.util.logging.Logger.getLogger(them_hanhkhach.class.getName()).log(Level.SEVERE,null,e);
-		} catch (SQLException e) {
-			java.util.logging.Logger.getLogger(them_hanhkhach.class.getName()).log(Level.SEVERE,null,e);
-
+			JOptionPane.showMessageDialog(null, e);		
+			} catch (SQLException e) {
+				JOptionPane.showMessageDialog(null, e);
 		}  
 	}
 //	public void autoID1() {

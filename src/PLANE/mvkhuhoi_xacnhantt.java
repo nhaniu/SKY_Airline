@@ -725,65 +725,6 @@ public class mvkhuhoi_xacnhantt extends JFrame {
 							System.out.println("\ninsert dat ve thanh cong\n");
 							
 							
-							// hanh khách chuyen bay 1
-							PreparedStatement pst1=null;
-							String insert_hanhkhach;
-							if(a6!=null) {
-		
-								SimpleDateFormat formatter1 = new SimpleDateFormat("dd-MM-YY hh:mm:ss");
-								String tgString1=formatter1.format(ngaysinh);
-								 String ngsinh = "TO_DATE('"+tgString1+"','yyyy-mm-dd HH24:MI:SS')";
-
-
-
-								 insert_hanhkhach="insert into \"DB_AIRLINE\".\"HANHKHACH\"(\"ID\", \"HOTEN\", \"NGAYSINH\",\"QUOCTICH\",  \"GIOITINH\", \"SDT\", \"EMAIL\",\"TAIKHOAN_ID\") values( "+idhk+", '"+hoten_hk+"',"+ngsinh+",'"+quoctich+"','"+gioitinh+"',"+sodt+",'"+email+"',"+matk+")";
-								  pst1 = con.prepareStatement(insert_hanhkhach);
-									pst1.execute();
-									System.out.println("insert hanh khach  co tai khoan thanh cong");
-									
-							}
-							else if (a6.equals("null")) {
-								SimpleDateFormat formatter1 = new SimpleDateFormat("dd-MM-YY hh:mm:ss");
-								String tgString1=formatter1.format(ngaysinh);
-								 String ngsinh = "TO_DATE('"+tgString1+"','yyyy-mm-dd HH24:MI:SS')";
-
-								 insert_hanhkhach="insert into \"DB_AIRLINE\".\"HANHKHACH\"(\"ID\", \"HOTEN\", \"NGAYSINH\",\"QUOCTICH\",  \"GIOITINH\", \"SDT\", \"EMAIL\",\"TAIKHOAN_ID\") values( "+idhk+", '"+hoten_hk+"',"+ngsinh+",'"+quoctich+"','"+gioitinh+"',"+sodt+",'"+email+"',"+null+")";
-								  pst1 = con.prepareStatement(insert_hanhkhach);
-									pst1.execute();
-									System.out.println("insert hanh khach khong co tai khoan thanh cong");
-
-							}
-							
-							
-							
-							// hành khách chuyến bay 2
-							String insert_hanhkhachkh;
-							if(a6!=null) {
-		
-								SimpleDateFormat formatter1 = new SimpleDateFormat("dd-MM-YY hh:mm:ss");
-								String tgString1=formatter1.format(ngaysinh);
-								 String ngsinh = "TO_DATE('"+tgString1+"','yyyy-mm-dd HH24:MI:SS')";
-
-
-
-								 insert_hanhkhachkh="insert into \"DB_AIRLINE\".\"HANHKHACH\"(\"ID\", \"HOTEN\", \"NGAYSINH\",\"QUOCTICH\",  \"GIOITINH\", \"SDT\", \"EMAIL\",\"TAIKHOAN_ID\") values( "+idhkkh+", '"+hoten_hk+"',"+ngsinh+",'"+quoctich+"','"+gioitinh+"',"+sodt+",'"+email+"',"+matk+")";
-								  pst1 = con.prepareStatement(insert_hanhkhachkh);
-									pst1.execute();
-									System.out.println("insert hanh khach  co tai khoan thanh cong");
-									
-							}
-							else if (a6.equals("null")) {
-								SimpleDateFormat formatter1 = new SimpleDateFormat("dd-MM-YY hh:mm:ss");
-								String tgString1=formatter1.format(ngaysinh);
-								 String ngsinh = "TO_DATE('"+tgString1+"','yyyy-mm-dd HH24:MI:SS')";
-
-								 insert_hanhkhachkh="insert into \"DB_AIRLINE\".\"HANHKHACH\"(\"ID\", \"HOTEN\", \"NGAYSINH\",\"QUOCTICH\",  \"GIOITINH\", \"SDT\", \"EMAIL\",\"TAIKHOAN_ID\") values( "+idhkkh+", '"+hoten_hk+"',"+ngsinh+",'"+quoctich+"','"+gioitinh+"',"+sodt+",'"+email+"',"+null+")";
-								  pst1 = con.prepareStatement(insert_hanhkhachkh);
-									pst1.execute();
-									System.out.println("insert hanh khach khong co tai khoan thanh cong");
-
-							}
-							
 							//chuyen 1: thong ke
 							Statement st=con.createStatement(); 
 
@@ -996,12 +937,23 @@ public class mvkhuhoi_xacnhantt extends JFrame {
 									DangNhap dn=null;
 									String tendangnhap=dn.tendn;
 									String mkhau=dn.mk;
+									
+
+									PreparedStatement pst1=null;
+									String insert_hanhkhach;
+								
+									
+									PreparedStatement pstkh=null;
+									String insert_hanhkhachkh;
+									
 									if(tendangnhap!=null) {
 			
-											String searchtkh="select TONGTIENMUAVE from TAIKHOAN where TENDANGNHAP='"+tendangnhap+"' and MATKHAU='"+mkhau+"'";					
+											String searchtkh="select TONGTIENMUAVE, ID from TAIKHOAN where TENDANGNHAP='"+tendangnhap+"' and MATKHAU='"+mkhau+"'";					
 											ResultSet rs9= st.executeQuery(searchtkh);
 											rs9.next();
 												String tongtientk =rs9.getString(1);	
+												String idtk =rs9.getString(2);	
+
 												
 												int tttk=Integer.parseInt(tongtientk);
 												int tongtienupdate=(int) (tttk+ttdv_daupdate+ttdv_daupdatekh);
@@ -1027,8 +979,53 @@ public class mvkhuhoi_xacnhantt extends JFrame {
 												pst4.execute();
 
 												System.out.println("update tai khoan thanh cong");
+												
+												// hanh khách chuyen bay 1
+
+												SimpleDateFormat formatter1 = new SimpleDateFormat("dd-MM-YY hh:mm:ss");
+												String tgString1=formatter1.format(ngaysinh);
+												 String ngsinh = "TO_DATE('"+tgString1+"','yyyy-mm-dd HH24:MI:SS')";
+
+
+
+												 insert_hanhkhach="insert into \"DB_AIRLINE\".\"HANHKHACH\"(\"ID\", \"HOTEN\", \"NGAYSINH\",\"QUOCTICH\",  \"GIOITINH\", \"SDT\", \"EMAIL\",\"TAIKHOAN_ID\") values( "+idhk+", '"+hoten_hk+"',"+ngsinh+",'"+quoctich+"','"+gioitinh+"',"+sodt+",'"+email+"',"+idtk+")";
+												  pst1 = con.prepareStatement(insert_hanhkhach);
+													pst1.execute();
+													pst1.close();
+													// hanh khách chuyen bay 2
+
+												
+
+													 insert_hanhkhachkh="insert into \"DB_AIRLINE\".\"HANHKHACH\"(\"ID\", \"HOTEN\", \"NGAYSINH\",\"QUOCTICH\",  \"GIOITINH\", \"SDT\", \"EMAIL\",\"TAIKHOAN_ID\") values( "+idhkkh+", '"+hoten_hk+"',"+ngsinh+",'"+quoctich+"','"+gioitinh+"',"+sodt+",'"+email+"',"+idtk+")";
+													  pstkh= con.prepareStatement(insert_hanhkhachkh);
+														pstkh.execute();
+														
+													System.out.println("insert hanh khach  co tai khoan thanh cong");
 
 										}
+									else {
+										// hành khách chuyến bay 1
+
+										SimpleDateFormat formatter1 = new SimpleDateFormat("dd-MM-YY hh:mm:ss");
+										String tgString1=formatter1.format(ngaysinh);
+										 String ngsinh = "TO_DATE('"+tgString1+"','yyyy-mm-dd HH24:MI:SS')";
+
+										 insert_hanhkhach="insert into \"DB_AIRLINE\".\"HANHKHACH\"(\"ID\", \"HOTEN\", \"NGAYSINH\",\"QUOCTICH\",  \"GIOITINH\", \"SDT\", \"EMAIL\",\"TAIKHOAN_ID\") values( "+idhk+", '"+hoten_hk+"',"+ngsinh+",'"+quoctich+"','"+gioitinh+"',"+sodt+",'"+email+"',"+null+")";
+										  pst1 = con.prepareStatement(insert_hanhkhach);
+											pst1.execute();
+											pst1.close();
+											
+											// hành khách chuyến bay 2
+
+											
+
+											
+											 insert_hanhkhachkh="insert into \"DB_AIRLINE\".\"HANHKHACH\"(\"ID\", \"HOTEN\", \"NGAYSINH\",\"QUOCTICH\",  \"GIOITINH\", \"SDT\", \"EMAIL\",\"TAIKHOAN_ID\") values( "+idhkkh+", '"+hoten_hk+"',"+ngsinh+",'"+quoctich+"','"+gioitinh+"',"+sodt+",'"+email+"',"+null+")";
+											 pstkh = con.prepareStatement(insert_hanhkhachkh);
+											 pstkh.execute();
+												System.out.println("insert hanh khach khong co tai khoan thanh cong");
+
+									}
 									
 									
 									 String thoigiankh = "TO_DATE('"+gio_kh_di+"','yyyy-mm-dd HH24:MI:SS')";

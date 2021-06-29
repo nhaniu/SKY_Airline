@@ -153,14 +153,12 @@ public class timkiem_ve extends JFrame {
 					}
 					
 					con.close();
-
 					
 				} catch (ClassNotFoundException e1) {
 					e1.printStackTrace();
 				} catch (SQLException e2) {
 					e2.printStackTrace();
-				}
-			
+				}			
 			}
 			
 		});
