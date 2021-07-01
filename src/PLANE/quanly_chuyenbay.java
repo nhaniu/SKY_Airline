@@ -233,44 +233,7 @@ Connection con=null;
 		});
 
 		
-//		try {
-//			Class.forName("oracle.jdbc.OracleDriver");
-//			Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
-//			Statement st=con.createStatement(); 
-//			String search="select * from CHUYENBAY";				
-//			while(tableModel.getRowCount() > 0) 
-//			{									
-//				tableModel.removeRow(0);
-//			}			
-//			ResultSet rs= st.executeQuery(search);
-//			while(rs.next()) {
-//				String ID =rs.getString(1);
-//				String ttmaybayid =rs.getString(2);
-//				String sanbaydi =rs.getString(3);
-//				String sanbayden =rs.getString(4);
-//				String ngaygiokh =rs.getString(5);
-//				String ngaygiohc =rs.getString(6);
-//				String tongsove=rs.getString(7);
-//				String ID_NQL =rs.getString(8);
-//
-//				tableModel.addRow(new Object[] {ID,ttmaybayid,sanbaydi,sanbayden,ngaygiokh,ngaygiohc,tongsove,ID_NQL});
-//
-//				table.setModel(tableModel);
-//				scrollPane.setVisible(true);
-//				bt_them.setVisible(true);
-//				bt_sua.setVisible(true);
-//				bt_timkiem.setVisible(true);
-//				bt_xoa.setVisible(true);
-//			}			
-//			con.close();
-//			
-//		} catch (ClassNotFoundException e1) {
-//			e1.printStackTrace();
-//		} catch (SQLException e1) {
-//			e1.printStackTrace();
-//		}
 
-		//scrollPane.setVisible(true);
 		bt_xoa.setBackground(new Color(255, 255, 224));
 		bt_xoa.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		bt_xoa.setBounds(676, 398, 89, 23);
@@ -314,48 +277,7 @@ Connection con=null;
 		btnNewButton_1.setBounds(151, 87, 102, 23);
 		contentPane.add(btnNewButton_1);
 		
-//		try {
-//			Class.forName("oracle.jdbc.OracleDriver");
-//			Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
-//			Statement st=con.createStatement(); 
-//			
-//
-//
-//			String search="select * from CHUYENBAY";				
-//			while(tableModel.getRowCount() > 0) 
-//			{									
-//				tableModel.removeRow(0);
-//			}
-//			
-//			ResultSet rs= st.executeQuery(search);
-//			while(rs.next()) {
-//				String ID =rs.getString(1);
-//				String ttmaybayid =rs.getString(2);
-//				String sanbaydi =rs.getString(3);
-//				String sanbayden =rs.getString(4);
-//				String ngaygiokh =rs.getString(5);
-//				String ngaygiohc =rs.getString(6);
-//				String tongsove=rs.getString(7);
-//				String ID_NQL =rs.getString(8);
-//				
-//				
-//				tableModel.addRow(new Object[] {ID,ttmaybayid,sanbaydi,sanbayden,ngaygiokh,ngaygiohc,tongsove,ID_NQL});
-//
-//				table.setModel(tableModel);
-//				scrollPane.setVisible(true);
-//				bt_them.setVisible(true);
-//				bt_sua.setVisible(true);
-//				bt_timkiem.setVisible(true);
-//				bt_xoa.setVisible(true);
-//			}
-//			
-//			con.close();
-//			
-//		} catch (ClassNotFoundException e1) {
-//			e1.printStackTrace();
-//		} catch (SQLException e1) {
-//			e1.printStackTrace();
-//		}
+
 		
 		JButton bt_thongke = new JButton("Thống kê");
 		bt_thongke.addActionListener(new ActionListener() {
@@ -446,7 +368,7 @@ Connection con=null;
 						SimpleDateFormat formatter1 = new SimpleDateFormat("dd-MM-YY");		
 						String tgString1=formatter1.format(dateChooser_1.getDate());	
 						thoigian1="TO_DATE('"+tgString1+" 23:59:59','DD-MM-RR HH24:MI:SS')";
-					
+						
 
 					String search="select * from CHUYENBAY WHERE  NGAY_GIO_KH>="+thoigian+" and  NGAY_GIO_KH<"+thoigian1+"";				
 					while(tableModel.getRowCount() > 0) 
@@ -484,7 +406,7 @@ Connection con=null;
 					e1.printStackTrace();
 				}				
 				}
-				}
+			}
 		});
 		bt_hienthidanhsachchuyenbay.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		bt_hienthidanhsachchuyenbay.setBounds(740, 94, 244, 28);

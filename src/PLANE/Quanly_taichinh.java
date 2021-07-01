@@ -187,6 +187,8 @@ public class Quanly_taichinh extends JFrame {
 				kt=1;
 				lb_ngaybatdau.setVisible(true);
 				dateChooser1.setVisible(true);
+				lb_ngaykt.setVisible(false);
+				dateChooser2.setVisible(false);
 			
 			}
 		});
@@ -228,11 +230,7 @@ public class Quanly_taichinh extends JFrame {
 			
 
 			public void actionPerformed(ActionEvent e) {
-				bt_xuatfile.setVisible(true);
-				scrollPane.setVisible(true);
-				table.setVisible(true);
-				scrollPane_1.setVisible(true);
-				table_1.setVisible(true);
+				
 				
 				try {																									
 						Class.forName("oracle.jdbc.OracleDriver");
@@ -256,14 +254,20 @@ public class Quanly_taichinh extends JFrame {
 						 con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
 						Statement st=con.createStatement(); 
 
-						SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-YY");		
+						SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-YY");	
+						System.out.println(dateChooser1.getDate());
+						if (dateChooser1.getDate()==null)
+						{
+							JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin");
+						}
+						else {
+							
+						
 						String tgString=formatter.format(dateChooser1.getDate());	
 						 thoigian="TO_DATE('"+tgString+"','DD-MM-RR')";
 						 thoigian1="TO_DATE('"+tgString+" 23:59:59','DD-MM-RR HH24:MI:SS')";
-						System.out.println(thoigian1);
 						
-						System.out.println(thoigian);
-	
+						 
 						while(tableModel.getRowCount() > 0) 
 						{									
 							tableModel.removeRow(0);
@@ -272,14 +276,15 @@ public class Quanly_taichinh extends JFrame {
 								+ "FROM  CHUYENBAY CB, DOANHTHUCHUYENBAY DT\r\n"
 								+ "WHERE CB.ID= DT.CHUYENBAY_ID and CB.NGAY_GIO_KH>="+thoigian+" and  CB.NGAY_GIO_KH<="+thoigian1+"";
 						ResultSet rs1= st.executeQuery(search1);
-						while(rs1.next()) {							
+						int dem=0;
+						while (rs1.next()) {							
 							 id =rs1.getString(1);
 							 cbid =rs1.getString(2);
 							 ngaygiokh =rs1.getString(3);
 							 tongbanve =rs1.getString(4);
 							 tongphihoan =rs1.getString(5);
 							 tongdoanhthu =rs1.getString(6);
-							
+							 dem++;
 					
 						tableModel.addRow(new Object[] {id,cbid,ngaygiokh,tongbanve,tongphihoan,tongdoanhthu});
 
@@ -291,8 +296,16 @@ public class Quanly_taichinh extends JFrame {
 
 						PreparedStatement pst= con.prepareStatement("insert into \"DB_AIRLINE\".\"COPYDOANHTHU\" (\"ID\", \"CHUYENBAY_ID\", \"NGAY_GIO_KH\", \"TONGTIENBANVE\", \"TONGPHIHOANVE\", \"TONGDOANHTHU\") values("+id+", "+cbid+", "+thoigian11+", "+tongbanve+", "+tongphihoan+", "+tongdoanhthu+")");		
 						pst.execute();	
+						bt_xuatfile.setVisible(true);
+						scrollPane.setVisible(true);
+						table.setVisible(true);
+						scrollPane_1.setVisible(true);
+						table_1.setVisible(true);
 						
+						}
 						
+						if(dem==0) {
+							JOptionPane.showMessageDialog(null, "Không tìm thấy thông tin");
 						}
 						table_1.setVisible(true);
 						scrollPane_1.setViewportView(table_1);
@@ -330,8 +343,10 @@ public class Quanly_taichinh extends JFrame {
 						model.addRow(new Object[] {tid_chuyenbay,ttienve,tphihoan,tdoanhthu});
 
 						table_1.setModel(model);
+						
+						
 						}
-
+						}
 					} catch (ClassNotFoundException e1) {
 						e1.printStackTrace();
 					} catch (SQLException e1) {
@@ -395,6 +410,11 @@ public class Quanly_taichinh extends JFrame {
 						Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
 						Statement st=con.createStatement(); 
 						
+						if (dateChooser1.getDate()==null||dateChooser2.getDate()==null)
+						{
+							JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin");
+						}
+						else {
 						
 						SimpleDateFormat formatter2 = new SimpleDateFormat("dd-MM-YY");		
 						String tgString2=formatter2.format(dateChooser1.getDate());	
@@ -419,6 +439,7 @@ public class Quanly_taichinh extends JFrame {
 						String search1=" SELECT DISTINCT DT.ID, CB.ID, CB.NGAY_GIO_KH, DT.TONGTIENBANVE, DT.TONGPHIHOANVE, DT.TONGDOANHTHU\r\n"
 								+ "FROM  CHUYENBAY CB, DOANHTHUCHUYENBAY DT where CB.ID= DT.CHUYENBAY_ID AND CB.NGAY_GIO_KH>="+thoigian11+" and  CB.NGAY_GIO_KH<="+thoigian22+"";
 						ResultSet rs1= st.executeQuery(search1);
+						int dem=0;
 						while(rs1.next()) {
 							
 							 id =rs1.getString(1);
@@ -432,11 +453,20 @@ public class Quanly_taichinh extends JFrame {
 							 tableModel.addRow(new Object[] {id,cbid,ngaygiokh,tongbanve,tongphihoan,tongdoanhthu});
 							 table.setModel(tableModel);
 									 
-
+							 bt_xuatfile.setVisible(true);
+								scrollPane.setVisible(true);
+								table.setVisible(true);
+								scrollPane_1.setVisible(true);
+								table_1.setVisible(true);
+								
+								dem++;
 
 							PreparedStatement pst= con.prepareStatement("insert into \"DB_AIRLINE\".\"COPYDOANHTHU\" (\"ID\", \"CHUYENBAY_ID\", \"NGAY_GIO_KH\", \"TONGTIENBANVE\", \"TONGPHIHOANVE\", \"TONGDOANHTHU\") values("+id+", "+cbid+", "+thoigian33+", "+tongbanve+", "+tongphihoan+", "+tongdoanhthu+")");		
 								pst.execute();
 							
+						}
+						if(dem==0) {
+							JOptionPane.showMessageDialog(null, "Không tìm thấy thông tin");
 						}
 						
 						table_1.setVisible(true);
@@ -477,8 +507,8 @@ public class Quanly_taichinh extends JFrame {
 
 						table_1.setModel(model);
 						}
-						//con.close();
-
+						
+						}
 					} catch (ClassNotFoundException e1) {
 						e1.printStackTrace();
 					} catch (SQLException e1) {

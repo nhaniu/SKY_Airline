@@ -194,6 +194,15 @@ public class QuanLy_DatVe extends JFrame {
 					Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
 					Statement st=con.createStatement(); 
 					
+					
+					ResultSet rs1= st.executeQuery("select ID from CHUYENBAY where ID="+textField_maCB.getText()+"");
+					if(rs1.next()) {
+						String ID =rs1.getString(1);
+						}
+					else {
+						JOptionPane.showMessageDialog(null, "ID chuyến bay không tồn tại");
+					}
+					rs1.close();
 					String search="select dv.ID,dv.VEMAYBAY_ID, dv.HANHKHACH_ID, dv.KHUYENMAI_ID, dv.DICHVUBOTRO_ID, dv.NGAYDAT, dv.TONGTIEN, dv.TINHTRANG, dv.TAIKHOAN_ID\r\n"
 							+ "from DATVEBAY dv, CHUYENBAY cb, VEMAYBAY ve\r\n"
 							+ "where dv.VEMAYBAY_ID=ve.ID and ve.CHUYENBAY_ID=cb.ID and ve.CHUYENBAY_ID="+textField_maCB.getText()+" ";					

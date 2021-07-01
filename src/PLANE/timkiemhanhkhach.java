@@ -47,7 +47,6 @@ public class timkiemhanhkhach extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField_CB;
-	private JTextField textField_MaDC;
 	private JTextField textField_hoten;
 	private JTextField textField_quoctich;
 	private JTextField textField_sdt;
@@ -78,7 +77,7 @@ public class timkiemhanhkhach extends JFrame {
 		setBackground(new Color(240, 255, 255));
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 170, 907, 513);
+		setBounds(100, 170, 907, 572);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(240, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -107,18 +106,8 @@ public class timkiemhanhkhach extends JFrame {
 		textField_CB.setBounds(227, 17, 163, 20);
 		panel.add(textField_CB);
 		textField_CB.setColumns(10);
-		
-		JLabel lb_maDC = new JLabel(" Mã đặt chỗ:");
-		lb_maDC.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lb_maDC.setBounds(490, 17, 122, 18);
-		panel.add(lb_maDC);
-		
-		textField_MaDC = new JTextField();
-		textField_MaDC.setBounds(626, 17, 163, 20);
-		panel.add(textField_MaDC);
-		textField_MaDC.setColumns(10);
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(52, 105, 785, 40);
+		scrollPane.setBounds(52, 62, 785, 89);
 		panel.add(scrollPane);
 		scrollPane.setVisible(false);
 		
@@ -127,103 +116,10 @@ public class timkiemhanhkhach extends JFrame {
 		JPanel panel_sua = new JPanel();
 		panel_sua.setBorder(null);
 		panel_sua.setBackground(new Color(51, 204, 255));
-		panel_sua.setBounds(185, 144, 532, 305);
+		panel_sua.setBounds(188, 162, 532, 305);
 		panel.add(panel_sua);
 		panel_sua.setLayout(null);
 		panel_sua.setVisible(false);
-		
-		JTable table=new JTable();
-		
-		table.setBackground(new Color(255, 255, 255));
-		final DefaultTableModel tableModel = new DefaultTableModel();
-		tableModel.addColumn("ID");
-		tableModel.addColumn("Họ tên");
-		tableModel.addColumn("Ngày sinh");
-		tableModel.addColumn("Quốc tịch");
-		tableModel.addColumn("Giới tính");
-		tableModel.addColumn("SĐT");
-		tableModel.addColumn("Email");
-		tableModel.addColumn("Tài khoản ID");
-		scrollPane.setViewportView(table);
-
-
-		
-		JTableHeader Theader = table.getTableHeader();
-		 Theader.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-		Theader.setBackground(new Color(255, 255, 255));
-		table.setModel(tableModel);
-		
-
-		
-		JButton bt_timkiem = new JButton("Tìm kiếm");
-		bt_timkiem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				try {
-					
-					if (textField_CB.getText().isEmpty()) {
-						 JOptionPane.showMessageDialog(null, "vui lòng nhập mã chuyến bay");
-						 textField_CB.requestFocus();
-						 return; 
-						}
-					if (textField_MaDC.getText().isEmpty()) {
-						 JOptionPane.showMessageDialog(null, "vui lòng nhập mã đặt chỗ");
-						 textField_CB.requestFocus();
-						 return; 
-						}
-						
-					Class.forName("oracle.jdbc.OracleDriver");
-					Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
-					Statement st=con.createStatement(); 
-					
-					String search="select hk.ID, hk.HOTEN, hk.NGAYSINH, hk.QUOCTICH, hk.GIOITINH, hk.SDT, hk.EMAIL, hk.TAIKHOAN_ID\r\n"
-							+ "from VEMAYBAY v, HANHKHACH hk, DATVEBAY dv, CHUYENBAY cb\r\n"
-							+ "where v.CHUYENBAY_ID=cb.ID and v.ID=dv.VEMAYBAY_ID and hk.ID=dv.HANHKHACH_ID and dv.ID="+textField_MaDC.getText()+ "and cb.ID="+textField_CB.getText();// and dv.ID ='\"+textField_MaDC.getText()+\"'";					
-										
-					while(tableModel.getRowCount() > 0) 
-					{									
-						tableModel.removeRow(0);
-					}
-					
-					ResultSet rs= st.executeQuery(search);
-					if(rs.next()) {
-						String ID =rs.getString(1);
-						String hoten =rs.getString(2);
-						String ngaysinh =rs.getString(3);
-						String quoctich =rs.getString(4);
-						String gioitinh =rs.getString(5);
-						String sdt =rs.getString(6);
-						String email =rs.getString(7);
-						String taikhoanID =rs.getString(8);
-
-						System.out.print(ID+hoten+ngaysinh+quoctich+gioitinh+sdt+email+taikhoanID+"\n");
-						
-						tableModel.addRow(new Object[] {ID, hoten, ngaysinh,quoctich, gioitinh, sdt, email,taikhoanID});
-
-						table.setModel(tableModel);
-						scrollPane.setVisible(true);
-						//bt_Sua.setVisible(true);
-
-					}
-					else {
-						JOptionPane.showMessageDialog(null, "Không tìm thấy hành khách");
-					}
-					
-					con.close();
-
-					
-				} catch (ClassNotFoundException e1) {
-					e1.printStackTrace();
-				} catch (SQLException e2) {
-					e2.printStackTrace();
-				}
-
-			}
-		});
-		bt_timkiem.setBackground(new Color(255, 255, 224));
-		bt_timkiem.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		bt_timkiem.setBounds(169, 62, 115, 20);
-		panel.add(bt_timkiem);
 		
 
 		JLabel lb_idhk = new JLabel("ID hành khách: ");
@@ -303,10 +199,149 @@ public class timkiemhanhkhach extends JFrame {
 		textField_taikhoan_id.setColumns(10);
 		
 		textField_ID = new JTextField();
+		textField_ID.setEditable(false);
 		textField_ID.setBounds(135, 23, 128, 20);
 		panel_sua.add(textField_ID);
 		textField_ID.setColumns(10);
 		
+
+		
+		
+		JTable table=new JTable();
+		
+		table.setBackground(new Color(255, 255, 255));
+		final DefaultTableModel tableModel = new DefaultTableModel();
+		tableModel.addColumn("ID");
+		tableModel.addColumn("Họ tên");
+		tableModel.addColumn("Ngày sinh");
+		tableModel.addColumn("Quốc tịch");
+		tableModel.addColumn("Giới tính");
+		tableModel.addColumn("SĐT");
+		tableModel.addColumn("Email");
+		tableModel.addColumn("Tài khoản ID");
+		scrollPane.setViewportView(table);
+
+
+		
+		JTableHeader Theader = table.getTableHeader();
+		 Theader.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		Theader.setBackground(new Color(255, 255, 255));
+		table.setModel(tableModel);
+		
+		JButton btnNewButton_2 = new JButton("Cập nhật");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				DefaultTableModel model=(DefaultTableModel)table.getModel();
+				int i=table.getSelectedRow();
+				if(i==-1) {
+					JOptionPane.showMessageDialog(null, "Vui lòng chọn thông tin cần cập nhật trong bảng");
+				}
+				else {
+					panel_sua.setVisible(true);
+
+				textField_ID.setText(model.getValueAt(i, 0).toString());
+				textField_hoten.setText(model.getValueAt(i, 1).toString());
+			
+				try {
+					Date date=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse((String) model.getValueAt(i, 2));
+					dateChooser.setDate(date);
+				} catch (ParseException e1) {
+					e1.printStackTrace();
+				}
+				
+				textField_quoctich.setText(model.getValueAt(i, 3).toString());
+				comboBox.setSelectedItem(model.getValueAt(i, 4).toString());
+				textField_sdt.setText(model.getValueAt(i, 5).toString());
+				textField_email.setText(model.getValueAt(i, 6).toString());
+				if(model.getValueAt(i, 7)!=null) {
+					textField_taikhoan_id.setText(model.getValueAt(i, 7).toString());
+				}
+				
+				}
+				
+				
+			}
+		});
+		btnNewButton_2.setBackground(new Color(255, 255, 224));
+		btnNewButton_2.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		btnNewButton_2.setBounds(765, 15, 109, 23);
+		panel.add(btnNewButton_2);
+		btnNewButton_2.setVisible(false);
+		
+		JButton bt_timkiem = new JButton("Hiển thị danh sách");
+		bt_timkiem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				try {
+					
+					if (textField_CB.getText().isEmpty()) {
+						 JOptionPane.showMessageDialog(null, "vui lòng nhập mã chuyến bay");
+						 textField_CB.requestFocus();
+						 return; 
+						}
+//					if (textField_MaDC.getText().isEmpty()) {
+//						 JOptionPane.showMessageDialog(null, "vui lòng nhập mã đặt chỗ");
+//						 textField_CB.requestFocus();
+//						 return; 
+//						}
+//						
+					Class.forName("oracle.jdbc.OracleDriver");
+					Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+					Statement st=con.createStatement(); 
+					
+					String search="select hk.ID, hk.HOTEN, hk.NGAYSINH, hk.QUOCTICH, hk.GIOITINH, hk.SDT, hk.EMAIL, hk.TAIKHOAN_ID\r\n"
+							+ "from VEMAYBAY v, HANHKHACH hk, DATVEBAY dv, CHUYENBAY cb\r\n"
+							+ "where v.CHUYENBAY_ID=cb.ID and v.ID=dv.VEMAYBAY_ID and hk.ID=dv.HANHKHACH_ID and  cb.ID="+textField_CB.getText();// and dv.ID ='\"+textField_MaDC.getText()+\"'";					
+										
+					while(tableModel.getRowCount() > 0) 
+					{									
+						tableModel.removeRow(0);
+					}
+					
+					ResultSet rs= st.executeQuery(search);
+					int dem=0;
+					while(rs.next()) {
+						String ID =rs.getString(1);
+						String hoten =rs.getString(2);
+						String ngaysinh =rs.getString(3);
+						String quoctich =rs.getString(4);
+						String gioitinh =rs.getString(5);
+						String sdt =rs.getString(6);
+						String email =rs.getString(7);
+						String taikhoanID =rs.getString(8);
+						dem++;
+
+						System.out.print(ID+hoten+ngaysinh+quoctich+gioitinh+sdt+email+taikhoanID+"\n");
+						
+						tableModel.addRow(new Object[] {ID, hoten, ngaysinh,quoctich, gioitinh, sdt, email,taikhoanID});
+
+						table.setModel(tableModel);
+						btnNewButton_2.setVisible(true);
+						scrollPane.setVisible(true);
+
+					}
+
+					if(dem==0) {
+						JOptionPane.showMessageDialog(null, "Không tìm thấy hành khách");
+					}
+					con.close();
+
+					
+				} catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
+				} catch (SQLException e2) {
+					e2.printStackTrace();
+				}
+
+			}
+		});
+		bt_timkiem.setBackground(new Color(255, 255, 224));
+		bt_timkiem.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		bt_timkiem.setBounds(436, 16, 169, 25);
+		panel.add(bt_timkiem);
+		
+
 		JButton btnNewButton = new JButton("Xác nhận");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -347,7 +382,7 @@ public class timkiemhanhkhach extends JFrame {
 					}
 					else 
 					{
-							 update ="update HANHKHACH set ID= "+textField_ID.getText()+", HOTEN='"+ textField_hoten.getText()+"',NGAYSINH="+texString+",QUOCTICH='"+textField_quoctich.getText()+"',GIOITINH='"+comboBox.getSelectedItem()+"',SDT="+textField_sdt.getText()+",EMAIL='"+textField_email.getText()+"',TAIKHOAN_ID="+textField_taikhoan_id.getText()+" where ID="+ textField_ID.getText()+"";					
+							 update ="update HANHKHACH set HOTEN='"+ textField_hoten.getText()+"',NGAYSINH="+texString+",QUOCTICH='"+textField_quoctich.getText()+"',GIOITINH='"+comboBox.getSelectedItem()+"',SDT="+textField_sdt.getText()+",EMAIL='"+textField_email.getText()+"',TAIKHOAN_ID="+textField_taikhoan_id.getText()+" where ID="+ textField_ID.getText()+"";					
 					}
 					System.out.println(update);
 					Class.forName("oracle.jdbc.OracleDriver");
@@ -393,21 +428,36 @@ public class timkiemhanhkhach extends JFrame {
 		
 		JButton bt_Sua = new JButton("Cập nhật");
 		bt_Sua.setBounds(497, 61, 115, 23);
-		panel.add(bt_Sua);
-		//bt_Sua.setVisible(false);
+		//panel.add(bt_Sua);
+		bt_Sua.setVisible(false);
 		bt_Sua.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				panel_sua.setVisible(true);
 				
 			}
 		});
 		bt_Sua.setBackground(new Color(255, 255, 224));
 		bt_Sua.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		
+		JButton btnNewButton_3 = new JButton("Tìm kiếm");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new timkiem_1hanhkhach();
+			}
+		});
+		btnNewButton_3.setBackground(new Color(255, 255, 224));
+		btnNewButton_3.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		btnNewButton_3.setBounds(626, 16, 109, 23);
+		panel.add(btnNewButton_3);
+		
+		
 		JLabel lblNewLabel_3 = new JLabel("New label");
+		lblNewLabel_3.setBackground(new Color(255, 255, 224));
 		lblNewLabel_3.setIcon(new ImageIcon("anh.jpg"));
 		lblNewLabel_3.setBounds(0, 0, 912, 491);
 		panel.add(lblNewLabel_3);
+		
+	
+		
 		
 
 		
@@ -420,33 +470,33 @@ public class timkiemhanhkhach extends JFrame {
 		lblNewLabel_2.setBounds(0, 0, 912, 488);
 		contentPane.add(lblNewLabel_2);
 		
-		table.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				DefaultTableModel model=(DefaultTableModel)table.getModel();
-				int i=table.getSelectedRow();
-				
-				textField_ID.setText(model.getValueAt(i, 0).toString());
-				textField_hoten.setText(model.getValueAt(i, 1).toString());
-			
-				try {
-					Date date=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse((String) model.getValueAt(i, 2));
-					dateChooser.setDate(date);
-				} catch (ParseException e1) {
-					e1.printStackTrace();
-				}
-				
-				textField_quoctich.setText(model.getValueAt(i, 3).toString());
-				comboBox.setSelectedItem(model.getValueAt(i, 4).toString());
-				textField_sdt.setText(model.getValueAt(i, 5).toString());
-				textField_email.setText(model.getValueAt(i, 6).toString());
-				if(model.getValueAt(i, 7)!=null) {
-					textField_taikhoan_id.setText(model.getValueAt(i, 7).toString());
-				}
-				
-
-			}
-		});
+//		table.addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mouseClicked(MouseEvent e) {
+//				DefaultTableModel model=(DefaultTableModel)table.getModel();
+//				int i=table.getSelectedRow();
+//				
+//				textField_ID.setText(model.getValueAt(i, 0).toString());
+//				textField_hoten.setText(model.getValueAt(i, 1).toString());
+//			
+//				try {
+//					Date date=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse((String) model.getValueAt(i, 2));
+//					dateChooser.setDate(date);
+//				} catch (ParseException e1) {
+//					e1.printStackTrace();
+//				}
+//				
+//				textField_quoctich.setText(model.getValueAt(i, 3).toString());
+//				comboBox.setSelectedItem(model.getValueAt(i, 4).toString());
+//				textField_sdt.setText(model.getValueAt(i, 5).toString());
+//				textField_email.setText(model.getValueAt(i, 6).toString());
+//				if(model.getValueAt(i, 7)!=null) {
+//					textField_taikhoan_id.setText(model.getValueAt(i, 7).toString());
+//				}
+//				
+//
+//			}
+//		});
 
 				
 	}

@@ -51,6 +51,7 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JTextArea;
 
 public class xacnhantt_mv1chieu extends JFrame {
 
@@ -463,6 +464,16 @@ public class xacnhantt_mv1chieu extends JFrame {
 		btnNewButton.setBounds(47, 343, 172, 25);
 		panel_2.add(btnNewButton);
 		
+		JTextArea txtrKhchHngn = new JTextArea();
+		txtrKhchHngn.setBackground(new Color(255, 255, 224));
+		txtrKhchHngn.setForeground(new Color(255, 0, 0));
+		txtrKhchHngn.setLineWrap(true);
+		txtrKhchHngn.setWrapStyleWord(true);
+		txtrKhchHngn.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 15));
+		txtrKhchHngn.setText("Khách hàng đến quầy thu ngân để thanh toán tiền vé\r\n");
+		txtrKhchHngn.setBounds(85, 444, 354, 31);
+		panel_2.add(txtrKhchHngn);
+		
 		
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -630,7 +641,7 @@ public class xacnhantt_mv1chieu extends JFrame {
 							//bắt đầu transaction 1
 							String search1="SELECT SOLUONGVECON,SOLUONGVEBAN FROM THONGKECHUYENBAY WHERE CHUYENBAY_ID="+id_cb+"";					
 							
-							ResultSet rs4= st.executeQuery(search1); //executeQuery không làm kết thúc transaction
+							ResultSet rs4= st.executeQuery(search1); 
 							if(rs4.next()) {
 								String slvc =rs4.getString(1);
 								String slvb =rs4.getString(2);
@@ -644,7 +655,7 @@ public class xacnhantt_mv1chieu extends JFrame {
 								String updatetk ="update THONGKECHUYENBAY set SOLUONGVECON="+slvecon_update+",SOLUONGVEBAN="+slveban_update+" where CHUYENBAY_ID="+id_cb+"";
 								PreparedStatement pst4 = con.prepareStatement(updatetk);
 								pst4= con.prepareStatement(updatetk);
-								pst4.execute();  // lệnh execute() làm kết thúc transaction 2
+								pst4.execute();  
 								
 								System.out.println("update thong ke thanh cong");
 
@@ -819,7 +830,7 @@ public class xacnhantt_mv1chieu extends JFrame {
 									Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
 									
 															
-									FileInputStream in=new FileInputStream(new File("C:\\Users\\nguyen thi nhan\\Documents\\SKY_Airline\\src\\PLANE\\XUAT_VE.jrxml"));
+									FileInputStream in=new FileInputStream(new File("XUAT_VE.jrxml"));
 									JasperDesign jd=JRXmlLoader.load(in);
 									
 									
@@ -856,7 +867,14 @@ public class xacnhantt_mv1chieu extends JFrame {
 						//JOptionPane.showMessageDialog(a, e1);						
 		
 					}
-				}}
+				}
+				else if(confirm==JOptionPane.NO_OPTION)
+				{
+//					getDefaultCloseOperation();
+//					new trangchu();
+					dispose();
+				}
+			}
 		});
 	
 }	

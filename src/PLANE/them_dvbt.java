@@ -155,17 +155,6 @@ public class them_dvbt extends JFrame {
 		bt_them.setBounds(47, 258, 89, 23);
 		contentPane.add(bt_them);
 		
-		JButton btnNewButton = new JButton("Thoát");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-			}
-		});
-		btnNewButton.setBackground(new Color(135, 206, 250));
-		btnNewButton.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		btnNewButton.setBounds(244, 259, 89, 23);
-		contentPane.add(btnNewButton);
-		
 		JLabel lblNewLabel_4 = new JLabel("New label");
 		lblNewLabel_4.setBounds(-20, 0, 456, 330);
 		contentPane.add(lblNewLabel_4);

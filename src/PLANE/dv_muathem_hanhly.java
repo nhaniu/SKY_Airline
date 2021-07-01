@@ -85,7 +85,7 @@ public class dv_muathem_hanhly extends JFrame {
 		lb_MaDC.setBounds(41, 279, 99, 22);
 		contentPane.add(lb_MaDC);
 		
-		JLabel lb_title = new JLabel("Mua thêm hành lý ký gửi");
+		JLabel lb_title = new JLabel("Đăng ký dịch vụ bổ trợ");
 		lb_title.setFont(new Font("Times New Roman", Font.BOLD, 25));
 		lb_title.setHorizontalAlignment(SwingConstants.CENTER);
 		lb_title.setBounds(240, 9, 321, 36);
@@ -207,6 +207,7 @@ public class dv_muathem_hanhly extends JFrame {
 			Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
 			Statement st=con.createStatement(); 
 			
+		
 
 
 			String search="select * from DICHVUBOTRO";				
@@ -242,13 +243,24 @@ public class dv_muathem_hanhly extends JFrame {
 		JButton bt_thanhtoan = new JButton("Xác nhận thông tin");
 		bt_thanhtoan.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				DefaultTableModel model=(DefaultTableModel) table.getModel();
+				int i=table.getSelectedRow();
+				
+				
+				if(i==-1) {
+					JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin");
+				}
+				else {
 			
 				if (textField_MaDC.getText().isEmpty()) {
-					 JOptionPane.showMessageDialog(null, "vui lòng nhập mã đặt vé");
+					 JOptionPane.showMessageDialog(null, "vui lòng nhập đầy đủ thông tin");
 					 textField_MaDC.requestFocus();
 					 return; 
 					}
+			
 				else {
+					
+					
 		
 					try {
 						Class.forName("oracle.jdbc.OracleDriver");
@@ -291,7 +303,7 @@ public class dv_muathem_hanhly extends JFrame {
 					} catch (SQLException e1) {
 						e1.printStackTrace();
 					}				
-				}
+				}}
 			}
 		});
 		bt_thanhtoan.setBackground(new Color(135, 206, 250));
@@ -379,7 +391,9 @@ public class dv_muathem_hanhly extends JFrame {
 							float tdt=Float.parseFloat(tongdt);
 							float tongdoanhthu=tdt+tiendvbt;
 
-						
+							PreparedStatement pst1= con.prepareStatement("update DOANHTHUCHUYENBAY set TONGTIENBANVE="+tongtbv+", TONGDOANHTHU="+tongdoanhthu+" where ID= "+id_dt+"");		
+							pst1.execute();
+							System.out.println("update doanh thu ok");
 							
 							System.out.println("ok");
 							
@@ -420,17 +434,15 @@ public class dv_muathem_hanhly extends JFrame {
 									pst2.close();
 							}
 							
+							JOptionPane.showMessageDialog(null, "Mua thành công");
 							
-							PreparedStatement pst1= con.prepareStatement("update DOANHTHUCHUYENBAY set TONGTIENBANVE="+tongtbv+", TONGDOANHTHU="+tongdoanhthu+" where ID= "+id_dt+"");		
-							pst1.execute();
-							System.out.println("update doanh thu ok");
 							pst1.close();
 							rs2.close();
 							rs.close();
 							pst.close();
 
 						con.close();
-						JOptionPane.showMessageDialog(null, "Mua thành công");
+						
 						
 					} catch (ClassNotFoundException e1) {
 						JOptionPane.showMessageDialog(null, "thất bại");
@@ -439,6 +451,9 @@ public class dv_muathem_hanhly extends JFrame {
 					} catch (SQLException e2) {
 						e2.printStackTrace();
 					}
+				}
+				else if(confirm==JOptionPane.NO_OPTION) {
+					dispose();
 				}
 				
 			

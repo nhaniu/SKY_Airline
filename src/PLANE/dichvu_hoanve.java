@@ -169,8 +169,7 @@ public class dichvu_hoanve extends JFrame {
 					 return; 
 					}
 				
-				int confirm =JOptionPane.showConfirmDialog(null, "Xác nhận nếu bạn muốn hoàn vé","Xác nhận",JOptionPane.YES_NO_OPTION);
-				if(confirm==JOptionPane.YES_OPTION) {
+		
 					
 			
 				try {
@@ -187,17 +186,30 @@ public class dichvu_hoanve extends JFrame {
 				String b= "select TONGTIEN, TAIKHOAN_ID, ID from DATVEBAY   WHERE  DATVEBAY.ID="+textField_madatcho.getText();
 				ResultSet rs= st.executeQuery(b);
 				
-				rs.next();
+				
+				if(rs.next()) {
 				String tien =rs.getString(1);				
 				System.out.println("tong tien: "+tien);				
 				float tongtien=Integer.parseInt(tien);
 				float phihv=(float)(0.2*tongtien);
 				float tienhoan=tongtien-phihv;
-				
+				int id_tk=0;
 				String tk_id =rs.getString(2);
-				int id_tk=Integer.parseInt(tk_id);
+				if(tk_id!=null) {
+					if(!tk_id.equals("null")) {
+						 id_tk=Integer.parseInt(tk_id);
+
+					}
+					
+				}
+					System.out.println(tk_id);
+					
 				String idString=rs.getString(3);
+
 				
+				
+				int confirm =JOptionPane.showConfirmDialog(null, "Xác nhận nếu bạn muốn hoàn vé","Xác nhận",JOptionPane.YES_NO_OPTION);
+				if(confirm==JOptionPane.YES_OPTION) {
 
 				
 
@@ -240,7 +252,7 @@ public class dichvu_hoanve extends JFrame {
 				pst2.execute();
 				
 				
-				String C= "select DT.ID, DT.TONGPHIHOANVE,DT.TONGDOANHTHU \r\n"
+				String C= "select DT.ID, DT.TONGPHIHOANVE,DT.TONGDOANHTHU, DT.CHUYENBAY_ID\r\n"
 						+ "from DOANHTHUCHUYENBAY DT, VEMAYBAY VE, DATVEBAY DV \r\n"
 						+ "WHERE   DT.CHUYENBAY_ID=VE.CHUYENBAY_ID AND VE.ID=DV.VEMAYBAY_ID AND DV.ID="+textField_madatcho.getText();
 				ResultSet rs2= st.executeQuery(C);
@@ -255,20 +267,37 @@ public class dichvu_hoanve extends JFrame {
 				String tongdt =rs2.getString(3);	
 				float tdt=Float.parseFloat(tongdt);
 				float tongdoanhthu=tdt-tienhoan;
+				String idcb =rs2.getString(4);
+				System.out.println("idcb: "+idcb);
+				
 
 				PreparedStatement pst1= con.prepareStatement("update DOANHTHUCHUYENBAY set TONGPHIHOANVE="+updatetth+", TONGDOANHTHU="+tongdoanhthu+" where ID= "+id_dt+"");		
 				pst1.execute();
 				
+
+			
 				
-				Component a=null;
-				JOptionPane.showMessageDialog(a, "Thêm thành công");
+				String search1="SELECT SOLUONGVECON,SOLUONGVEBAN FROM THONGKECHUYENBAY WHERE CHUYENBAY_ID="+idcb+"";					
 				
-				
-				rs2.close();
-				rs.close();
-				pst.close();
-				
-				String search="select ID, DATVEBAY_ID,LIDO, NGAYHOAN, PHIHV, TIENHV from HOANVEBAY where ID="+lb_id.getText();					
+				ResultSet rs4= st.executeQuery(search1); 
+				if(rs4.next()) {
+					String slvc =rs4.getString(1);
+					String slvb =rs4.getString(2);
+
+					int slvecon=Integer.parseInt(slvc);
+					int slveban=Integer.parseInt(slvb);
+					
+					int slvecon_update=slvecon-1;
+					int slveban_update=slveban+1;
+					String updatetk ="update THONGKECHUYENBAY set SOLUONGVECON="+slvecon_update+",SOLUONGVEBAN="+slveban_update+" where CHUYENBAY_ID="+idcb+"";
+					PreparedStatement pst4 = con.prepareStatement(updatetk);
+					pst4= con.prepareStatement(updatetk);
+					pst4.execute();  
+					
+					System.out.println("update thong ke thanh cong");
+					
+
+String search="select ID, DATVEBAY_ID,LIDO, NGAYHOAN, PHIHV, TIENHV from HOANVEBAY where ID="+lb_id.getText();					
 				
 				while(tableModel.getRowCount() > 0) 
 				{									
@@ -292,18 +321,45 @@ public class dichvu_hoanve extends JFrame {
 					scrollPane.setVisible(true);
 
 				}
-				rs1.close();				
+				
+				
+					
+				rs1.close();	
+
+
+				}
+				
+				Component a=null;
+				JOptionPane.showMessageDialog(a, "Hoàn vé thành công");
+				
+				rs2.close();
+				rs.close();
+				pst.close();
+				
+							
 				con.close();
-			} catch (ClassNotFoundException e1) {
-				JOptionPane.showMessageDialog(null, e1);
+				
+				
+				}	
+				else {
+					dispose();
+				}
+				}
+
+				else if(!rs.next()) {
+					JOptionPane.showMessageDialog(null, "Mã đặt chỗ không tồn tại");
+				}
+				}
+			 catch (ClassNotFoundException e1) {
+				//JOptionPane.showMessageDialog(null, e1);
 			} catch (SQLException e1) {
-				JOptionPane.showMessageDialog(null, e1);
+				//JOptionPane.showMessageDialog(null, e1);
 			}
 				
 				
 			}
 				
-			}
+			
 		});
 		bt_gui.setBackground(new Color(0, 191, 255));
 		bt_gui.setFont(new Font("Times New Roman", Font.BOLD, 15));
