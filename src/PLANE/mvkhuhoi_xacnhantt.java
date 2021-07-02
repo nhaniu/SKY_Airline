@@ -669,7 +669,7 @@ public class mvkhuhoi_xacnhantt extends JFrame {
 								
 							
 							
-							
+						
 							
 							////Chuyến khứ hồi
 							
@@ -1072,7 +1072,6 @@ public class mvkhuhoi_xacnhantt extends JFrame {
 											
 										
 										} catch (Exception e2) {
-											e2.printStackTrace();
 										}
 									}
 								});

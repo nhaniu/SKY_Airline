@@ -60,7 +60,17 @@ public class quanly_chuyenbay extends JFrame {
 	public static int kt=0;
 	public static String thoigian;
 	public static String thoigian1;
+	public static String id;
+	public static String idmb ;
+	public static String sanbaydi;
+	public static String sanbayden;
 	
+	public static String tg1;
+	public static String tg2; 
+	
+					
+	public static  String tongsove;
+	public static  String idnql;	
 
 
 
@@ -171,22 +181,22 @@ Connection con=null;
 					JOptionPane.showMessageDialog(null, "Chọn chuyến bay cần cập nhật");
 				}
 				
-				String id= model.getValueAt(SelectedRows, 0).toString();
-				String idmb =model.getValueAt(SelectedRows, 1).toString();
-				String sanbaydi= model.getValueAt(SelectedRows, 2).toString();
-				String sanbayden= model.getValueAt(SelectedRows, 3).toString();
+				 id= model.getValueAt(SelectedRows, 0).toString();
+				 idmb =model.getValueAt(SelectedRows, 1).toString();
+				 sanbaydi= model.getValueAt(SelectedRows, 2).toString();
+				 sanbayden= model.getValueAt(SelectedRows, 3).toString();
 				String ngaykh=model.getValueAt( SelectedRows, 4).toString();
 				String ngayhc=model.getValueAt( SelectedRows, 5).toString();
 				
-				String tg1 = ngaykh.substring(0, 10);
-				String tg2 = ngayhc.substring(0, 10);
+				 tg1 = ngaykh.substring(0, 10);
+				 tg2 = ngayhc.substring(0, 10);
 				System.out.println(tg1);
 				System.out.println(tg2);
 								
-				String tongsove= model.getValueAt(SelectedRows, 6).toString();
-				String idnql= model.getValueAt(SelectedRows, 7).toString();
+				 tongsove= model.getValueAt(SelectedRows, 6).toString();
+				 idnql= model.getValueAt(SelectedRows, 7).toString();
 				
-				update_chuyenbay update= new update_chuyenbay(id, idmb, sanbaydi, sanbayden, tg1, tg2, tongsove, idnql);
+				update_chuyenbay update= new update_chuyenbay();
 				update.setVisible(true);
 				
 				

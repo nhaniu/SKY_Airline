@@ -167,7 +167,7 @@ public class xacnhantt_mv1chieu extends JFrame {
 		JLabel Tong_tien = new JLabel("Tổng tiền: ");
 		Tong_tien.setForeground(new Color(255, 0, 0));
 		Tong_tien.setFont(new Font("Tahoma", Font.BOLD, 24));
-		Tong_tien.setBounds(74, 449, 156, 29);
+		Tong_tien.setBounds(70, 465, 156, 29);
 		panel.add(Tong_tien);
 		
 		JLabel Label_Ngay_Gio_kh = new JLabel("New label");
@@ -235,20 +235,20 @@ public class xacnhantt_mv1chieu extends JFrame {
 		
 		JLabel lblNewLabel = new JLabel("Dịch vụ bổ trợ ");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblNewLabel.setBounds(47, 391, 144, 19);
+		lblNewLabel.setBounds(46, 391, 144, 19);
 		panel.add(lblNewLabel);
 		
 		JLabel Label_DichvuBotro = new JLabel("");
 		Label_DichvuBotro.setFont(new Font("Tahoma", Font.BOLD, 16));
-		Label_DichvuBotro.setBounds(187, 391, 156, 19);
+		Label_DichvuBotro.setBounds(187, 391, 263, 19);
 		panel.add(Label_DichvuBotro);
 		Label_DichvuBotro.setText(n);
 		
 		JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblNewLabel_1.setBounds(343, 391, 144, 19);
+		lblNewLabel_1.setBounds(187, 419, 144, 19);
 		panel.add(lblNewLabel_1);
-		lblNewLabel_1.setText(o + " VND");
+		lblNewLabel_1.setText(o  );
 		//lblNewLabel_1.setVisible(false);
 		
 		JLabel Label_Hoten_hk = new JLabel("<dynamic>");
@@ -366,7 +366,7 @@ public class xacnhantt_mv1chieu extends JFrame {
 					System.out.print(tiengiamkm);
 
 					label_noidungkm.setText(noidung);
-					label_tiengiam_km.setText(tiengiamkm + " VND");
+					label_tiengiam_km.setText(tiengiamkm );
 			}
 			
 			
@@ -388,7 +388,7 @@ public class xacnhantt_mv1chieu extends JFrame {
 			DangNhap dNhap=null;
 			@SuppressWarnings("static-access")
 			String tendn=dNhap.tendn;
-			String sql = "select ID, DIEM from TAIKHOAN where ID =  " + "'"+a5+"'";
+			String sql = "select ID, DIEM from TAIKHOAN where ID =  " + "'"+a6+"'";
 			
 			System.out.println(sql);
 			
@@ -454,7 +454,7 @@ public class xacnhantt_mv1chieu extends JFrame {
 		Label_Gia_ve.setFont(new Font("Tahoma", Font.BOLD, 24));
 		Label_Gia_ve.setForeground(Color.RED);
 		Label_Gia_ve.setBackground(Color.WHITE);
-		Label_Gia_ve.setBounds(238, 449, 212, 29);
+		Label_Gia_ve.setBounds(238, 465, 212, 29);
 		panel.add(Label_Gia_ve);
 		Label_Gia_ve.setText(s + " VND");
 		
@@ -564,7 +564,7 @@ public class xacnhantt_mv1chieu extends JFrame {
 						PreparedStatement pst=null;
 						
 						
-					    System.out.println(" MÃ TAI KHOAN: "+a5);
+					    System.out.println(" MÃ TAI KHOAN: "+a6);
 
 					    
 					    if (iddvbt.equals("null")){
@@ -830,7 +830,7 @@ public class xacnhantt_mv1chieu extends JFrame {
 									Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
 									
 															
-									FileInputStream in=new FileInputStream(new File("XUAT_VE.jrxml"));
+									FileInputStream in=new FileInputStream(new File("C:\\Users\\nguyen thi nhan\\Documents\\SKY_Airline\\src\\PLANE\\XUAT_VE.jrxml"));
 									JasperDesign jd=JRXmlLoader.load(in);
 									
 									
@@ -849,29 +849,23 @@ public class xacnhantt_mv1chieu extends JFrame {
 								
 							
 							} catch (Exception e2) {
-								e2.printStackTrace();
+								//e2.printStackTrace();
 							}}
 						});
 						con.close();
 
 
 					} catch (ClassNotFoundException e1) {
-						//Component a=null;
-						//JOptionPane.showMessageDialog(a, e1);						
 						e1.printStackTrace();
-						//JOptionPane.showMessageDialog(a, e1);						
 					} catch (SQLException e1) {
 						Component a=null;
 						e1.printStackTrace();
 
-						//JOptionPane.showMessageDialog(a, e1);						
 		
 					}
 				}
 				else if(confirm==JOptionPane.NO_OPTION)
 				{
-//					getDefaultCloseOperation();
-//					new trangchu();
 					dispose();
 				}
 			}

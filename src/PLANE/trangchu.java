@@ -279,7 +279,7 @@ public class trangchu extends JFrame {
 		});
 		mnDchV.add(item_hoanve);
 		
-		JMenuItem item_muahanhly = new JMenuItem("Mua thêm hành lý");
+		JMenuItem item_muahanhly = new JMenuItem("Đăng ký dịch vụ bổ trợ");
 		item_muahanhly.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		item_muahanhly.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {

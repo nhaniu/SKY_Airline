@@ -106,7 +106,7 @@ public class timkiemtaikhoan extends JFrame {
 		
 		model.addColumn("ID");
 		model.addColumn("Tên đăng nhập");
-		model.addColumn("Mật khẩu");
+		//model.addColumn("Mật khẩu");
 		model.addColumn("Ngày bắt đầu");
 		model.addColumn("SDT");
 		model.addColumn("Email");
@@ -146,7 +146,7 @@ public class timkiemtaikhoan extends JFrame {
 						if(rs.next()) {
 							String ID =rs.getString(1);
 							String tendn =rs.getString(2);
-							String mk =rs.getString(3);
+							//String mk =rs.getString(3);
 							String ngaybd =rs.getString(4);							
 							String sdt =rs.getString(5);
 							String email =rs.getString(6);
@@ -154,7 +154,7 @@ public class timkiemtaikhoan extends JFrame {
 							String diem =rs.getString(8);
 							String hang =rs.getString(9);
 												
-						model.addRow(new Object[] {ID,tendn,mk,ngaybd,sdt,email,tongtien,diem,hang});
+						model.addRow(new Object[] {ID,tendn,ngaybd,sdt,email,tongtien,diem,hang});
 
 						table.setModel(model);
 						scrollPane.setVisible(true);

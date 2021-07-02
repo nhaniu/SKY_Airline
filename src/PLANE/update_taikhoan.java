@@ -45,7 +45,7 @@ public class update_taikhoan extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					update_taikhoan frame = new update_taikhoan("1","2","3","4","5","6","7","8","9");
+					update_taikhoan frame = new update_taikhoan("1","2","4","5","6","7","8","9");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -57,7 +57,7 @@ public class update_taikhoan extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public update_taikhoan(String a, String b, String c, String d, String e, String f, String g, String h, String i) {
+	public update_taikhoan(String a, String b,  String d, String e, String f, String g, String h, String i) {
 		setBackground(new Color(240, 255, 255));
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -106,14 +106,6 @@ public class update_taikhoan extends JFrame {
 		contentPane.add(lblNewLabel_4);
 		lblNewLabel_4.setVisible(false);
 		
-		textField_mk = new JTextField();
-		textField_mk.setEnabled(false);
-		textField_mk.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		textField_mk.setBounds(467, 268, 119, 20);
-		contentPane.add(textField_mk);
-		textField_mk.setColumns(10);
-		textField_mk.setText(c);
-		textField_mk.setVisible(false);
 		
 		JLabel lblNewLabel_5 = new JLabel("Ngày bắt đầu:");
 		lblNewLabel_5.setFont(new Font("Times New Roman", Font.BOLD, 15));
@@ -195,11 +187,7 @@ public class update_taikhoan extends JFrame {
 					 return; 
 					}
 				
-				if (textField_mk.getText().isEmpty()) {
-					 JOptionPane.showMessageDialog(null, "vui lòng nhập đầy đủ thông tin");
-					 textField_mk.requestFocus();
-					 return; 
-					}
+				
 				if (textField_sdt.getText().isEmpty()) {
 					 JOptionPane.showMessageDialog(null, "vui lòng nhập đầy đủ thông tin");
 					 textField_sdt.requestFocus();
@@ -212,15 +200,17 @@ public class update_taikhoan extends JFrame {
 					SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-YY hh:mm:ss");
 					String tgString=formatter.format(dateChooser.getDate());
 					String ngaybd="TO_DATE('"+tgString+"','DD-MM-RR HH24:MI:SS')";
+					System.out.println("ok");
 					
-					String update ="update TAIKHOAN set ID= "+lb_id.getText()+",TENDANGNHAP='"+lb_tendn.getText()+"',MATKHAU='"+textField_mk.getText()+"',NGAYBATDAU="+ngaybd+",SDT="+textField_sdt.getText()+",EMAIL='"+textField_email.getText()+"',TONGTIENMUAVE="+lb_tongtienve.getText()+",DIEM="+lb_diem.getText()+", HANG='"+lb_hang.getText()+"'where ID="+ lb_id.getText()+"";
+					String update ="update TAIKHOAN set ID= "+lb_id.getText()+",TENDANGNHAP='"+lb_tendn.getText()+"',NGAYBATDAU="+ngaybd+",SDT="+textField_sdt.getText()+",EMAIL='"+textField_email.getText()+"',TONGTIENMUAVE="+lb_tongtienve.getText()+",DIEM="+lb_diem.getText()+", HANG='"+lb_hang.getText()+"'where ID="+ lb_id.getText()+"";
 																		
 					Class.forName("oracle.jdbc.OracleDriver");
 					java.sql.Connection DB_AIRLINE= DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");  		
 					PreparedStatement pst = DB_AIRLINE.prepareStatement(update);
 					pst= DB_AIRLINE.prepareStatement(update);
 					pst.execute();
-	
+					System.out.println("ok1");
+
 					JOptionPane.showMessageDialog(null, "Cập nhật thành công");
 					pst.close();
 					DB_AIRLINE.close();

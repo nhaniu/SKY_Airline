@@ -74,7 +74,7 @@ public class Quanly_taikhoan extends JFrame {
 		
 		model.addColumn("ID");
 		model.addColumn("Tên đăng nhập");
-		model.addColumn("Mật khẩu");
+		//model.addColumn("Mật khẩu");
 		model.addColumn("Ngày bắt đầu");
 		model.addColumn("SDT");
 		model.addColumn("Email");
@@ -125,17 +125,17 @@ public class Quanly_taikhoan extends JFrame {
 				}
 				String id= model.getValueAt(SelectedRows, 0).toString();
 				String tendn =model.getValueAt(SelectedRows, 1).toString();
-				String matkhau= model.getValueAt(SelectedRows, 2).toString();
-				 ngaybd= model.getValueAt(SelectedRows, 3).toString();
-				String sdt=model.getValueAt( SelectedRows, 4).toString();
-				String email=model.getValueAt( SelectedRows, 5).toString();
-				String tongtien=model.getValueAt( SelectedRows, 6).toString();				
+				//String matkhau= model.getValueAt(SelectedRows, 2).toString();
+				 ngaybd= model.getValueAt(SelectedRows, 2).toString();
+				String sdt=model.getValueAt( SelectedRows, 3).toString();
+				String email=model.getValueAt( SelectedRows, 4).toString();
+				String tongtien=model.getValueAt( SelectedRows, 5).toString();				
 				String tg1 = ngaybd.substring(0, 10);
 			
-				String diem= model.getValueAt(SelectedRows, 7).toString();
-				String hang= model.getValueAt(SelectedRows, 8).toString();
+				String diem= model.getValueAt(SelectedRows, 6).toString();
+				String hang= model.getValueAt(SelectedRows, 7).toString();
 				
-				update_taikhoan update= new update_taikhoan(id, tendn, matkhau, tg1, sdt, email, tongtien, diem,hang);
+				update_taikhoan update= new update_taikhoan(id, tendn, tg1, sdt, email, tongtien, diem,hang);
 				update.setVisible(true);
 			}
 		});
@@ -162,7 +162,7 @@ public class Quanly_taikhoan extends JFrame {
 			while(rs.next()) {
 				String ID =rs.getString(1);
 				String tendn =rs.getString(2);
-				String mk =rs.getString(3);
+				//String mk =rs.getString(3);
 				String ngaybd =rs.getString(4);
 				String sdt =rs.getString(5);
 				String email =rs.getString(6);
@@ -173,7 +173,7 @@ public class Quanly_taikhoan extends JFrame {
 				
 
 				
-				model.addRow(new Object[] {ID,tendn,mk,ngaybd,sdt,email,tongtien,diem,hang});
+				model.addRow(new Object[] {ID,tendn,ngaybd,sdt,email,tongtien,diem,hang});
 
 				table.setModel(model);
 				scrollPane.setVisible(true);
@@ -214,7 +214,7 @@ public class Quanly_taikhoan extends JFrame {
 				while(rs.next()) {
 					String ID =rs.getString(1);
 					String tendn =rs.getString(2);
-					String mk =rs.getString(3);
+					//String mk =rs.getString(3);
 					String ngaybd =rs.getString(4);
 					String sdt =rs.getString(5);
 					String email =rs.getString(6);
@@ -225,7 +225,7 @@ public class Quanly_taikhoan extends JFrame {
 					
 
 					
-					model.addRow(new Object[] {ID,tendn,mk,ngaybd,sdt,email,tongtien,diem,hang});
+					model.addRow(new Object[] {ID,tendn,ngaybd,sdt,email,tongtien,diem,hang});
 
 					table.setModel(model);
 				

@@ -351,9 +351,9 @@ String search="select ID, DATVEBAY_ID,LIDO, NGAYHOAN, PHIHV, TIENHV from HOANVEB
 				}
 				}
 			 catch (ClassNotFoundException e1) {
-				//JOptionPane.showMessageDialog(null, e1);
+				JOptionPane.showMessageDialog(null, e1);
 			} catch (SQLException e1) {
-				//JOptionPane.showMessageDialog(null, e1);
+				JOptionPane.showMessageDialog(null, e1);
 			}
 				
 				

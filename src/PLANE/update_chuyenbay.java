@@ -26,9 +26,10 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 
 import java.awt.event.ActionListener;
-
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -45,13 +46,14 @@ public class update_chuyenbay extends JFrame {
 	private JTextField textField_ID;
 	private JComboBox comboBox_noidi;
 	private JComboBox comboBox_noiden;
+	Connection con;
  
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					update_chuyenbay frame = new update_chuyenbay("b", "a", null, null, "2001-10-01", "2001-12-12", "205", "205");
+					update_chuyenbay frame = new update_chuyenbay();
 					
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -61,16 +63,58 @@ public class update_chuyenbay extends JFrame {
 		});
 	}
 	
+	public update_chuyenbay() {
+		initComponent();
+		loadCombobox();
+		loadCombobox1();
+	}
 	/**
 	 * Create the frame.
 	 */
+	public void loadCombobox() {
+		try {
+			Class.forName("oracle.jdbc.OracleDriver");
+			 con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+             PreparedStatement pst = con.prepareStatement("Select TENSANBAY from SANBAY");
+				ResultSet rs= pst.executeQuery();
+				while(rs.next()) {
+					comboBox_noidi.addItem(rs.getString(1));
+
+				}
+	         
+
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		
+	}
+	public void loadCombobox1() {
+		try {
+			Class.forName("oracle.jdbc.OracleDriver");
+			con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+             PreparedStatement pst = con.prepareStatement("Select TENSANBAY from SANBAY");
+				ResultSet rs= pst.executeQuery();
+				while(rs.next()) {
+					comboBox_noiden.addItem(rs.getString(1));
+
+				}
+	         
+
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		
+	}
 	
-	
-	public update_chuyenbay(String id, String idmmb, String sanbaydi, String sanbayden, String ngay_kh, String ngay_hc, String tongsove,String idnql) {
+	public void initComponent() {
 		
 		
 		
-			
+			quanly_chuyenbay qlcb=null;
 		
 		setBackground(new Color(240, 255, 255));
 		setVisible(true);
@@ -94,91 +138,23 @@ public class update_chuyenbay extends JFrame {
 		contentPane.add(lb_sbdi);
 		
 		
-		JComboBox comboBox_noiden = new JComboBox();
+		 comboBox_noiden = new JComboBox();
 		comboBox_noiden.setBounds(559, 133, 151, 21);
 		contentPane.add(comboBox_noiden);
-		comboBox_noiden.setModel(new DefaultComboBoxModel(new String[] { "Tp. Hồ Chí Minh (SGN), Việt Nam", "Hà Nội (HAN), Việt Nam","Đà Nẵng (DAD), Việt Nam", "Phú Quốc (PQC), Việt Nam", "Nha Trang (CXR), Việt Nam", "Buôn Ma Thuột (BMV), Việt Nam", "Đồng Hới (VDH), Việt Nam"}));
+		//comboBox_noiden.setModel(new DefaultComboBoxModel(new String[] { "Tp. Hồ Chí Minh (SGN), Việt Nam", "Hà Nội (HAN), Việt Nam","Đà Nẵng (DAD), Việt Nam", "Phú Quốc (PQC), Việt Nam", "Nha Trang (CXR), Việt Nam", "Buôn Ma Thuột (BMV), Việt Nam", "Đồng Hới (VDH), Việt Nam"}));
 
 		
-		comboBox_noiden.setSelectedItem(sanbayden);
+		comboBox_noiden.setSelectedItem(qlcb.sanbayden);
 
 		
-		final JComboBox comboBox_noidi = new JComboBox();
-		comboBox_noidi.setModel(new DefaultComboBoxModel(new String[] {"Hà Nội (HAN), Việt Nam", "Tp. Hồ Chí Minh (SGN), Việt Nam", "Đà Nẵng (DAD), Việt Nam", "Phú Quốc (PQC), Việt Nam", "Nha Trang (CXR), Việt Nam", "Buôn Ma Thuột (BMV), Việt Nam", "Đồng Hới (VDH), Việt Nam"}));
+		 comboBox_noidi = new JComboBox();
+		//comboBox_noidi.setModel(new DefaultComboBoxModel(new String[] {"Hà Nội (HAN), Việt Nam", "Tp. Hồ Chí Minh (SGN), Việt Nam", "Đà Nẵng (DAD), Việt Nam", "Phú Quốc (PQC), Việt Nam", "Nha Trang (CXR), Việt Nam", "Buôn Ma Thuột (BMV), Việt Nam", "Đồng Hới (VDH), Việt Nam"}));
 		comboBox_noidi.setBounds(172, 133, 151, 20);
 		
-		comboBox_noidi.setSelectedItem(sanbaydi);
+		comboBox_noidi.setSelectedItem(qlcb.sanbaydi);
 
 		
 		contentPane.add(comboBox_noidi);
-		comboBox_noidi.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(comboBox_noidi.getSelectedItem().equals("Hà Nội (HAN), Việt Nam"))
-				{
-					comboBox_noiden.removeAllItems();
-					comboBox_noiden.setSelectedItem(null);
-					comboBox_noiden.addItem("Tp. Hồ Chí Minh (SGN), Việt Nam");
-					comboBox_noiden.addItem("Đà Nẵng (DAD), Việt Nam");
-					comboBox_noiden.addItem("Phú Quốc (PQC), Việt Nam");
-					comboBox_noiden.addItem("Nha Trang (CXR), Việt Nam");
-					comboBox_noiden.addItem("Buôn Ma Thuột (BMV), Việt Nam");
-					comboBox_noiden.addItem("Đồng Hới (VDH), Việt Nam");
-					
-				}
-				else if (comboBox_noidi.getSelectedItem().equals("Tp. Hồ Chí Minh (SGN), Việt Nam")) {
-					comboBox_noiden.removeAllItems();
-					comboBox_noiden.setSelectedItem(null);
-					comboBox_noiden.addItem("Hà Nội (HAN), Việt Nam");
-					comboBox_noiden.addItem("Đà Nẵng (DAD), Việt Nam");
-					comboBox_noiden.addItem("Phú Quốc (PQC), Việt Nam");
-					comboBox_noiden.addItem("Nha Trang (CXR), Việt Nam");
-					comboBox_noiden.addItem("Buôn Ma Thuột (BMV), Việt Nam");
-					comboBox_noiden.addItem("Đồng Hới (VDH), Việt Nam");
-				}
-				else if (comboBox_noidi.getSelectedItem().equals("Đà Nẵng (DAD), Việt Nam")) {
-					comboBox_noiden.removeAllItems();
-					comboBox_noiden.setSelectedItem(null);
-					comboBox_noiden.addItem("Hà Nội (HAN), Việt Nam");
-					comboBox_noiden.addItem("Tp. Hồ Chí Minh (SGN), Việt Nam");
-					comboBox_noiden.addItem("Phú Quốc (PQC), Việt Nam");
-
-				}
-				else if (comboBox_noidi.getSelectedItem().equals("Phú Quốc (PQC), Việt Nam")) {
-					comboBox_noiden.removeAllItems();
-					comboBox_noiden.setSelectedItem(null);
-					comboBox_noiden.addItem("Hà Nội (HAN), Việt Nam");
-					comboBox_noiden.addItem("Tp. Hồ Chí Minh (SGN), Việt Nam");
-					comboBox_noiden.addItem("Đà Nẵng (DAD), Việt Nam");
-					comboBox_noiden.addItem("Nha Trang (CXR), Việt Nam");
-
-				}
-				else if (comboBox_noidi.getSelectedItem().equals("Nha Trang (CXR), Việt Nam")) {
-					comboBox_noiden.removeAllItems();
-					comboBox_noiden.setSelectedItem(null);
-					comboBox_noiden.addItem("Hà Nội (HAN), Việt Nam");
-					comboBox_noiden.addItem("Tp. Hồ Chí Minh (SGN), Việt Nam");
-					comboBox_noiden.addItem("Đồng Hới (VDH), Việt Nam");
-					comboBox_noiden.addItem("Phú Quốc (PQC), Việt Nam");
-
-				}
-				else if (comboBox_noidi.getSelectedItem().equals("Buôn Ma Thuột (BMV), Việt Nam")) {
-					comboBox_noiden.removeAllItems();
-					comboBox_noiden.setSelectedItem(null);
-					comboBox_noiden.addItem("Hà Nội (HAN), Việt Nam");
-					comboBox_noiden.addItem("Tp. Hồ Chí Minh (SGN), Việt Nam");
-
-				}
-				else if (comboBox_noidi.getSelectedItem().equals("Đồng Hới (VDH), Việt Nam")) {
-					comboBox_noiden.removeAllItems();
-					comboBox_noiden.setSelectedItem(null);
-					comboBox_noiden.addItem("Hà Nội (HAN), Việt Nam");
-					comboBox_noiden.addItem("Tp. Hồ Chí Minh (SGN), Việt Nam");
-					comboBox_noiden.addItem("Nha Trang (CXR), Việt Nam");
-
-				}
-				
-			}
-		});
 		
 		JLabel lb_noiden = new JLabel("Sân bay đến: ");
 		lb_noiden.setFont(new Font("Times New Roman", Font.BOLD, 15));
@@ -196,7 +172,7 @@ public class update_chuyenbay extends JFrame {
 		dateChooser_hc.setBounds(559, 172, 151, 20);
 		contentPane.add(dateChooser_hc);
 		
-		LocalDate localDate = LocalDate.parse(ngay_hc);
+		LocalDate localDate = LocalDate.parse(qlcb.tg2);
         Date date3 = (Date) Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
 		dateChooser_hc.setDate(date3);
 		
@@ -214,7 +190,7 @@ public class update_chuyenbay extends JFrame {
 		contentPane.add(textField_ID_NQL);
 		textField_ID_NQL.setColumns(10);
 		
-		textField_ID_NQL.setText(idnql);
+		textField_ID_NQL.setText(qlcb.idnql);
 		
 		JLabel lblNewLabel_1 = new JLabel("Tổng số vé:");
 		lblNewLabel_1.setFont(new Font("Times New Roman", Font.BOLD, 15));
@@ -226,7 +202,7 @@ public class update_chuyenbay extends JFrame {
 		contentPane.add(textField_tongsove);
 		textField_tongsove.setColumns(10);
 		
-		textField_tongsove.setText(tongsove);
+		textField_tongsove.setText(qlcb.tongsove);
 		
 		JLabel lblNewLabel_2 = new JLabel("Ngày-giờ khởi hành:");
 		lblNewLabel_2.setFont(new Font("Times New Roman", Font.BOLD, 15));
@@ -239,7 +215,7 @@ public class update_chuyenbay extends JFrame {
 		dateChooser_kh.setBounds(172, 172, 151, 20);
 		contentPane.add(dateChooser_kh);
 		
-		LocalDate localDate1 = LocalDate.parse(ngay_kh);
+		LocalDate localDate1 = LocalDate.parse(qlcb.tg1);
         Date date2 = (Date) Date.from(localDate1.atStartOfDay(ZoneId.systemDefault()).toInstant());;
 		dateChooser_kh.setDate(date2);
 			
@@ -253,7 +229,7 @@ public class update_chuyenbay extends JFrame {
 		contentPane.add(textField_IDmb);
 		textField_IDmb.setColumns(10);
 		
-		textField_IDmb.setText(idmmb);
+		textField_IDmb.setText(qlcb.idmb);
 		
 		JLabel lblNewLabel_4 = new JLabel("ID chuyến bay:");
 		lblNewLabel_4.setFont(new Font("Times New Roman", Font.BOLD, 15));
@@ -273,7 +249,7 @@ public class update_chuyenbay extends JFrame {
 		contentPane.add(textField_ID);
 		textField_ID.setColumns(10);
 		
-		textField_ID.setText(id);
+		textField_ID.setText(qlcb.id);
 		
 		JLabel lblNewLabel = new JLabel("New label");
 		lblNewLabel.setBounds(0, 0, 796, 453);

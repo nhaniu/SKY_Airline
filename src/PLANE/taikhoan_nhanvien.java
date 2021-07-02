@@ -84,7 +84,7 @@ public class taikhoan_nhanvien extends JFrame {
 		
 		JLabel lb_hoten = new JLabel("New label");
 		lb_hoten.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		lb_hoten.setBounds(99, 151, 135, 21);
+		lb_hoten.setBounds(99, 151, 207, 21);
 		contentPane.add(lb_hoten);
 		
 		JLabel lblNewLabel_5 = new JLabel("Ngày sinh:");
@@ -94,7 +94,7 @@ public class taikhoan_nhanvien extends JFrame {
 		
 		JLabel lb_ngsinh = new JLabel("New label");
 		lb_ngsinh.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		lb_ngsinh.setBounds(97, 193, 116, 21);
+		lb_ngsinh.setBounds(97, 193, 209, 21);
 		contentPane.add(lb_ngsinh);
 		
 		JLabel lblNewLabel_6 = new JLabel("SĐT:");
@@ -124,7 +124,7 @@ public class taikhoan_nhanvien extends JFrame {
 		
 		JLabel lb_ngvl = new JLabel("New label");
 		lb_ngvl.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		lb_ngvl.setBounds(118, 298, 116, 21);
+		lb_ngvl.setBounds(118, 298, 215, 21);
 		contentPane.add(lb_ngvl);
 		
 		JLabel lblNewLabel_10 = new JLabel("Nơi công tác:");

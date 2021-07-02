@@ -395,7 +395,6 @@ public class Quanly_taichinh extends JFrame {
 								con.close();
 
 							} catch (Exception e2) {
-								e2.printStackTrace();
 							}
 
 						}
@@ -560,7 +559,6 @@ public class Quanly_taichinh extends JFrame {
 							con.close();
 
 						} catch (Exception e2) {
-							e2.printStackTrace();
 						}
 
 					}

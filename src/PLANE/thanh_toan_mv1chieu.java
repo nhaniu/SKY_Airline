@@ -243,7 +243,7 @@ public class thanh_toan_mv1chieu extends JFrame {
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblNewLabel_1.setBounds(318, 391, 144, 19);
 		panel.add(lblNewLabel_1);
-		lblNewLabel_1.setText(o + " VND");
+		lblNewLabel_1.setText(o );
 		
 		JLabel Label_Hoten_hk = new JLabel("<dynamic>");
 		Label_Hoten_hk.setFont(new Font("Tahoma", Font.BOLD, 16));
