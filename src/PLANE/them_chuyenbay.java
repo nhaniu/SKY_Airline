@@ -29,6 +29,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -46,11 +48,14 @@ public class them_chuyenbay extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField_ID_NQL;
 	private JTextField textField_tongsove;
-	private JTextField textField_IDmb;
 	private JLabel lb_id;
 	Connection con=null;
 	private JComboBox comboBox_noidi;
 	private JComboBox comboBox_noiden;
+	private JComboBox comboBox;
+	private String tsgcb;
+
+
 
 
 	public them_chuyenbay() {
@@ -58,6 +63,7 @@ public class them_chuyenbay extends JFrame {
 		autoID();
 		loadCombobox();
 		loadCombobox1();
+		loadCombobox2();
 
 	}
 	/**
@@ -72,6 +78,25 @@ public class them_chuyenbay extends JFrame {
 				ResultSet rs= pst.executeQuery();
 				while(rs.next()) {
 					comboBox_noidi.addItem(rs.getString(1));
+
+				}
+	         
+
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		
+	}
+	public void loadCombobox2() {
+		try {
+			Class.forName("oracle.jdbc.OracleDriver");
+			con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+             PreparedStatement pst = con.prepareStatement("Select ID from TTMAYBAY");
+				ResultSet rs= pst.executeQuery();
+				while(rs.next()) {
+					comboBox.addItem(rs.getString(1));
 
 				}
 	         
@@ -151,6 +176,8 @@ public class them_chuyenbay extends JFrame {
 		contentPane.add(comboBox_noidi);
 		
 		
+		
+		
 		JLabel lb_noiden = new JLabel("Sân bay đến: ");
 		lb_noiden.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		lb_noiden.setBounds(421, 133, 102, 18);
@@ -199,9 +226,47 @@ public class them_chuyenbay extends JFrame {
 		contentPane.add(lblNewLabel_1);
 		
 		textField_tongsove = new JTextField();
+		
+		textField_tongsove.setEditable(false);
 		textField_tongsove.setBounds(559, 216, 151, 18);
 		contentPane.add(textField_tongsove);
 		textField_tongsove.setColumns(10);
+		
+		
+		comboBox = new JComboBox();
+		comboBox.addItemListener((ItemListener) new ItemListener() {
+		    public void itemStateChanged(ItemEvent e) {
+		        if(e.getStateChange() == ItemEvent.SELECTED) {
+		        	
+		        	try {
+		    			Class.forName("oracle.jdbc.OracleDriver");
+		    			con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+		                 PreparedStatement pst = con.prepareStatement("Select TONGSOGHE from TTMAYBAY where ID="+comboBox.getSelectedItem()+"");
+		             	
+		    				ResultSet rs= pst.executeQuery();
+		    				while(rs.next()) {
+		    					String tongsoghe =rs.getString(1);
+		    					float tsg=Float.parseFloat(tongsoghe);
+		    					int tsg_cb= (int) (tsg*1.2);
+		    					 tsgcb=String.valueOf(tsg_cb);
+		    					 
+		    				}
+		    	         
+
+		    		} catch (ClassNotFoundException e1) {
+		    			e1.printStackTrace();
+		    		} catch (SQLException e1) {
+		    			e1.printStackTrace();
+		    		}
+		    		
+					textField_tongsove.setText(tsgcb);
+		        }
+		    }
+		});
+	
+		comboBox.setBounds(559, 89, 152, 21);
+		contentPane.add(comboBox);
+		
 		
 		JLabel lblNewLabel_2 = new JLabel("Ngày-giờ khởi hành:");
 		lblNewLabel_2.setFont(new Font("Times New Roman", Font.BOLD, 15));
@@ -216,11 +281,6 @@ public class them_chuyenbay extends JFrame {
 		lblNewLabel_3.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		lblNewLabel_3.setBounds(421, 87, 114, 17);
 		contentPane.add(lblNewLabel_3);
-		
-		textField_IDmb = new JTextField();
-		textField_IDmb.setBounds(559, 87, 151, 18);
-		contentPane.add(textField_IDmb);
-		textField_IDmb.setColumns(10);
 		
 		JLabel lblNewLabel_4 = new JLabel("ID chuyến bay:");
 		lblNewLabel_4.setFont(new Font("Times New Roman", Font.BOLD, 15));
@@ -238,15 +298,8 @@ public class them_chuyenbay extends JFrame {
 		lb_id.setBounds(172, 85, 151, 18);
 		contentPane.add(lb_id);
 		
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setBounds(0, 0, 795, 524);
-		contentPane.add(lblNewLabel);
 		
-		ImageIcon icon=new ImageIcon("anh1.jpg");
-		Image imgIcon =icon.getImage();
-		Image imgScale =imgIcon.getScaledInstance(lblNewLabel.getWidth(), lblNewLabel.getHeight(), Image.SCALE_SMOOTH);
-		ImageIcon scaleIcon=new ImageIcon(imgScale);
-		lblNewLabel.setIcon(scaleIcon);
+		
 		
 		bt_them.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -256,11 +309,7 @@ public class them_chuyenbay extends JFrame {
 					 return; 
 					}
 				
-				if (textField_IDmb.getText().isEmpty()) {
-					 JOptionPane.showMessageDialog(null, "vui lòng nhập ID máy bay");
-					 textField_IDmb.requestFocus();
-					 return; 
-					}
+				
 			
 				try {
 					
@@ -276,7 +325,7 @@ public class them_chuyenbay extends JFrame {
 
 				Class.forName("oracle.jdbc.OracleDriver");
 				con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
-				PreparedStatement pst= con.prepareStatement("insert into \"DB_AIRLINE\".\"CHUYENBAY\"  (\"ID\", \"TTMAYBAY_ID\", \"SANBAYDI\",\"SANBAYDEN\",  \"NGAY_GIO_KH\", \"NGAY_GIO_HC\", \"TONGSOVE\",\"NGUOIQUANLY_ID\") values("+lb_id.getText()+","+textField_IDmb.getText()+",'"+comboBox_noidi.getSelectedItem()+"','"+comboBox_noiden.getSelectedItem()+"',"+ngay_khoihanh+","+ngay_hacanh+","+textField_tongsove.getText()+","+textField_ID_NQL.getText()+")");		
+				PreparedStatement pst= con.prepareStatement("insert into \"DB_AIRLINE\".\"CHUYENBAY\"  (\"ID\", \"TTMAYBAY_ID\", \"SANBAYDI\",\"SANBAYDEN\",  \"NGAY_GIO_KH\", \"NGAY_GIO_HC\", \"TONGSOVE\",\"NGUOIQUANLY_ID\") values("+lb_id.getText()+","+comboBox.getSelectedItem()+",'"+comboBox_noidi.getSelectedItem()+"','"+comboBox_noiden.getSelectedItem()+"',"+ngay_khoihanh+","+ngay_hacanh+","+textField_tongsove.getText()+","+textField_ID_NQL.getText()+")");		
 				pst.execute();	
 				
 
@@ -328,41 +377,17 @@ public class them_chuyenbay extends JFrame {
 			JOptionPane.showMessageDialog(null, e);		
 			} catch (SQLException e) {
 				JOptionPane.showMessageDialog(null, e);
-		}  
+		}
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setBounds(0, 0, 795, 524);
+		contentPane.add(lblNewLabel);
+		
+		ImageIcon icon=new ImageIcon("anh1.jpg");
+		Image imgIcon =icon.getImage();
+		Image imgScale =imgIcon.getScaledInstance(lblNewLabel.getWidth(), lblNewLabel.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon scaleIcon=new ImageIcon(imgScale);
+		lblNewLabel.setIcon(scaleIcon);
+		
 	}
-//	public void autoID1() {
-//		
-//		
-//		
-//		try {
-//			Class.forName("oracle.jdbc.OracleDriver");
-//			java.sql.Connection DB_AIRLINE= DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");  		
-//			
-//			Statement stmt=(Statement) ((java.sql.Connection) DB_AIRLINE).createStatement();  	
-//			ResultSet rs=((java.sql.Statement) stmt).executeQuery("select MAX(ID) from THONGKECHUYENBAY");  
-//			
-//			rs.next();
-//			System.out.println(rs.getString("MAX(ID)"));
-//			
-//			if(rs.getString("MAX(ID)")==null) {
-//				rs.getString("ID=6001");
-//			}
-//			else 
-//			{
-//				Integer result1 = Integer.valueOf(rs.getString("MAX(ID)"));
-//				result1++;
-//				rs.getString(result1.toString());
-//				System.out.println(	rs.getString(result1.toString()));
-//
-//			}
-//			
-//			rs.close();
-//			DB_AIRLINE.close();
-//		} catch (ClassNotFoundException e) {
-//			java.util.logging.Logger.getLogger(them_hanhkhach.class.getName()).log(Level.SEVERE,null,e);
-//		} catch (SQLException e) {
-//			java.util.logging.Logger.getLogger(them_hanhkhach.class.getName()).log(Level.SEVERE,null,e);
-//
-//		}  
-//	}
+	
 	}

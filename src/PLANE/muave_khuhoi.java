@@ -33,6 +33,10 @@ public class muave_khuhoi extends JFrame {
 	public static String idcbdi;
 	public static String idhvve;
 	public static String idcbve;
+	private int tongsoghe;
+	private int countid;
+	private int tongsoghe1;
+	private int countid1;
 
 
 
@@ -164,13 +168,18 @@ public class muave_khuhoi extends JFrame {
 		table_di.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		table_di.setVisible(false);
 		
-		table_di.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"Giờ khởi hành", "Giờ hạ cánh", "Hạng vé", "Giá vé"
-			}
-		));
+		final DefaultTableModel tableModeldi = new DefaultTableModel();
+		tableModeldi.addColumn("Giờ khởi hành");
+		tableModeldi.addColumn("Giờ hạ cánh");
+		tableModeldi.addColumn("Hạng vé");
+		tableModeldi.addColumn("Giá vé");
+
+		table_di.setModel(tableModeldi);
+
+		
+		JTableHeader Theader = table_di.getTableHeader();
+		 Theader.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		Theader.setBackground(new Color(255, 255, 255));
 		scrollPane_di.setViewportView(table_di);
 		
 		final JScrollPane scrollPane_ve = new JScrollPane();
@@ -182,14 +191,21 @@ public class muave_khuhoi extends JFrame {
 		table_ve.setBackground(new Color(255, 255, 255));
 		table_ve.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		
-		table_di.setVisible(false);
-		table_ve.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-					"Giờ khởi hành", "Giờ hạ cánh", "Hạng vé", "Giá vé"
-			}
-		));
+	//	table_di.setVisible(false);
+		
+		final DefaultTableModel tableModel = new DefaultTableModel();
+		tableModel.addColumn("Giờ khởi hành");
+		tableModel.addColumn("Giờ hạ cánh");
+		tableModel.addColumn("Hạng vé");
+		tableModel.addColumn("Giá vé");
+
+		table_ve.setModel(tableModel);
+
+		
+		JTableHeader Theader1 = table_ve.getTableHeader();
+		 Theader1.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		Theader1.setBackground(new Color(255, 255, 255));
+		
 		scrollPane_ve.setViewportView(table_ve);
 		
 		final JLabel Label_ngaydi = new JLabel("Ngày đi ");
@@ -217,7 +233,6 @@ public class muave_khuhoi extends JFrame {
 		bt_timchuyebay.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		bt_timchuyebay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
 				try {
 					Class.forName("oracle.jdbc.driver.OracleDriver");
 					Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "DB_AIRLINE", "123");
@@ -248,8 +263,13 @@ public class muave_khuhoi extends JFrame {
 					System.out.println(date);
 					System.out.println(sql);
 					
-			
+					int dem=0;
+
 					ResultSet rs =  ((java.sql.Statement) st).executeQuery(sql);
+					 while(tableModeldi.getRowCount() > 0) 
+						{									
+							tableModeldi.removeRow(0);
+						}
 					while(rs.next()) 
 					{
 						String giokh = rs.getString(1);
@@ -259,21 +279,21 @@ public class muave_khuhoi extends JFrame {
 						idhvdi = rs.getString(5);
 						idcbdi = rs.getString(6);
 
-						 
-						
-						String tbData[] = {giokh, giohc, hv, gv};
-							DefaultTableModel tblModel = (DefaultTableModel)table_di.getModel();
-							System.out.print(giokh+giohc+hv+gv);
+						 dem++;
+							tableModeldi.addRow(new Object[] {giokh, giohc, hv, gv});
 
-							tblModel.addRow(tbData);
+
 							scrollPane_di.setVisible(true);
 							table_di.setVisible(true);
 							button_chonmua.setVisible(true);
-							
+							Label_ngaydi.setVisible(true);
+
 							
 					}
 					
-						
+					if(dem==0) {
+						JOptionPane.showMessageDialog(null, "Không tìm thấy chuyến bay đi");
+					}
 					conn.close();
 				}
 				
@@ -315,6 +335,11 @@ public class muave_khuhoi extends JFrame {
 					
 			
 					ResultSet rs =  ((java.sql.Statement) st).executeQuery(sql);
+					 while(tableModel.getRowCount() > 0) 
+						{									
+							tableModel.removeRow(0);
+						}
+					 int dem=0;
 					while(rs.next()) 
 					{
 						String giokh = rs.getString(1);
@@ -323,20 +348,85 @@ public class muave_khuhoi extends JFrame {
 						String gv = rs.getString(4);
 						idhvve = rs.getString(5);
 						idcbve = rs.getString(6);
-						 
+						 dem++;
 						
-						String tbData[] = {giokh, giohc, hv, gv};
-							DefaultTableModel tblModel = (DefaultTableModel)table_ve.getModel();
-							System.out.print(giokh+giohc+hv+gv);
+						tableModel.addRow(new Object[] {giokh, giohc, hv, gv});
 
-							tblModel.addRow(tbData);
+
 							scrollPane_ve.setVisible(true);
 							table_ve.setVisible(true);
 							button_chonmua.setVisible(true);
+							Label_ngayve.setVisible(true);
 							
 					}
+					if(dem==0) {
+						JOptionPane.showMessageDialog(null, "Không tìm thấy chuyến bay về");
+					}
+					try {
+						Class.forName("oracle.jdbc.OracleDriver");
+						con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+			             PreparedStatement pst = con.prepareStatement("Select count(CHUYENBAY_ID) from VEMAYBAY ve where CHUYENBAY_ID="+idcbdi+" ");
+			         	
+							ResultSet rs1= pst.executeQuery();
+							while(rs1.next()) {
+								 String a =rs1.getString(1);
+								 countid=Integer.parseInt(a);							}
+
+					} catch (ClassNotFoundException e1) {
+						e1.printStackTrace();
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
+					try {
+						Class.forName("oracle.jdbc.OracleDriver");
+						con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+			             PreparedStatement pst = con.prepareStatement("Select TONGSOVE from CHUYENBAY  where ID="+idcbdi+"");
+			         	
+							ResultSet rs1= pst.executeQuery();
+							while(rs1.next()) {
+								String b =rs1.getString(1);
+								 tongsoghe=Integer.parseInt(b);							}
+
+					} catch (ClassNotFoundException e1) {
+						e1.printStackTrace();
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
+					//chuyenve
+					try {
+						Class.forName("oracle.jdbc.OracleDriver");
+						con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+			             PreparedStatement pst1 = con.prepareStatement("Select count(CHUYENBAY_ID) from VEMAYBAY ve where CHUYENBAY_ID="+idcbve+" ");
+			         	
+							ResultSet rs2= pst1.executeQuery();
+							while(rs2.next()) {
+								 String a =rs2.getString(1);
+								 countid1=Integer.parseInt(a);
+							}
+
+					} catch (ClassNotFoundException e1) {
+						e1.printStackTrace();
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
+					try {
+						Class.forName("oracle.jdbc.OracleDriver");
+						con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+			             PreparedStatement pst1 = con.prepareStatement("Select TONGSOVE from CHUYENBAY  where ID="+idcbve+"");
+			         	
+							ResultSet rs2= pst1.executeQuery();
+							while(rs2.next()) {
+								 String b =rs2.getString(1);
+								 tongsoghe1=Integer.parseInt(b);
+							}
+							System.out.println("tong so ghe ve: "+tongsoghe1);
+					} catch (ClassNotFoundException e1) {
+						e1.printStackTrace();
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
 					
-						
+						System.out.println("\nidcbve"+idcbve);
 					conn.close();
 				}
 				
@@ -346,8 +436,7 @@ public class muave_khuhoi extends JFrame {
 					
 				}
 				
-				Label_ngaydi.setVisible(true);
-				Label_ngayve.setVisible(true);
+				
 				
 			}
 		});
@@ -360,9 +449,21 @@ public class muave_khuhoi extends JFrame {
 		
 		JTableHeader theJTableHeader1 = table_ve.getTableHeader();
 		theJTableHeader1.setBackground(new Color(135, 206, 250));
+		
+		System.out.println("so ghe chuyen bay di: "+tongsoghe);
+		System.out.println("so ghe chuyen bay ve: "+tongsoghe1);
+
 
 		button_chonmua.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
+				if(tongsoghe==countid) {
+					JOptionPane.showMessageDialog(null, "Chuyến bay thứ nhất đã hết vé, xin quý khách chọn chuyến bay khác");
+				}
+				else if(tongsoghe1==countid1) {
+					JOptionPane.showMessageDialog(null, "Chuyến bay thứ 2 đã hết vé, xin quý khách chọn chuyến bay khác");
+				}
+				else {
 				int id = table_di.getSelectedRow();
 				System.out.println(id);
 				String gio_kh_di= new String();
@@ -404,7 +505,7 @@ public class muave_khuhoi extends JFrame {
 				nhapthongtin_mvkhuhoi obj = new nhapthongtin_mvkhuhoi(gio_kh_di, gio_hc_di, h_ve_di, gia_ve_di, noi_di, noi_den, gio_kh_ve, gio_hc_ve, h_ve_ve, gia_ve_ve);
 				obj.setVisible(true);
 				dispose();
-				}
+				}}
 			
 				
 		});

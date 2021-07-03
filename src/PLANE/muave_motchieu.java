@@ -37,6 +37,9 @@ public class muave_motchieu extends JFrame {
 	Connection con=null;
 	private JComboBox comboBox_noidi;
 	private JComboBox comboBox_noiden;
+	private String tsgcb;
+	private int tongsoghe;
+	private int countid;
 
 
 	public muave_motchieu() {
@@ -147,15 +150,19 @@ public class muave_motchieu extends JFrame {
 		table = new JTable();
 		table.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		table.setVisible(false);
+		final DefaultTableModel tableModel = new DefaultTableModel();
+		tableModel.addColumn("Giờ khởi hành");
+		tableModel.addColumn("Giờ hạ cánh");
+		tableModel.addColumn("Hạng vé");
+		tableModel.addColumn("Giá vé");
+
 		
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"Giờ khởi hành ", "Giờ hạ cánh", "Hạng vé ", "Giá vé"
-			}
-			
-		));
+		
+		JTableHeader Theader = table.getTableHeader();
+		 Theader.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		Theader.setBackground(new Color(255, 255, 255));
+		table.setModel(tableModel);
+		
 		scrollPane.setViewportView(table);
 		
 		
@@ -164,6 +171,8 @@ public class muave_motchieu extends JFrame {
 		button_chonmua.setBackground(new Color(124, 252, 0));
 		button_chonmua.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		button_chonmua.setVisible(false);
+		
+
 		
 		JButton bt_tim_chuyen_bay = new JButton("Tìm chuyến bay");
 		bt_tim_chuyen_bay.setFont(new Font("Times New Roman", Font.BOLD, 14));
@@ -201,8 +210,14 @@ public class muave_motchieu extends JFrame {
 					System.out.println(date);
 					System.out.println(sql);
 					
-			
 					ResultSet rs =  ((java.sql.Statement) st).executeQuery(sql);
+					
+					 int dem=0;
+					 
+					 while(tableModel.getRowCount() > 0) 
+						{									
+							tableModel.removeRow(0);
+						}
 					while(rs.next()) 
 					{
 						 idcb = rs.getString(1);
@@ -212,14 +227,12 @@ public class muave_motchieu extends JFrame {
 						String gv = rs.getString(5);
 						idhv = rs.getString(6);
 
-						
+						dem++;
 						
 
-						String tbData[] = {giokh, giohc, hv, gv};
-							DefaultTableModel tblModel = (DefaultTableModel)table.getModel();
+						tableModel.addRow(new Object[] {giokh, giohc, hv, gv});
 							System.out.print(giokh+giohc+hv+gv);
 
-							tblModel.addRow(tbData);
 							scrollPane.setVisible(true);
 							table.setVisible(true);
 							button_chonmua.setVisible(true);
@@ -227,14 +240,15 @@ public class muave_motchieu extends JFrame {
 					}
 					
 	
-						
+					if(dem==0) {
+						JOptionPane.showMessageDialog(null, "Không tìm thấy chuyến bay");
+					}
 					conn.close();
 				}
 				
 				catch(Exception e1 )
 				{
-					System.out.println("Không tìm thấy chuyến bay!");
-					JOptionPane.showMessageDialog(null, "Không tìm thấy chuyến bay!");
+				
 				}
 				
 
@@ -244,10 +258,48 @@ public class muave_motchieu extends JFrame {
 		bt_tim_chuyen_bay.setBounds(252, 122, 137, 24);
 		contentPane.add(bt_tim_chuyen_bay);
 		
+	
 		
 
 		button_chonmua.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				 
+				try {
+					Class.forName("oracle.jdbc.OracleDriver");
+					con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+		             PreparedStatement pst = con.prepareStatement("Select count(CHUYENBAY_ID) from VEMAYBAY ve where CHUYENBAY_ID="+idcb+" ");
+		            
+						ResultSet rs1= pst.executeQuery();
+						while(rs1.next()) {
+							String a =rs1.getString(1);
+							countid=Integer.parseInt(a);
+						}
+
+				} catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				try {
+					Class.forName("oracle.jdbc.OracleDriver");
+					con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+		             PreparedStatement pst = con.prepareStatement("Select TONGSOVE from CHUYENBAY  where ID="+idcb+"");
+		         	
+						ResultSet rs1= pst.executeQuery();
+						while(rs1.next()) {
+							String  b =rs1.getString(1);
+							tongsoghe=Integer.parseInt(b);
+						}
+
+				} catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				if(tongsoghe==countid) {
+					JOptionPane.showMessageDialog(null, "Chuyến bay đã hết vé, xin quý khách chọn chuyến bay khác");
+				}
+				else {
 				
 				int i = table.getSelectedRow();
 				System.out.println(i);
@@ -274,6 +326,7 @@ public class muave_motchieu extends JFrame {
 				nhapthongtin_mv1chieu obj = new nhapthongtin_mv1chieu(gio_kh_di, gio_hc_di, h_ve_di, gia_ve_di, noi_di, noi_den, gio_kh_ve, gio_hc_ve, h_ve_ve, gia_ve_ve);
 				obj.setVisible(true);
 				dispose();
+				}
 				
 				
 			}
