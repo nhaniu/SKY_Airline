@@ -77,9 +77,7 @@ public class muave_motchieu extends JFrame {
 	         
 
 		} catch (ClassNotFoundException e1) {
-			e1.printStackTrace();
 		} catch (SQLException e1) {
-			e1.printStackTrace();
 		}
 		
 	}
@@ -96,9 +94,7 @@ public class muave_motchieu extends JFrame {
 	         
 
 		} catch (ClassNotFoundException e1) {
-			e1.printStackTrace();
 		} catch (SQLException e1) {
-			e1.printStackTrace();
 		}
 		
 	}
@@ -276,9 +272,7 @@ public class muave_motchieu extends JFrame {
 						}
 
 				} catch (ClassNotFoundException e1) {
-					e1.printStackTrace();
 				} catch (SQLException e1) {
-					e1.printStackTrace();
 				}
 				try {
 					Class.forName("oracle.jdbc.OracleDriver");
@@ -292,9 +286,7 @@ public class muave_motchieu extends JFrame {
 						}
 
 				} catch (ClassNotFoundException e1) {
-					e1.printStackTrace();
 				} catch (SQLException e1) {
-					e1.printStackTrace();
 				}
 				if(tongsoghe==countid) {
 					JOptionPane.showMessageDialog(null, "Chuyến bay đã hết vé, xin quý khách chọn chuyến bay khác");
@@ -302,6 +294,10 @@ public class muave_motchieu extends JFrame {
 				else {
 				
 				int i = table.getSelectedRow();
+				if(i==-1) {
+					JOptionPane.showMessageDialog(null, "Vui lòng chọn chuyến bay cần mua");
+				}
+				else {
 				System.out.println(i);
 				 String gio_kh_di = new String();
 				 String gio_hc_di = new String();
@@ -328,7 +324,7 @@ public class muave_motchieu extends JFrame {
 				dispose();
 				}
 				
-				
+				}
 			}
 		});
 		JTableHeader theJTableHeader = table.getTableHeader();

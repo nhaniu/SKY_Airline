@@ -244,8 +244,7 @@ public class Quanly_taichinh extends JFrame {
 				e12.printStackTrace();
 			}
 			
-				
-				
+
 				
 				if (kt==1) {
 					try {
@@ -352,10 +351,7 @@ public class Quanly_taichinh extends JFrame {
 					} catch (SQLException e1) {
 						e1.printStackTrace();
 					}	
-					
-					
-					
-					
+
 					bt_xuatfile.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
 							try {

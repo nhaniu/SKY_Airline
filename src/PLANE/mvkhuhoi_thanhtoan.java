@@ -361,11 +361,12 @@ public class mvkhuhoi_thanhtoan extends JFrame {
 						System.out.println(ngaybd);
 					}
 					
-					if (date1.before(ngaybd) || date1.after(ngaykt) ) {
+					if (!textField_makm.getText().toString().equals("")&&date1.before(ngaybd) || date1.after(ngaykt) ) {
 						JOptionPane.showMessageDialog(null, "Mã khuyến mãi không hợp lệ!");
 						textField_makm.setText("");
 						
 					}
+					
 					else {
 				
 					String makm = null;

@@ -388,7 +388,8 @@ public class xacnhantt_mv1chieu extends JFrame {
 			DangNhap dNhap=null;
 			@SuppressWarnings("static-access")
 			String tendn=dNhap.tendn;
-			String sql = "select ID, DIEM from TAIKHOAN where ID =  " + "'"+a6+"'";
+			
+			String sql = "select ID, DIEM from TAIKHOAN where TENDANGNHAP =  " + "'"+tendn+"'";
 			
 			System.out.println(sql);
 			
