@@ -126,13 +126,7 @@ public class mvkhuhoi_xacnhantt extends JFrame {
 		iddvbt=r;
 		
 		
-//		float p = Float.parseFloat(d);
-//		System.out.print(p);
-//		float q = Float.parseFloat(k);
-//		System.out.print(q);
-//		float t = p + q;
-//		String s = String.valueOf(t);
-		
+
 		float p = Float.parseFloat(o.substring(0, o.length()-4));
 		System.out.print(p);
 		float q = Float.parseFloat(d);
@@ -140,14 +134,7 @@ public class mvkhuhoi_xacnhantt extends JFrame {
 		float x = Float.parseFloat(k);
 		System.out.print(r);
 		float t = (float)(p + q + x);
-		
-//		float p1=Float.parseFloat(o.substring(0,o.length()-4));
-//		float p = Float.parseFloat(d);
-//		System.out.print(p);
-//		float q = Float.parseFloat(k);
-//		System.out.print(q);
-//		float t = p + q +p1;
-//		String s = String.valueOf(t);
+
 		
 		
 		
@@ -431,7 +418,7 @@ public class mvkhuhoi_xacnhantt extends JFrame {
 			Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "DB_AIRLINE", "123");
 			java.sql.Statement st = conn.createStatement();
 			
-			String sql = "select DIEM from TAIKHOAN where ID =  " + "'"+ a6 +"'";
+			String sql = "select DIEM from TAIKHOAN where ID =  " + "'"+ a6+"'";
 			
 			System.out.println(sql);
 			

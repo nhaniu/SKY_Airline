@@ -311,39 +311,70 @@ public class thanh_toan_mv1chieu extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				
-				String makm=null;// = new String();
-				String matk=null;// = new String();
-				String gioitinh = new String();
-				
-				if (l.toString() == "Ông")
-				{
-					gioitinh = "NAM";
-				}
-				else if(l.toString() == "Bà" || l.toString() == "Cô/Chị") {
-					gioitinh = "NỮ";
-				}
-				System.out.print(gioitinh);
+				try {
+					Class.forName("oracle.jdbc.driver.OracleDriver");
+					Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "DB_AIRLINE", "123");
+					java.sql.Statement st = conn.createStatement();
+					String sql = " SELECT NGAYBD, NGAYKT FROM BKHUYENMAI WHERE ID = '"+textField_makm.getText()+"'";
+					System.out.println(sql);
+					
+					Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(a); 
+					Date ngaybd = new Date();
+					Date ngaykt = new Date();
+					ResultSet rs =  ((java.sql.Statement) st).executeQuery(sql);
+					while(rs.next()) {
+						ngaybd = rs.getDate(1);
+						ngaykt = rs.getDate(2);
+						System.out.println(ngaybd);
+					}
+					
+					if (date1.before(ngaybd) || date1.after(ngaykt) ) {
+						JOptionPane.showMessageDialog(null, "Mã khuyến mãi không hợp lệ!");
+						textField_makm.setText("");
 						
-				
-				if (!textField_makm.getText().toString().equals(""))
-			    {
-			    	 makm = textField_makm.getText().toString();
-			    }
-			    else if(textField_makm.getText().toString().equals(""))
-			    {
-			    	makm ="null";  
-			    }
-			    if (!textField_matk.getText().toString().equals(""))
-			    {
-			    	matk = textField_matk.getText().toString();
-			    }
-			    else if(textField_matk.getText().toString().equals("")) {
-					matk ="null";
-				}
-			    
-			    xacnhantt_mv1chieu obj = new xacnhantt_mv1chieu(gio_kh_di, gio_hc_di, h_ve_di, gia_ve_di, noi_di, noi_den, gio_kh_ve, gio_hc_ve, h_ve_ve, gia_ve_ve, danh_xung, hoten_hk,  ngaysinh, sodt, email, quoctich, goihanhly, giatien, iddvbt, makm, matk, gioitinh);
-				obj.setVisible(true);
-				dispose();
+					}
+					else {
+						String makm=null;// = new String();
+						String matk=null;// = new String();
+						String gioitinh = new String();
+						
+						if (l.toString() == "Ông")
+						{
+							gioitinh = "NAM";
+						}
+						else if(l.toString() == "Bà" || l.toString() == "Cô/Chị") {
+							gioitinh = "NỮ";
+						}
+						System.out.print(gioitinh);
+								
+						
+						if (!textField_makm.getText().toString().equals(""))
+					    {
+					    	 makm = textField_makm.getText().toString();
+					    }
+					    else if(textField_makm.getText().toString().equals(""))
+					    {
+					    	makm ="null";  
+					    }
+					    if (!textField_matk.getText().toString().equals(""))
+					    {
+					    	matk = textField_matk.getText().toString();
+					    }
+					    else if(textField_matk.getText().toString().equals("")) {
+							matk ="null";
+						}
+					    
+					    xacnhantt_mv1chieu obj = new xacnhantt_mv1chieu(gio_kh_di, gio_hc_di, h_ve_di, gia_ve_di, noi_di, noi_den, gio_kh_ve, gio_hc_ve, h_ve_ve, gia_ve_ve, danh_xung, hoten_hk,  ngaysinh, sodt, email, quoctich, goihanhly, giatien, iddvbt, makm, matk, gioitinh);
+						obj.setVisible(true);
+						dispose();
+					}
+					
+					
+					}
+					catch(Exception e1 )
+					{
+					
+					}
 
 					
 				}

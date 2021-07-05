@@ -51,6 +51,6 @@
 	<classpathentry kind="lib" path="C:/Users/nguyen thi nhan/Downloads/jasperreports-6.16.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/nguyen thi nhan/Downloads/commons-collections4-4.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/nguyen thi nhan/Downloads/commons-javaflow-1066591.jar/commons-javaflow-1066591.jar"/>
-	<classpathentry kind="lib" path="src/PLANE/ojdbc10.jar"/>
+	<classpathentry kind="lib" path="C:/Users/nguyen thi nhan/Downloads/ojdbc10.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

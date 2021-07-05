@@ -275,7 +275,7 @@ public class quanly_khuyenmai extends JFrame {
 		
 		JLabel lblNewLabel = new JLabel("New label");
 		lblNewLabel.setIcon(new ImageIcon("anh.jpg"));
-		lblNewLabel.setBounds(10, 0, 866, 457);
+		lblNewLabel.setBounds(-12, 0, 888, 457);
 		contentPane.add(lblNewLabel);
 	}
 	

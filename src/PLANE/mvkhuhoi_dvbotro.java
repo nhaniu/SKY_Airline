@@ -135,7 +135,6 @@ public class mvkhuhoi_dvbotro extends JFrame {
 		table.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null},
 			},
 			new String[] {
 				"ID", "G\u00F3i h\u00E0nh l\u00FD", "Gi\u00E1 ti\u1EC1n"
@@ -169,7 +168,6 @@ public class mvkhuhoi_dvbotro extends JFrame {
 			while(rs.next()) 
 			{
 				iddvbt = rs.getString(1);
-
 				String goihl = rs.getString(2);
 				String giatien = rs.getString(3);
 
