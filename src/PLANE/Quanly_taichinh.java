@@ -87,7 +87,7 @@ public class Quanly_taichinh extends JFrame {
 	 String tongbanve;
 	 String tongphihoan;
 	 String tongdoanhthu;
-
+	 int demIn=0;
 	 private JTable table_1;
 	 Connection con=null;
 	 public static String thoigian, thoigian1;
@@ -214,7 +214,15 @@ public class Quanly_taichinh extends JFrame {
 		table_1 = new JTable();
 		table_1.setVisible(false);
 		
-		JButton bt_xuatfile = new JButton("Xuất file");
+		JButton btnNewButton = new JButton("Xuất tổng doanh thu");
+		btnNewButton.setBackground(new Color(255, 255, 224));
+		btnNewButton.setVisible(false);
+		
+		btnNewButton.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		btnNewButton.setBounds(160, 453, 183, 23);
+		contentPane.add(btnNewButton);
+		
+		JButton bt_xuatfile = new JButton("Xuất doanh thu theo chuyến");
 		bt_xuatfile.setVisible(false);
 		bt_xuatfile.setBackground(new Color(255, 255, 224));
 		bt_xuatfile.addActionListener(new ActionListener() {
@@ -231,21 +239,8 @@ public class Quanly_taichinh extends JFrame {
 
 			public void actionPerformed(ActionEvent e) {
 				
-				
-				try {																									
-						Class.forName("oracle.jdbc.OracleDriver");
-						java.sql.Connection DB_AIRLINE= DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");  		
-						PreparedStatement pst = DB_AIRLINE.prepareStatement("delete from COPYDOANHTHU");
-						pst.executeUpdate();
+				demIn=0;
 
-			} catch (ClassNotFoundException e11) {
-				e11.printStackTrace();
-			} catch (SQLException e12) {
-				e12.printStackTrace();
-			}
-			
-
-				
 				if (kt==1) {
 					try {
 						
@@ -289,12 +284,9 @@ public class Quanly_taichinh extends JFrame {
 
 						table.setModel(tableModel);
 												
-							 String thoigian11 = "TO_DATE('"+ngaygiokh+"','yyyy-mm-dd HH24:MI:SS')";
+							// String thoigian11 = "TO_DATE('"+ngaygiokh+"','yyyy-mm-dd HH24:MI:SS')";
+								btnNewButton.setVisible(true);
 
-			
-
-						PreparedStatement pst= con.prepareStatement("insert into \"DB_AIRLINE\".\"COPYDOANHTHU\" (\"ID\", \"CHUYENBAY_ID\", \"NGAY_GIO_KH\", \"TONGTIENBANVE\", \"TONGPHIHOANVE\", \"TONGDOANHTHU\") values("+id+", "+cbid+", "+thoigian11+", "+tongbanve+", "+tongphihoan+", "+tongdoanhthu+")");		
-						pst.execute();	
 						bt_xuatfile.setVisible(true);
 						scrollPane.setVisible(true);
 						table.setVisible(true);
@@ -352,49 +344,9 @@ public class Quanly_taichinh extends JFrame {
 						e1.printStackTrace();
 					}	
 
-					bt_xuatfile.addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent e) {
-							try {
-								
-								Class.forName("oracle.jdbc.OracleDriver");
-								 con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
-								
-						
-								FileInputStream in=new FileInputStream(new File("C:\\Users\\nguyen thi nhan\\Documents\\SKY_Airline\\src\\PLANE\\BC.jrxml"));
-								JasperDesign jd=JRXmlLoader.load(in);
-								
-								JasperDesign jd1=JRXmlLoader.load(in);
-								String sql="SELECT COUNT(CHUYENBAY_ID),SUM(TONGTIENBANVE),SUM(TONGPHIHOANVE),SUM(TONGDOANHTHU)\r\n"
-										+ "FROM COPYDOANHTHU";				
-								JRDesignQuery newQuery1=new JRDesignQuery();
-								newQuery1.setText(sql);
-								jd1.setQuery(newQuery1);
-								JasperReport jr1=JasperCompileManager.compileReport(jd1);
-								HashMap para1=new HashMap();
-								JasperPrint j1=JasperFillManager.fillReport(jr1, para1,con);
-								JasperViewer.viewReport(j1,false);
-								java.io.OutputStream os1=new FileOutputStream(new File("C:\\Users\\nguyen thi nhan\\Documents\\Report"));
-								JasperExportManager.exportReportToPdfStream(j1, os1);
-							
-								String sqlString="SELECT DISTINCT *FROM COPYDOANHTHU";				
-								JRDesignQuery newQuery=new JRDesignQuery();
-								newQuery.setText(sqlString);
-								jd.setQuery(newQuery);
-								JasperReport jr=JasperCompileManager.compileReport(jd);
-								HashMap para=new HashMap();
-								JasperPrint j=JasperFillManager.fillReport(jr, para,con);
-								JasperViewer.viewReport(j,false);
-								java.io.OutputStream os=new FileOutputStream(new File("C:\\Users\\nguyen thi nhan\\Documents\\Report"));
-								JasperExportManager.exportReportToPdfStream(j, os);
-								
-								in.close();
-								con.close();
-
-							} catch (Exception e2) {
-							}
-
-						}
-					});
+					
+					
+				
 			
 					
 				}
@@ -456,14 +408,13 @@ public class Quanly_taichinh extends JFrame {
 								
 								dem++;
 
-							PreparedStatement pst= con.prepareStatement("insert into \"DB_AIRLINE\".\"COPYDOANHTHU\" (\"ID\", \"CHUYENBAY_ID\", \"NGAY_GIO_KH\", \"TONGTIENBANVE\", \"TONGPHIHOANVE\", \"TONGDOANHTHU\") values("+id+", "+cbid+", "+thoigian33+", "+tongbanve+", "+tongphihoan+", "+tongdoanhthu+")");		
-								pst.execute();
+							
 							
 						}
 						if(dem==0) {
 							JOptionPane.showMessageDialog(null, "Không tìm thấy thông tin");
 						}
-						
+						btnNewButton.setVisible(true);
 						table_1.setVisible(true);
 						scrollPane_1.setViewportView(table_1);
 						final DefaultTableModel model = new DefaultTableModel();
@@ -496,8 +447,7 @@ public class Quanly_taichinh extends JFrame {
 							String tphihoan =rs.getString(3);							 
 							String tdoanhthu =rs.getString(4);
 							
-							
-			
+
 						model.addRow(new Object[] {tid_chuyenbay,ttienbanve,tphihoan,tdoanhthu});
 
 						table_1.setModel(model);
@@ -508,61 +458,9 @@ public class Quanly_taichinh extends JFrame {
 						e1.printStackTrace();
 					} catch (SQLException e1) {
 						e1.printStackTrace();
-					}
+					}					
 				}
-				
-				
-				bt_xuatfile.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						try {
-							Class.forName("oracle.jdbc.OracleDriver");
-							 con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
-							
-													
-							FileInputStream in=new FileInputStream(new File("C:\\Users\\nguyen thi nhan\\Documents\\SKY_Airline\\src\\PLANE\\BaoCao.jrxml"));
-							JasperDesign jd=JRXmlLoader.load(in);
-							
-							
-						
-							String sqlString="SELECT DISTINCT *FROM COPYDOANHTHU";				
-							JRDesignQuery newQuery=new JRDesignQuery();
-							newQuery.setText(sqlString);
-							jd.setQuery(newQuery);
-							JasperReport jr=JasperCompileManager.compileReport(jd);
-							HashMap para=new HashMap();
-							final JasperPrint j=JasperFillManager.fillReport(jr, para,con);
-							JasperViewer.viewReport(j,false);
-							java.io.OutputStream os=new FileOutputStream(new File("C:\\Users\\nguyen thi nhan\\Documents\\Report1"));
-							JasperExportManager.exportReportToPdfStream(j, os);
-							
-							JasperDesign jd1=JRXmlLoader.load(in);
-							String sql="SELECT DISTINCT COUNT(CHUYENBAY_ID),SUM(TONGTIENBANVE),SUM(TONGPHIHOANVE),SUM(TONGDOANHTHU)\r\n"
-									+ "FROM COPYDOANHTHU";				
-							JRDesignQuery newQuery1=new JRDesignQuery();
-							newQuery1.setText(sql);
-							jd1.setQuery(newQuery1);
-							JasperReport jr1=JasperCompileManager.compileReport(jd1);
-							HashMap para1=new HashMap();
-							JasperPrint j1=JasperFillManager.fillReport(jr1, para1,con);
-							JasperViewer.viewReport(j1,false);
-							java.io.OutputStream os1=new FileOutputStream(new File("C:\\Users\\nguyen thi nhan\\Documents\\Report1"));
-							JasperExportManager.exportReportToPdfStream(j1, os1);
-							
-							
-						
-							
-							in.close();
-							con.close();
 
-						} catch (Exception e2) {
-						}
-
-					}
-				});
-				
-				
-				
-				
 				
 				
 			}
@@ -572,15 +470,150 @@ public class Quanly_taichinh extends JFrame {
 		bt_thongke.setBounds(583, 157, 235, 23);
 		contentPane.add(bt_thongke);
 		
+		bt_xuatfile.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(kt==1) {
+				try {
+					
+					Class.forName("oracle.jdbc.OracleDriver");
+					 con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+					
+			
+					FileInputStream in=new FileInputStream(new File("C:\\Users\\nguyen thi nhan\\Documents\\SKY_Airline\\src\\PLANE\\Blank_A4.jrxml"));
+					
+					JasperDesign jd=JRXmlLoader.load(in);
+					String sqlString="SELECT DISTINCT DT.ID, DT.CHUYENBAY_ID, CB.NGAY_GIO_KH, TONGTIENBANVE, TONGPHIHOANVE, TONGDOANHTHU\r\n"
+							+ "from CHUYENBAY CB, DOANHTHUCHUYENBAY DT\r\n"
+							+ "WHERE CB.ID=DT.CHUYENBAY_ID AND CB.NGAY_GIO_KH>="+thoigian+" and  CB.NGAY_GIO_KH<="+thoigian1+"";				
+
+					JRDesignQuery newQuery=new JRDesignQuery();
+					newQuery.setText(sqlString);
+					jd.setQuery(newQuery);
+					JasperReport jr=JasperCompileManager.compileReport(jd);
+					HashMap para=new HashMap();
+					JasperPrint j=JasperFillManager.fillReport(jr, para,con);
+					JasperViewer.viewReport(j,false);
+					java.io.OutputStream os=new FileOutputStream(new File("C:\\Users\\nguyen thi nhan\\Documents\\Report"));
+					JasperExportManager.exportReportToPdfStream(j, os);
+					
+					
+		
+					
+					
+					in.close();
+					con.close();
+
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+
+			}
+				if(kt==2) {
+					try {
+
+						Class.forName("oracle.jdbc.OracleDriver");
+						 con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+						
+				
+						FileInputStream in=new FileInputStream(new File("C:\\Users\\nguyen thi nhan\\Documents\\SKY_Airline\\src\\PLANE\\Blank_A4.jrxml"));
+
+						JasperDesign jd1=JRXmlLoader.load(in);
+						String sql="SELECT DISTINCT DT.ID, DT.CHUYENBAY_ID, CB.NGAY_GIO_KH, TONGTIENBANVE, TONGPHIHOANVE, TONGDOANHTHU\r\n"
+								+ "from CHUYENBAY CB, DOANHTHUCHUYENBAY DT\r\n"
+								+ "WHERE CB.ID=DT.CHUYENBAY_ID AND CB.NGAY_GIO_KH>="+thoigian11+" and  CB.NGAY_GIO_KH<="+thoigian22+"";	
+						JRDesignQuery newQuery1=new JRDesignQuery();
+						newQuery1.setText(sql);
+						jd1.setQuery(newQuery1);
+						JasperReport jr1=JasperCompileManager.compileReport(jd1);
+						HashMap para1=new HashMap();
+						JasperPrint j1=JasperFillManager.fillReport(jr1, para1,con);
+						JasperViewer.viewReport(j1,false);
+						java.io.OutputStream os1=new FileOutputStream(new File("C:\\Users\\nguyen thi nhan\\Documents\\Report"));
+						JasperExportManager.exportReportToPdfStream(j1, os1);						
+
+				
+						in.close();
+						con.close();
+
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+				}
+				}
+			
+		});
+		
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(kt==1)
+				{
+				try {
+				Class.forName("oracle.jdbc.OracleDriver");
+				 con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+				
+				FileInputStream in=new FileInputStream(new File("C:\\Users\\nguyen thi nhan\\Documents\\SKY_Airline\\src\\PLANE\\Bang.jrxml"));
+				//JasperDesign jd=JRXmlLoader.load(in);
+
+				JasperDesign jd1=JRXmlLoader.load(in);
+				String sql="SELECT COUNT(CHUYENBAY_ID),SUM(TONGTIENBANVE),SUM(TONGPHIHOANVE),SUM(TONGDOANHTHU)\r\n"
+						+ "FROM DOANHTHUCHUYENBAY DT, CHUYENBAY CB \r\n"
+						+ "WHERE CB.ID=DT.CHUYENBAY_ID AND CB.NGAY_GIO_KH>="+thoigian+" and  CB.NGAY_GIO_KH<="+thoigian1+"";				
+				JRDesignQuery newQuery1=new JRDesignQuery();
+				newQuery1.setText(sql);
+				jd1.setQuery(newQuery1);
+				JasperReport jr1=JasperCompileManager.compileReport(jd1);
+				HashMap para1=new HashMap();
+				JasperPrint j1=JasperFillManager.fillReport(jr1, para1,con);
+				JasperViewer.viewReport(j1,false);
+				java.io.OutputStream os1=new FileOutputStream(new File("C:\\Users\\nguyen thi nhan\\Documents\\Report"));
+				JasperExportManager.exportReportToPdfStream(j1, os1);
+
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+				}
+				if(kt==2) {
+
+					try {
+					Class.forName("oracle.jdbc.OracleDriver");
+					 con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+					
+
+						FileInputStream in=new FileInputStream(new File("C:\\Users\\nguyen thi nhan\\Documents\\SKY_Airline\\src\\PLANE\\Bang.jrxml"));
+						//JasperDesign jd=JRXmlLoader.load(in);
+
+						JasperDesign jd1=JRXmlLoader.load(in);
+						String sql="SELECT COUNT(CHUYENBAY_ID),SUM(TONGTIENBANVE),SUM(TONGPHIHOANVE),SUM(TONGDOANHTHU)\r\n"
+								+ "FROM DOANHTHUCHUYENBAY DT, CHUYENBAY CB \r\n"
+								+ "WHERE CB.ID=DT.CHUYENBAY_ID AND CB.NGAY_GIO_KH>="+thoigian11+" and  CB.NGAY_GIO_KH<="+thoigian22+"";				
+						JRDesignQuery newQuery1=new JRDesignQuery();
+						newQuery1.setText(sql);
+						jd1.setQuery(newQuery1);
+						JasperReport jr1=JasperCompileManager.compileReport(jd1);
+						HashMap para1=new HashMap();
+						JasperPrint j1=JasperFillManager.fillReport(jr1, para1,con);
+						JasperViewer.viewReport(j1,false);
+						java.io.OutputStream os1=new FileOutputStream(new File("C:\\Users\\nguyen thi nhan\\Documents\\Report"));
+						JasperExportManager.exportReportToPdfStream(j1, os1);
+
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+				}
+			}
+		});
 		
 		bt_xuatfile.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		bt_xuatfile.setBounds(614, 452, 99, 23);
+		bt_xuatfile.setBounds(478, 452, 235, 23);
 		contentPane.add(bt_xuatfile);
+		
+		
+		
+		
 		
 		JLabel lblNewLabel = new JLabel("New label");
 		lblNewLabel.setIcon(new ImageIcon("anh.jpg"));
-		lblNewLabel.setBounds(0, 0, 850, 511);
+		lblNewLabel.setBounds(-20, 11, 850, 511);
 		contentPane.add(lblNewLabel);
-		
 	}
 }

@@ -45,9 +45,9 @@ public class dv_muathem_hanhly extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField_MaDC;
 	private JTable table;
+	private JTextField textField_sdt;
 	public dv_muathem_hanhly() {
 		initcomponents();
-		//isCellEditable(ERROR, ABORT);
 	}
 
 	/**
@@ -82,7 +82,7 @@ public class dv_muathem_hanhly extends JFrame {
 		
 		JLabel lb_MaDC = new JLabel("Mã đặt vé:");
 		lb_MaDC.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lb_MaDC.setBounds(41, 279, 99, 22);
+		lb_MaDC.setBounds(43, 273, 99, 22);
 		contentPane.add(lb_MaDC);
 		
 		JLabel lb_title = new JLabel("Đăng ký dịch vụ bổ trợ");
@@ -96,7 +96,7 @@ public class dv_muathem_hanhly extends JFrame {
 		contentPane.add(separator);
 		
 		textField_MaDC = new JTextField();
-		textField_MaDC.setBounds(150, 281, 143, 20);
+		textField_MaDC.setBounds(146, 275, 143, 20);
 		contentPane.add(textField_MaDC);
 		textField_MaDC.setColumns(10);
 		
@@ -118,12 +118,12 @@ public class dv_muathem_hanhly extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel.setBackground(new Color(135, 206, 250));
-		panel.setBounds(41, 86, 397, 166);
+		panel.setBounds(43, 68, 397, 166);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
 		JLabel lb_banggia = new JLabel("Bảng giá ");
-		lb_banggia.setBounds(169, 11, 79, 24);
+		lb_banggia.setBounds(173, 11, 79, 24);
 		lb_banggia.setFont(new Font("Times New Roman", Font.BOLD, 20));
 		panel.add(lb_banggia);
 		
@@ -267,7 +267,7 @@ public class dv_muathem_hanhly extends JFrame {
 						Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
 						Statement st=con.createStatement(); 
 	
-						String search="select ID from DATVEBAY where ID="+textField_MaDC.getText()+"";				
+						String search="select DV.ID, HK.SDT from DATVEBAY DV, HANHKHACH HK where HK.ID=DV.HANHKHACH_ID AND DV.TINHTRANG='Đã thanh toán' and DV.ID="+textField_MaDC.getText()+" AND HK.SDT="+textField_sdt.getText();				
 					
 						ResultSet rs= st.executeQuery(search);
 						if(rs.next()) {
@@ -292,7 +292,7 @@ public class dv_muathem_hanhly extends JFrame {
 	
 						}
 						else
-							JOptionPane.showMessageDialog(null, " Mã đặt vé không tồn tại");
+							JOptionPane.showMessageDialog(null, " Thông tin nhập không chính xác");
 	
 						rs.close();
 
@@ -308,7 +308,7 @@ public class dv_muathem_hanhly extends JFrame {
 		});
 		bt_thanhtoan.setBackground(new Color(135, 206, 250));
 		bt_thanhtoan.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		bt_thanhtoan.setBounds(51, 335, 165, 22);
+		bt_thanhtoan.setBounds(57, 389, 165, 22);
 		contentPane.add(bt_thanhtoan);
 		
 		
@@ -366,8 +366,15 @@ public class dv_muathem_hanhly extends JFrame {
 							System.out.println("đặt vé "+tongtien+" "+tiendvbt+" "+tongtiendatve);
 							
 							String id_taikhoan=rs.getString(2);
-							int id_tk=Integer.parseInt(id_taikhoan);
-							System.out.println(id_tk);
+							int id_tk=0;
+							if(id_taikhoan!=null) {
+								if(!id_taikhoan.equals("null")) {
+									 id_tk=Integer.parseInt(id_taikhoan);
+									System.out.println(id_tk);
+								}
+								
+							}
+							
 
 							String update ="update DATVEBAY set DICHVUBOTRO_ID="+lb_id.getText()+",TONGTIEN="+tongtiendatve+" where ID="+textField_MaDC.getText()+"";
 							PreparedStatement pst = con.prepareStatement(update);
@@ -402,9 +409,9 @@ public class dv_muathem_hanhly extends JFrame {
 							String b=dNhap.mk;
 							
 							System.out.println(a+" "+b);
-							if(dNhap.tendn!=null) {
+							if(id_taikhoan!=null) {
 								
-								String searchtk="select TONGTIENMUAVE from TAIKHOAN where TENDANGNHAP='"+a+"' and MATKHAU='"+b+"'";					
+								String searchtk="select TONGTIENMUAVE from TAIKHOAN where ID="+id_tk;					
 								ResultSet rs1= st.executeQuery(search);
 								rs1.next();
 									String tongtientk =rs1.getString(1);	
@@ -475,6 +482,21 @@ public class dv_muathem_hanhly extends JFrame {
 		panel_1.add(lblNewLabel_8);
 		
 	
+	
+		
+		
+		JLabel lblNewLabel_9 = new JLabel("SĐT: ");
+		lblNewLabel_9.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lblNewLabel_9.setBounds(43, 319, 99, 20);
+		contentPane.add(lblNewLabel_9);
+		
+		textField_sdt = new JTextField();
+		textField_sdt.setBounds(146, 320, 143, 19);
+		contentPane.add(textField_sdt);
+		textField_sdt.setColumns(10);
+		
+		
+		
 		
 		JLabel lblNewLabel_7 = new JLabel("New label");
 		lblNewLabel_7.setBorder(new LineBorder(new Color(255, 192, 203), 3, true));
@@ -488,21 +510,6 @@ public class dv_muathem_hanhly extends JFrame {
 		Image imgScale =imgIcon.getScaledInstance(lblNewLabel_7.getWidth(), lblNewLabel_7.getHeight(), Image.SCALE_SMOOTH);
 		ImageIcon scaleIcon=new ImageIcon(imgScale);
 		lblNewLabel_7.setIcon(scaleIcon);
-		
-		JTextArea txtrKhchHngTin = new JTextArea();
-		txtrKhchHngTin.setBorder(new LineBorder(new Color(255, 215, 0), 1, true));
-		txtrKhchHngTin.setEditable(false);
-		txtrKhchHngTin.setBackground(new Color(255, 255, 240));
-		txtrKhchHngTin.setForeground(Color.RED);
-		txtrKhchHngTin.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 18));
-		txtrKhchHngTin.setLineWrap(true);
-		txtrKhchHngTin.setWrapStyleWord(true);
-		txtrKhchHngTin.setText("   Khách hàng tiến hành thanh toán tiền cho nhân   viên thu ngân ");
-		txtrKhchHngTin.setBounds(25, 378, 413, 52);
-		lblNewLabel_7.add(txtrKhchHngTin);
-		
-		
-		
 		
 
 	}

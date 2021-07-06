@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fe6b7d9c-1d1d-4bc1-a703-0ad6bfe35d3d">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="FILE "/>
+	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Dataset1" uuid="f10c37cf-5424-45e0-b796-1a7808c324f8">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="FILE "/>
+		<queryString language="SQL">
+			<![CDATA[SELECT COUNT(CHUYENBAY_ID),SUM(TONGTIENBANVE),SUM(TONGPHIHOANVE),SUM(TONGDOANHTHU)
+FROM DOANHTHUCHUYENBAY DT, CHUYENBAY CB
+WHERE DT.CHUYENBAY_ID=CB.ID]]>
+		</queryString>
+		<field name="COUNT(CHUYENBAY_ID)" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="COUNT(CHUYENBAY_ID)"/>
+			<property name="com.jaspersoft.studio.field.label" value="COUNT(CHUYENBAY_ID)"/>
+		</field>
+		<field name="SUM(TONGTIENBANVE)" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="SUM(TONGTIENBANVE)"/>
+			<property name="com.jaspersoft.studio.field.label" value="SUM(TONGTIENBANVE)"/>
+		</field>
+		<field name="SUM(TONGPHIHOANVE)" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="SUM(TONGPHIHOANVE)"/>
+			<property name="com.jaspersoft.studio.field.label" value="SUM(TONGPHIHOANVE)"/>
+		</field>
+		<field name="SUM(TONGDOANHTHU)" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="SUM(TONGDOANHTHU)"/>
+			<property name="com.jaspersoft.studio.field.label" value="SUM(TONGDOANHTHU)"/>
+		</field>
+	</subDataset>
+	<subDataset name="Dataset2" uuid="db9e234e-c42b-4778-ac1e-c16605342ced">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="FILE "/>
+		<queryString language="SQL">
+			<![CDATA[SELECT COUNT(CHUYENBAY_ID),SUM(TONGTIENBANVE),SUM(TONGPHIHOANVE),SUM(TONGDOANHTHU)
+FROM DOANHTHUCHUYENBAY DT, CHUYENBAY CB 
+WHERE CB.ID=DT.CHUYENBAY_ID]]>
+		</queryString>
+		<field name="COUNT(CHUYENBAY_ID)" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="COUNT(CHUYENBAY_ID)"/>
+			<property name="com.jaspersoft.studio.field.label" value="COUNT(CHUYENBAY_ID)"/>
+		</field>
+		<field name="SUM(TONGTIENBANVE)" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="SUM(TONGTIENBANVE)"/>
+			<property name="com.jaspersoft.studio.field.label" value="SUM(TONGTIENBANVE)"/>
+		</field>
+		<field name="SUM(TONGPHIHOANVE)" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="SUM(TONGPHIHOANVE)"/>
+			<property name="com.jaspersoft.studio.field.label" value="SUM(TONGPHIHOANVE)"/>
+		</field>
+		<field name="SUM(TONGDOANHTHU)" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="SUM(TONGDOANHTHU)"/>
+			<property name="com.jaspersoft.studio.field.label" value="SUM(TONGDOANHTHU)"/>
+		</field>
+	</subDataset>
+	<queryString language="SQL">
+		<![CDATA[SELECT DISTINCT DT.ID, DT.CHUYENBAY_ID, CB.NGAY_GIO_KH, TONGTIENBANVE, TONGPHIHOANVE, TONGDOANHTHU
+from CHUYENBAY CB, DOANHTHUCHUYENBAY DT
+WHERE CB.ID=DT.CHUYENBAY_ID]]>
+	</queryString>
+	<field name="ID" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ID"/>
+		<property name="com.jaspersoft.studio.field.label" value="ID"/>
+	</field>
+	<field name="CHUYENBAY_ID" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="CHUYENBAY_ID"/>
+		<property name="com.jaspersoft.studio.field.label" value="CHUYENBAY_ID"/>
+	</field>
+	<field name="NGAY_GIO_KH" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="NGAY_GIO_KH"/>
+		<property name="com.jaspersoft.studio.field.label" value="NGAY_GIO_KH"/>
+	</field>
+	<field name="TONGTIENBANVE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="TONGTIENBANVE"/>
+		<property name="com.jaspersoft.studio.field.label" value="TONGTIENBANVE"/>
+	</field>
+	<field name="TONGPHIHOANVE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="TONGPHIHOANVE"/>
+		<property name="com.jaspersoft.studio.field.label" value="TONGPHIHOANVE"/>
+	</field>
+	<field name="TONGDOANHTHU" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="TONGDOANHTHU"/>
+		<property name="com.jaspersoft.studio.field.label" value="TONGDOANHTHU"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="102" splitType="Stretch">
+			<staticText>
+				<reportElement x="85" y="10" width="391" height="50" uuid="b4688475-d108-4f81-adea-75c9561a4f93"/>
+				<textElement textAlignment="Center">
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DOANH THU THEO CHUYẾN BAY]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="400" y="60" width="103" height="21" uuid="f4a9c420-08f9-4695-8301-67f1392350e6"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH:mm">
+				<reportElement x="510" y="60" width="34" height="21" uuid="2143eb61-4302-4447-8f99-eb3c49e50abe"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="34" splitType="Stretch">
+			<rectangle>
+				<reportElement x="-13" y="-5" width="581" height="31" backcolor="#66CCFF" uuid="89b16d75-ba52-4c81-b694-60d1c5d9b835"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="-1" y="0" width="36" height="20" uuid="af6d9648-6262-45af-b3c3-dd255b0c4af5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1eb31859-a271-4215-9985-e438edde94ae"/>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="0" width="90" height="20" uuid="b5533f6f-3ca6-497f-8c0f-52f8524116fe">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3fdab628-48b0-478b-88d5-bc17ae56a815"/>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID chuyến bay]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="0" width="100" height="20" uuid="a71da9af-5093-44b4-a419-629bc3df217f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="80305479-d758-4b75-94fe-ac7553c09c6e"/>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ngày giờ khởi hành]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="230" y="0" width="100" height="20" uuid="9c0ed9a8-c784-4348-98dd-b5f43f142f10">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2572cf63-1e00-4524-9478-24a2af9181e5"/>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tổng tiền bán vé]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="340" y="0" width="100" height="20" uuid="8cd12d63-b755-4c7c-9562-3bc80269075c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c60235db-6698-4f4b-bedc-17a9a0acd816"/>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tổng phí hoàn vé]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="463" y="0" width="100" height="20" uuid="c225614e-3f91-4c4f-86d9-d0d81a7c6efa">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="62034951-458a-4125-a861-6d5856d6a342"/>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tổng doanh thu]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="60" splitType="Stretch">
+			<textField>
+				<reportElement x="-11" y="10" width="46" height="30" uuid="d3d48ce6-f171-4a85-875f-419756017bba">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1eb31859-a271-4215-9985-e438edde94ae"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="10" width="70" height="30" uuid="5fbe3929-39a2-451a-a288-4e581b1132ed">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3fdab628-48b0-478b-88d5-bc17ae56a815"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CHUYENBAY_ID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="140" y="10" width="80" height="30" uuid="9e791677-be78-4872-bcac-4c69b67afcde">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="80305479-d758-4b75-94fe-ac7553c09c6e"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NGAY_GIO_KH}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="230" y="10" width="100" height="30" uuid="ecb73fad-7f71-46a8-ba82-a30d032338ea">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2572cf63-1e00-4524-9478-24a2af9181e5"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TONGTIENBANVE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="345" y="10" width="100" height="30" uuid="e1bc5b3b-1022-40f8-8667-3b5c5f760cd4">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c60235db-6698-4f4b-bedc-17a9a0acd816"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TONGPHIHOANVE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="460" y="10" width="100" height="30" uuid="b6f863ff-5ec6-4f41-a12d-b00f71d72bc3">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="62034951-458a-4125-a861-6d5856d6a342"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TONGDOANHTHU}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45">
+			<textField>
+				<reportElement x="503" y="10" width="65" height="21" uuid="a0821537-efc0-49bf-b695-d0b7d2f7fde3"/>
+				<textElement>
+					<font fontName="SansSerif" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>

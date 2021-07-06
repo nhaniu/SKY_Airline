@@ -44,8 +44,8 @@ public class update_chuyenbay extends JFrame {
 	private JTextField textField_tongsove;
 	private JTextField textField_IDmb;
 	private JTextField textField_ID;
-	private JComboBox comboBox_noidi;
-	private JComboBox comboBox_noiden;
+	private static JComboBox comboBox_noidi;
+	private static JComboBox comboBox_noiden;
 	Connection con;
  
 
@@ -67,10 +67,21 @@ public class update_chuyenbay extends JFrame {
 		initComponent();
 		loadCombobox();
 		loadCombobox1();
+		Teststringcomparison (toString(), toString());
 	}
 	/**
 	 * Create the frame.
 	 */
+	public static boolean Teststringcomparison (Object object, Object object2){
+		object = comboBox_noidi.getSelectedItem().toString();
+		object2 = comboBox_noiden.getSelectedItem().toString();
+		if (object.equals(object2)) {
+			System.out.println("Giống");
+			return true;
+		}
+		System.out.println("K giống");
+		return false;
+		}
 	public void loadCombobox() {
 		try {
 			Class.forName("oracle.jdbc.OracleDriver");
@@ -186,6 +197,7 @@ public class update_chuyenbay extends JFrame {
 		contentPane.add(lb_idnql);
 		
 		textField_ID_NQL = new JTextField();
+		textField_ID_NQL.setEditable(false);
 		textField_ID_NQL.setBounds(559, 247, 151, 21);
 		contentPane.add(textField_ID_NQL);
 		textField_ID_NQL.setColumns(10);
@@ -198,6 +210,7 @@ public class update_chuyenbay extends JFrame {
 		contentPane.add(lblNewLabel_1);
 		
 		textField_tongsove = new JTextField();
+		textField_tongsove.setEditable(false);
 		textField_tongsove.setBounds(559, 216, 151, 18);
 		contentPane.add(textField_tongsove);
 		textField_tongsove.setColumns(10);
@@ -225,6 +238,7 @@ public class update_chuyenbay extends JFrame {
 		contentPane.add(lblNewLabel_3);
 		
 		textField_IDmb = new JTextField();
+		textField_IDmb.setEditable(false);
 		textField_IDmb.setBounds(559, 87, 151, 18);
 		contentPane.add(textField_IDmb);
 		textField_IDmb.setColumns(10);
@@ -264,51 +278,56 @@ public class update_chuyenbay extends JFrame {
 		
 		bt_capnhat.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (textField_ID_NQL.getText().isEmpty()) {
-					 JOptionPane.showMessageDialog(null, "vui lòng nhập ID người quản lý");
-					 textField_ID_NQL.requestFocus();
-					 return; 
-					}
-				
-				if (textField_IDmb.getText().isEmpty()) {
-					 JOptionPane.showMessageDialog(null, "vui lòng nhập ID máy bay");
-					 textField_IDmb.requestFocus();
-					 return; 
-					}
-			
-				try {
+				if (Teststringcomparison(comboBox_noidi.getSelectedItem(), comboBox_noiden.getSelectedItem()) == true) {
+					JOptionPane.showMessageDialog(null, "Vui lòng chọn lại nơi đến, nơi đi!");
+				}
+				else {
+					if (textField_ID_NQL.getText().isEmpty()) {
+						 JOptionPane.showMessageDialog(null, "vui lòng nhập ID người quản lý");
+						 textField_ID_NQL.requestFocus();
+						 return; 
+						}
 					
-					SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-YY hh:mm:ss");
-					String tgString=formatter.format(dateChooser_kh.getDate());
-					String ngay_khoihanh="TO_DATE('"+tgString+"','DD-MM-RR HH24:MI:SS')";
-	
-					SimpleDateFormat formatter1 = new SimpleDateFormat("dd-MM-YY hh:mm:ss");
-					String tgString1=formatter1.format(dateChooser_hc.getDate());
-					String ngay_hacanh="TO_DATE('"+tgString1+"','DD-MM-RR HH24:MI:SS')";
-					
-					String update ="update CHUYENBAY set ID= "+textField_ID.getText()+",TTMAYBAY_ID="+textField_IDmb.getText()+",SANBAYDI='"+comboBox_noidi.getSelectedItem()+"',SANBAYDEN='"+comboBox_noiden.getSelectedItem()+"',NGAY_GIO_KH="+ngay_khoihanh+",NGAY_GIO_HC="+ngay_hacanh+",TONGSOVE="+textField_tongsove.getText()+",NGUOIQUANLY_ID="+textField_ID_NQL.getText()+"where ID="+ textField_ID.getText()+"";
-																		
-					Class.forName("oracle.jdbc.OracleDriver");
-					java.sql.Connection DB_AIRLINE= DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");  		
-					PreparedStatement pst = DB_AIRLINE.prepareStatement(update);
-					pst= DB_AIRLINE.prepareStatement(update);
-					pst.execute();
+					if (textField_IDmb.getText().isEmpty()) {
+						 JOptionPane.showMessageDialog(null, "vui lòng nhập ID máy bay");
+						 textField_IDmb.requestFocus();
+						 return; 
+						}
 				
+					try {
+						
+						SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-YY hh:mm:ss");
+						String tgString=formatter.format(dateChooser_kh.getDate());
+						String ngay_khoihanh="TO_DATE('"+tgString+"','DD-MM-RR HH24:MI:SS')";
+		
+						SimpleDateFormat formatter1 = new SimpleDateFormat("dd-MM-YY hh:mm:ss");
+						String tgString1=formatter1.format(dateChooser_hc.getDate());
+						String ngay_hacanh="TO_DATE('"+tgString1+"','DD-MM-RR HH24:MI:SS')";
+						
+						String update ="update CHUYENBAY set ID= "+textField_ID.getText()+",TTMAYBAY_ID="+textField_IDmb.getText()+",SANBAYDI='"+comboBox_noidi.getSelectedItem()+"',SANBAYDEN='"+comboBox_noiden.getSelectedItem()+"',NGAY_GIO_KH="+ngay_khoihanh+",NGAY_GIO_HC="+ngay_hacanh+",TONGSOVE="+textField_tongsove.getText()+",NGUOIQUANLY_ID="+textField_ID_NQL.getText()+"where ID="+ textField_ID.getText()+"";
+																			
+						Class.forName("oracle.jdbc.OracleDriver");
+						java.sql.Connection DB_AIRLINE= DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");  		
+						PreparedStatement pst = DB_AIRLINE.prepareStatement(update);
+						pst= DB_AIRLINE.prepareStatement(update);
+						pst.execute();
+					
+		
+						JOptionPane.showMessageDialog(null, "Cập nhật thành công");
+						pst.close();
+						DB_AIRLINE.close();
+						setVisible(false);
 	
-					JOptionPane.showMessageDialog(null, "Cập nhật thành công");
-					pst.close();
-					DB_AIRLINE.close();
-					setVisible(false);
-
-				} catch (ClassNotFoundException e1) {
-					Component a=null;
-
-					JOptionPane.showMessageDialog(a, e1);						
-				} catch (SQLException e1) {
-					Component a=null;
-
-					JOptionPane.showMessageDialog(a, e1);						
+					} catch (ClassNotFoundException e1) {
+						Component a=null;
 	
+						JOptionPane.showMessageDialog(a, e1);						
+					} catch (SQLException e1) {
+						Component a=null;
+	
+						JOptionPane.showMessageDialog(a, e1);						
+		
+					}
 				}
 		}
 				

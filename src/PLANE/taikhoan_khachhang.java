@@ -55,6 +55,23 @@ public class taikhoan_khachhang extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	public static boolean checkNumberPhone(String str)
+    {
+        for(int i=0;i<str.length();i++)
+            if(str.charAt(i)<'0' || str.charAt(i)>'9') return false;
+        return true;
+    }
+	
+	public static boolean checkMail(String str)
+    {
+        int idofAt=str.indexOf('@');
+        if(idofAt==-1) return false;
+        String temp=str.substring(idofAt,str.length());
+        int idofDot = str.indexOf('.');
+        if(idofDot==-1) return false;
+        return true;
+    }
+	
 	public taikhoan_khachhang() {
 		setBackground(new Color(240, 255, 255));
 		setVisible(true);
@@ -94,13 +111,12 @@ public class taikhoan_khachhang extends JFrame {
 		lblNewLabel_4.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		lblNewLabel_4.setBounds(25, 364, 100, 24);
 		contentPane.add(lblNewLabel_4);
-		lblNewLabel_4.setVisible(false);
+		//lblNewLabel_4.setVisible(false);
 		
 		passwordField = new JPasswordField();
-		passwordField.setEditable(false);
 		passwordField.setBounds(155, 366, 122, 22);
 		contentPane.add(passwordField);
-		passwordField.setVisible(false);
+		//passwordField.setVisible(false);
 		
 		JLabel lblNewLabel_2 = new JLabel("Ngày bắt đầu:");
 		lblNewLabel_2.setFont(new Font("Times New Roman", Font.BOLD, 15));
@@ -117,7 +133,6 @@ public class taikhoan_khachhang extends JFrame {
 		contentPane.add(lblNewLabel_6);
 		
 		textField_sdt = new JTextField();
-		textField_sdt.setEditable(false);
 		textField_sdt.setBounds(155, 190, 122, 22);
 		contentPane.add(textField_sdt);
 		textField_sdt.setColumns(10);
@@ -128,7 +143,6 @@ public class taikhoan_khachhang extends JFrame {
 		contentPane.add(lblNewLabel_7);
 		
 		textField_email = new JTextField();
-		textField_email.setEditable(false);
 		textField_email.setBounds(155, 223, 122, 22);
 		contentPane.add(textField_email);
 		textField_email.setColumns(10);
@@ -211,12 +225,17 @@ public class taikhoan_khachhang extends JFrame {
 
 		
 		
-		JButton bt_xacnhan = new JButton("Xác nhận");
-		bt_xacnhan.setVisible(false);
-		bt_xacnhan.addActionListener(new ActionListener() {
+		
+		
+		JSeparator separator = new JSeparator();
+		separator.setBounds(10, 54, 397, 7);
+		contentPane.add(separator);
+		
+		JButton bt_capnhat = new JButton("Cập nhật");
+		bt_capnhat.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			
 				
+		
 				if (textField_email.getText().isEmpty()) {
 					 JOptionPane.showMessageDialog(null, "vui lòng nhập đầy đủ thông tin");
 					 textField_email.requestFocus();
@@ -234,6 +253,17 @@ public class taikhoan_khachhang extends JFrame {
 					 
 					 return; 
 					}
+				
+				if(checkNumberPhone(textField_sdt.getText()) == false) {
+					JOptionPane.showMessageDialog(null, "Vui lòng nhập đúng số điện thoại!");
+					 textField_sdt.requestFocus();
+					 return;
+				}
+				else if(checkMail(textField_email.getText()) == false){
+					JOptionPane.showMessageDialog(null, "Vui lòng nhập đúng tài khoản email!");
+					 textField_sdt.requestFocus();
+					 return;
+				}
 			
 				try {
 					
@@ -305,32 +335,9 @@ public class taikhoan_khachhang extends JFrame {
 				
 			}
 		});
-		bt_xacnhan.setBackground(new Color(135, 206, 250));
-		bt_xacnhan.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		bt_xacnhan.setBounds(246, 431, 122, 23);
-		contentPane.add(bt_xacnhan);
-		
-		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 54, 397, 7);
-		contentPane.add(separator);
-		
-		JButton bt_capnhat = new JButton("Cập nhật");
-		bt_capnhat.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				textField_email.setEditable(true);
-				passwordField.setEditable(true);
-				textField_sdt.setEditable(true);
-				lblNewLabel_4.setVisible(true);
-				passwordField.setVisible(true);
-				bt_xacnhan.setVisible(true);
-				
-				
-			}
-		});
 		bt_capnhat.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		bt_capnhat.setBackground(new Color(135, 206, 250));
-		bt_capnhat.setBounds(56, 432, 108, 23);
+		bt_capnhat.setBounds(209, 433, 108, 23);
 		contentPane.add(bt_capnhat);
 		
 		JLabel lblNewLabel_5 = new JLabel("New label");

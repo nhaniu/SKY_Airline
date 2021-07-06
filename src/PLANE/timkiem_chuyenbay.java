@@ -43,19 +43,31 @@ public class timkiem_chuyenbay extends JFrame {
 
 	private JPanel contentPane;
 	Connection con=null;
-	private JComboBox comboBox_noidi;
-	private JComboBox comboBox_noiden;
+	private static JComboBox comboBox_noidi;
+	private static JComboBox comboBox_noiden;
 
 
 	public timkiem_chuyenbay() {
 		initComponent();
 		loadCombobox();
 		loadCombobox1();
-
+		Teststringcomparison(toString(), toString());
 	}
 	/**
 	 * Launch the application.
 	 */
+	
+	public static boolean Teststringcomparison (Object object, Object object2){
+		object = comboBox_noidi.getSelectedItem().toString();
+		object2 = comboBox_noiden.getSelectedItem().toString();
+		if (object.equals(object2)) {
+			System.out.println("Giống");
+			return true;
+		}
+		System.out.println("K giống");
+		return false;
+		}
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -192,60 +204,65 @@ public class timkiem_chuyenbay extends JFrame {
 		btnNewButton.setBackground(new Color(135, 206, 250));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					Class.forName("oracle.jdbc.OracleDriver");
-					Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
-					Statement st=con.createStatement(); 
-					
-
-					
-					SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-YY");		
-					String tgString=formatter.format(dateChooser.getDate());	
-					 String thoigian="TO_DATE('"+tgString+"','DD-MM-RR')";
-					 String thoigian1="TO_DATE('"+tgString+" 23:59:59','DD-MM-RR HH24:MI:SS')";
-					
-				//	System.out.println(day+month+year);
-					//String search="select *	from CHUYENBAY where SANBAYDI = 'Hà Nội (HAN), Việt Nam' and SANBAYDEN='Tp. Hồ Chí Minh (SGN), Việt Nam' AND and EXTRACT(DAY FROM DATE '2021-01-01'"+"'"+day+"'"+" and EXTRACT(MONTH FROM DATE '2021-01-01'"+"'"+month+"'"+" and EXTRACT(YEAR FROM DATE '2021-01-01'"+"'"+year+"'";			
-					String search="select * from CHUYENBAY where SANBAYDI = '"+comboBox_noidi.getSelectedItem()+"' and SANBAYDEN ='"+comboBox_noiden.getSelectedItem()+"' AND NGAY_GIO_KH>="+thoigian+" and  NGAY_GIO_KH<="+thoigian1+"";		
-				
-					while(tableModel.getRowCount() > 0) 
-					{									
-						tableModel.removeRow(0);
-					}
-					
-					ResultSet rs= st.executeQuery(search);
-//					if(!rs.next()) {
-//						JOptionPane.showMessageDialog(null, "Không tìm thấy chuyến bay");
-//
-//					}
-					while(rs.next()) {
-						String ID =rs.getString(1);
-						String ttmaybayid =rs.getString(2);
-						String sanbaydi =rs.getString(3);
-						String sanbayden =rs.getString(4);
-						String ngaygiokh =rs.getString(5);
-						String ngaygiohc =rs.getString(6);
-						String tongsove=rs.getString(7);
-						String ID_NQL =rs.getString(8);
+				if (Teststringcomparison(comboBox_noidi.getSelectedItem(), comboBox_noiden.getSelectedItem()) == true) {
+					JOptionPane.showMessageDialog(null, "Vui lòng chọn lại nơi đến, nơi đi!");
+				}
+				else {
+					try {
+						Class.forName("oracle.jdbc.OracleDriver");
+						Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+						Statement st=con.createStatement(); 
 						
-
-						System.out.print(ID+ttmaybayid+sanbaydi+sanbayden+ngaygiokh+ngaygiohc+tongsove+ID_NQL+"\n");
+	
 						
-						tableModel.addRow(new Object[] {ID,ttmaybayid,sanbaydi,sanbayden,ngaygiokh,ngaygiohc,tongsove,ID_NQL});
-
-						table.setModel(tableModel);
-						scrollPane.setVisible(true);
-						table.setVisible(true);
+						SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-YY");		
+						String tgString=formatter.format(dateChooser.getDate());	
+						 String thoigian="TO_DATE('"+tgString+"','DD-MM-RR')";
+						 String thoigian1="TO_DATE('"+tgString+" 23:59:59','DD-MM-RR HH24:MI:SS')";
+						
+					//	System.out.println(day+month+year);
+						//String search="select *	from CHUYENBAY where SANBAYDI = 'Hà Nội (HAN), Việt Nam' and SANBAYDEN='Tp. Hồ Chí Minh (SGN), Việt Nam' AND and EXTRACT(DAY FROM DATE '2021-01-01'"+"'"+day+"'"+" and EXTRACT(MONTH FROM DATE '2021-01-01'"+"'"+month+"'"+" and EXTRACT(YEAR FROM DATE '2021-01-01'"+"'"+year+"'";			
+						String search="select * from CHUYENBAY where SANBAYDI = '"+comboBox_noidi.getSelectedItem()+"' and SANBAYDEN ='"+comboBox_noiden.getSelectedItem()+"' AND NGAY_GIO_KH>="+thoigian+" and  NGAY_GIO_KH<="+thoigian1+"";		
 					
+						while(tableModel.getRowCount() > 0) 
+						{									
+							tableModel.removeRow(0);
+						}
+						
+						ResultSet rs= st.executeQuery(search);
+	//					if(!rs.next()) {
+	//						JOptionPane.showMessageDialog(null, "Không tìm thấy chuyến bay");
+	//
+	//					}
+						while(rs.next()) {
+							String ID =rs.getString(1);
+							String ttmaybayid =rs.getString(2);
+							String sanbaydi =rs.getString(3);
+							String sanbayden =rs.getString(4);
+							String ngaygiokh =rs.getString(5);
+							String ngaygiohc =rs.getString(6);
+							String tongsove=rs.getString(7);
+							String ID_NQL =rs.getString(8);
+							
+	
+							System.out.print(ID+ttmaybayid+sanbaydi+sanbayden+ngaygiokh+ngaygiohc+tongsove+ID_NQL+"\n");
+							
+							tableModel.addRow(new Object[] {ID,ttmaybayid,sanbaydi,sanbayden,ngaygiokh,ngaygiohc,tongsove,ID_NQL});
+	
+							table.setModel(tableModel);
+							scrollPane.setVisible(true);
+							table.setVisible(true);
+						
+						}
+						
+						
+						con.close();
+						
+					} catch (ClassNotFoundException e1) {
+						e1.printStackTrace();
+					} catch (SQLException e1) {
+						e1.printStackTrace();
 					}
-					
-					
-					con.close();
-					
-				} catch (ClassNotFoundException e1) {
-					e1.printStackTrace();
-				} catch (SQLException e1) {
-					e1.printStackTrace();
 				}
 
 				

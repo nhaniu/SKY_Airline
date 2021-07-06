@@ -57,16 +57,29 @@ public class muave_khuhoi extends JFrame {
 	}
 
 	Connection con=null;
-	private JComboBox comboBox_noidi;
-	private JComboBox comboBox_noiden;
+	private static JComboBox comboBox_noidi;
+	private static JComboBox comboBox_noiden;
 
 
 	public  muave_khuhoi()  {
 		initComponent();
 		loadCombobox();
 		loadCombobox1();
+		Teststringcomparison(toString(), toString());
 
 	}
+	
+	public static boolean Teststringcomparison (Object object, Object object2){
+		object = comboBox_noidi.getSelectedItem().toString();
+		object2 = comboBox_noiden.getSelectedItem().toString();
+		if (object.equals(object2)) {
+			System.out.println("Giống");
+			return true;
+		}
+		System.out.println("K giống");
+		return false;
+		}
+	
 	public void loadCombobox() {
 		try {
 			Class.forName("oracle.jdbc.OracleDriver");
@@ -233,207 +246,212 @@ public class muave_khuhoi extends JFrame {
 		bt_timchuyebay.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		bt_timchuyebay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				try {
-					Class.forName("oracle.jdbc.driver.OracleDriver");
-					Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "DB_AIRLINE", "123");
-					java.sql.Statement st = conn.createStatement();
-					
-					String day = new String();
-					String month = new String();
-					String year = new String();
-					String date = new String();
-					
-					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-					String tgString=formatter.format(dateChooser_ngaydi.getDate());
-					day = tgString.substring(8,10);
-					month = tgString.substring(5,7);
-					year = tgString.substring(0,4);
-					date = tgString.substring(0,10);
-					
-					//String texString="TO_DATE('"+tgString+"','DD-MM-RR HH24:MI:SS')";
-					String sql = "select distinct c.NGAY_GIO_KH, c.NGAY_GIO_HC, h.TENHV, h.GIA, h.ID, c.ID"
-							+ " from CHUYENBAY c JOIN VEMAYBAY v ON c.ID = v.CHUYENBAY_ID JOIN HANGVE h ON h.ID = v.HANGVE_ID "
-							+ "where c.SANBAYDI = " + "'"+comboBox_noidi.getSelectedItem()+"'"+" and c.SANBAYDEN = "+"'"+comboBox_noiden.getSelectedItem()+"'"
-							+ " and EXTRACT( DAY FROM c.NGAY_GIO_KH)= "+"'"+day+"'"+" and EXTRACT( MONTH FROM c.NGAY_GIO_KH)= "+"'"+month+"'"+" and EXTRACT(YEAR FROM c.NGAY_GIO_KH)= "+"'"+year+"'";
-				
-					
-					System.out.println(day);
-					System.out.println(month);
-					System.out.println(year);
-					System.out.println(date);
-					System.out.println(sql);
-					
-					int dem=0;
-
-					ResultSet rs =  ((java.sql.Statement) st).executeQuery(sql);
-					 while(tableModeldi.getRowCount() > 0) 
-						{									
-							tableModeldi.removeRow(0);
-						}
-					while(rs.next()) 
-					{
-						String giokh = rs.getString(1);
-						String giohc = rs.getString(2);
-						String hv = rs.getString(3);
-						String gv = rs.getString(4);
-						idhvdi = rs.getString(5);
-						idcbdi = rs.getString(6);
-
-						 dem++;
-							tableModeldi.addRow(new Object[] {giokh, giohc, hv, gv});
-
-
-							scrollPane_di.setVisible(true);
-							table_di.setVisible(true);
-							button_chonmua.setVisible(true);
-							Label_ngaydi.setVisible(true);
-
-							
-					}
-					
-					if(dem==0) {
-						JOptionPane.showMessageDialog(null, "Không tìm thấy chuyến bay đi");
-					}
-					conn.close();
+				if (Teststringcomparison(comboBox_noidi.getSelectedItem(), comboBox_noiden.getSelectedItem()) == true) {
+					JOptionPane.showMessageDialog(null, "Vui lòng chọn lại nơi đến, nơi đi!");
 				}
-				
-				catch(Exception e1 )
-				{
-					System.out.println(e1);
-					
-				}
-				
-				try {
-					Class.forName("oracle.jdbc.driver.OracleDriver");
-					Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "DB_AIRLINE", "123");
-					java.sql.Statement st = conn.createStatement();
-					
-					String day = new String();
-					String month = new String();
-					String year = new String();
-					String date = new String();
-					
-					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-					String tgString=formatter.format(dateChooser_ngayve.getDate());
-					day = tgString.substring(8,10);
-					month = tgString.substring(5,7);
-					year = tgString.substring(0,4);
-					date = tgString.substring(0,10);
-					
-					// Chuyen ve
-					String sql = "select distinct c.NGAY_GIO_KH, c.NGAY_GIO_HC, h.TENHV, h.GIA,h.ID, c.ID"
-							+ " from CHUYENBAY c JOIN VEMAYBAY v ON c.ID = v.CHUYENBAY_ID JOIN HANGVE h ON h.ID = v.HANGVE_ID "
-							+ "where c.SANBAYDI = " + "'"+comboBox_noiden.getSelectedItem()+"'"+" and c.SANBAYDEN = "+"'"+comboBox_noidi.getSelectedItem()+"'"
-							+ " and EXTRACT( DAY FROM c.NGAY_GIO_KH)= "+"'"+day+"'"+" and EXTRACT( MONTH FROM c.NGAY_GIO_KH)= "+"'"+month+"'"+" and EXTRACT(YEAR FROM c.NGAY_GIO_KH)= "+"'"+year+"'";
-				
-					
-					System.out.println(day);
-					System.out.println(month);
-					System.out.println(year);
-					System.out.println(date);
-					System.out.println(sql);
-					
-			
-					ResultSet rs =  ((java.sql.Statement) st).executeQuery(sql);
-					 while(tableModel.getRowCount() > 0) 
-						{									
-							tableModel.removeRow(0);
-						}
-					 int dem=0;
-					while(rs.next()) 
-					{
-						String giokh = rs.getString(1);
-						String giohc = rs.getString(2);
-						String hv = rs.getString(3);
-						String gv = rs.getString(4);
-						idhvve = rs.getString(5);
-						idcbve = rs.getString(6);
-						 dem++;
+				else {
+					try {
+						Class.forName("oracle.jdbc.driver.OracleDriver");
+						Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "DB_AIRLINE", "123");
+						java.sql.Statement st = conn.createStatement();
 						
-						tableModel.addRow(new Object[] {giokh, giohc, hv, gv});
-
-
-							scrollPane_ve.setVisible(true);
-							table_ve.setVisible(true);
-							button_chonmua.setVisible(true);
-							Label_ngayve.setVisible(true);
-							
-					}
-					if(dem==0) {
-						JOptionPane.showMessageDialog(null, "Không tìm thấy chuyến bay về");
-					}
-					try {
-						Class.forName("oracle.jdbc.OracleDriver");
-						con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
-			             PreparedStatement pst = con.prepareStatement("Select count(CHUYENBAY_ID) from VEMAYBAY ve where CHUYENBAY_ID="+idcbdi+" ");
-			         	
-							ResultSet rs1= pst.executeQuery();
-							while(rs1.next()) {
-								 String a =rs1.getString(1);
-								 countid=Integer.parseInt(a);							}
-
-					} catch (ClassNotFoundException e1) {
-						e1.printStackTrace();
-					} catch (SQLException e1) {
-						e1.printStackTrace();
-					}
-					try {
-						Class.forName("oracle.jdbc.OracleDriver");
-						con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
-			             PreparedStatement pst = con.prepareStatement("Select TONGSOVE from CHUYENBAY  where ID="+idcbdi+"");
-			         	
-							ResultSet rs1= pst.executeQuery();
-							while(rs1.next()) {
-								String b =rs1.getString(1);
-								 tongsoghe=Integer.parseInt(b);							}
-
-					} catch (ClassNotFoundException e1) {
-						e1.printStackTrace();
-					} catch (SQLException e1) {
-						e1.printStackTrace();
-					}
-					//chuyenve
-					try {
-						Class.forName("oracle.jdbc.OracleDriver");
-						con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
-			             PreparedStatement pst1 = con.prepareStatement("Select count(CHUYENBAY_ID) from VEMAYBAY ve where CHUYENBAY_ID="+idcbve+" ");
-			         	
-							ResultSet rs2= pst1.executeQuery();
-							while(rs2.next()) {
-								 String a =rs2.getString(1);
-								 countid1=Integer.parseInt(a);
+						String day = new String();
+						String month = new String();
+						String year = new String();
+						String date = new String();
+						
+						SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+						String tgString=formatter.format(dateChooser_ngaydi.getDate());
+						day = tgString.substring(8,10);
+						month = tgString.substring(5,7);
+						year = tgString.substring(0,4);
+						date = tgString.substring(0,10);
+						
+						//String texString="TO_DATE('"+tgString+"','DD-MM-RR HH24:MI:SS')";
+						String sql = "select distinct c.NGAY_GIO_KH, c.NGAY_GIO_HC, h.TENHV, h.GIA, h.ID, c.ID"
+								+ " from CHUYENBAY c JOIN VEMAYBAY v ON c.ID = v.CHUYENBAY_ID JOIN HANGVE h ON h.ID = v.HANGVE_ID "
+								+ "where c.SANBAYDI = " + "'"+comboBox_noidi.getSelectedItem()+"'"+" and c.SANBAYDEN = "+"'"+comboBox_noiden.getSelectedItem()+"'"
+								+ " and EXTRACT( DAY FROM c.NGAY_GIO_KH)= "+"'"+day+"'"+" and EXTRACT( MONTH FROM c.NGAY_GIO_KH)= "+"'"+month+"'"+" and EXTRACT(YEAR FROM c.NGAY_GIO_KH)= "+"'"+year+"'";
+					
+						
+						System.out.println(day);
+						System.out.println(month);
+						System.out.println(year);
+						System.out.println(date);
+						System.out.println(sql);
+						
+						int dem=0;
+	
+						ResultSet rs =  ((java.sql.Statement) st).executeQuery(sql);
+						 while(tableModeldi.getRowCount() > 0) 
+							{									
+								tableModeldi.removeRow(0);
 							}
-
-					} catch (ClassNotFoundException e1) {
-						e1.printStackTrace();
-					} catch (SQLException e1) {
-						e1.printStackTrace();
-					}
-					try {
-						Class.forName("oracle.jdbc.OracleDriver");
-						con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
-			             PreparedStatement pst1 = con.prepareStatement("Select TONGSOVE from CHUYENBAY  where ID="+idcbve+"");
-			         	
-							ResultSet rs2= pst1.executeQuery();
-							while(rs2.next()) {
-								 String b =rs2.getString(1);
-								 tongsoghe1=Integer.parseInt(b);
-							}
-							System.out.println("tong so ghe ve: "+tongsoghe1);
-					} catch (ClassNotFoundException e1) {
-						e1.printStackTrace();
-					} catch (SQLException e1) {
-						e1.printStackTrace();
+						while(rs.next()) 
+						{
+							String giokh = rs.getString(1);
+							String giohc = rs.getString(2);
+							String hv = rs.getString(3);
+							String gv = rs.getString(4);
+							idhvdi = rs.getString(5);
+							idcbdi = rs.getString(6);
+	
+							 dem++;
+								tableModeldi.addRow(new Object[] {giokh, giohc, hv, gv});
+	
+	
+								scrollPane_di.setVisible(true);
+								table_di.setVisible(true);
+								button_chonmua.setVisible(true);
+								Label_ngaydi.setVisible(true);
+	
+								
+						}
+						
+						if(dem==0) {
+							JOptionPane.showMessageDialog(null, "Không tìm thấy chuyến bay đi");
+						}
+						conn.close();
 					}
 					
-						System.out.println("\nidcbve"+idcbve);
-					conn.close();
-				}
+					catch(Exception e1 )
+					{
+						System.out.println(e1);
+						
+					}
+					
+					try {
+						Class.forName("oracle.jdbc.driver.OracleDriver");
+						Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "DB_AIRLINE", "123");
+						java.sql.Statement st = conn.createStatement();
+						
+						String day = new String();
+						String month = new String();
+						String year = new String();
+						String date = new String();
+						
+						SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+						String tgString=formatter.format(dateChooser_ngayve.getDate());
+						day = tgString.substring(8,10);
+						month = tgString.substring(5,7);
+						year = tgString.substring(0,4);
+						date = tgString.substring(0,10);
+						
+						// Chuyen ve
+						String sql = "select distinct c.NGAY_GIO_KH, c.NGAY_GIO_HC, h.TENHV, h.GIA,h.ID, c.ID"
+								+ " from CHUYENBAY c JOIN VEMAYBAY v ON c.ID = v.CHUYENBAY_ID JOIN HANGVE h ON h.ID = v.HANGVE_ID "
+								+ "where c.SANBAYDI = " + "'"+comboBox_noiden.getSelectedItem()+"'"+" and c.SANBAYDEN = "+"'"+comboBox_noidi.getSelectedItem()+"'"
+								+ " and EXTRACT( DAY FROM c.NGAY_GIO_KH)= "+"'"+day+"'"+" and EXTRACT( MONTH FROM c.NGAY_GIO_KH)= "+"'"+month+"'"+" and EXTRACT(YEAR FROM c.NGAY_GIO_KH)= "+"'"+year+"'";
+					
+						
+						System.out.println(day);
+						System.out.println(month);
+						System.out.println(year);
+						System.out.println(date);
+						System.out.println(sql);
+						
 				
-				catch(Exception e1 )
-				{
-					System.out.println(e1);
+						ResultSet rs =  ((java.sql.Statement) st).executeQuery(sql);
+						 while(tableModel.getRowCount() > 0) 
+							{									
+								tableModel.removeRow(0);
+							}
+						 int dem=0;
+						while(rs.next()) 
+						{
+							String giokh = rs.getString(1);
+							String giohc = rs.getString(2);
+							String hv = rs.getString(3);
+							String gv = rs.getString(4);
+							idhvve = rs.getString(5);
+							idcbve = rs.getString(6);
+							 dem++;
+							
+							tableModel.addRow(new Object[] {giokh, giohc, hv, gv});
+	
+	
+								scrollPane_ve.setVisible(true);
+								table_ve.setVisible(true);
+								button_chonmua.setVisible(true);
+								Label_ngayve.setVisible(true);
+								
+						}
+						if(dem==0) {
+							JOptionPane.showMessageDialog(null, "Không tìm thấy chuyến bay về");
+						}
+						try {
+							Class.forName("oracle.jdbc.OracleDriver");
+							con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+				             PreparedStatement pst = con.prepareStatement("Select count(CHUYENBAY_ID) from VEMAYBAY ve where CHUYENBAY_ID="+idcbdi+" ");
+				         	
+								ResultSet rs1= pst.executeQuery();
+								while(rs1.next()) {
+									 String a =rs1.getString(1);
+									 countid=Integer.parseInt(a);							}
+	
+						} catch (ClassNotFoundException e1) {
+							e1.printStackTrace();
+						} catch (SQLException e1) {
+							e1.printStackTrace();
+						}
+						try {
+							Class.forName("oracle.jdbc.OracleDriver");
+							con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+				             PreparedStatement pst = con.prepareStatement("Select TONGSOVE from CHUYENBAY  where ID="+idcbdi+"");
+				         	
+								ResultSet rs1= pst.executeQuery();
+								while(rs1.next()) {
+									String b =rs1.getString(1);
+									 tongsoghe=Integer.parseInt(b);							}
+	
+						} catch (ClassNotFoundException e1) {
+							e1.printStackTrace();
+						} catch (SQLException e1) {
+							e1.printStackTrace();
+						}
+						//chuyenve
+						try {
+							Class.forName("oracle.jdbc.OracleDriver");
+							con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+				             PreparedStatement pst1 = con.prepareStatement("Select count(CHUYENBAY_ID) from VEMAYBAY ve where CHUYENBAY_ID="+idcbve+" ");
+				         	
+								ResultSet rs2= pst1.executeQuery();
+								while(rs2.next()) {
+									 String a =rs2.getString(1);
+									 countid1=Integer.parseInt(a);
+								}
+	
+						} catch (ClassNotFoundException e1) {
+							e1.printStackTrace();
+						} catch (SQLException e1) {
+							e1.printStackTrace();
+						}
+						try {
+							Class.forName("oracle.jdbc.OracleDriver");
+							con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+				             PreparedStatement pst1 = con.prepareStatement("Select TONGSOVE from CHUYENBAY  where ID="+idcbve+"");
+				         	
+								ResultSet rs2= pst1.executeQuery();
+								while(rs2.next()) {
+									 String b =rs2.getString(1);
+									 tongsoghe1=Integer.parseInt(b);
+								}
+								System.out.println("tong so ghe ve: "+tongsoghe1);
+						} catch (ClassNotFoundException e1) {
+							e1.printStackTrace();
+						} catch (SQLException e1) {
+							e1.printStackTrace();
+						}
+						
+							System.out.println("\nidcbve"+idcbve);
+						conn.close();
+					}
 					
+					catch(Exception e1 )
+					{
+						System.out.println(e1);
+						
+					}
 				}
 				
 				

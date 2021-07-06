@@ -104,7 +104,7 @@ public class Quanly_dv_muathemhanhly extends JFrame {
 		});
 		bt_them.setBackground(new Color(255, 255, 224));
 		bt_them.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		bt_them.setBounds(61, 313, 99, 23);
+		bt_them.setBounds(62, 313, 99, 23);
 		contentPane.add(bt_them);
 		
 		JSeparator separator = new JSeparator();

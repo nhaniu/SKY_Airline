@@ -50,8 +50,8 @@ public class them_chuyenbay extends JFrame {
 	private JTextField textField_tongsove;
 	private JLabel lb_id;
 	Connection con=null;
-	private JComboBox comboBox_noidi;
-	private JComboBox comboBox_noiden;
+	private static JComboBox comboBox_noidi;
+	private static JComboBox comboBox_noiden;
 	private JComboBox comboBox;
 	private String tsgcb;
 
@@ -64,11 +64,23 @@ public class them_chuyenbay extends JFrame {
 		loadCombobox();
 		loadCombobox1();
 		loadCombobox2();
+		Teststringcomparison (toString(), toString());
 
 	}
 	/**
 	 * Launch the application.
 	 */
+	
+	public static boolean Teststringcomparison (Object object, Object object2){
+		object = comboBox_noidi.getSelectedItem().toString();
+		object2 = comboBox_noiden.getSelectedItem().toString();
+		if (object.equals(object2)) {
+			System.out.println("Giống");
+			return true;
+		}
+		System.out.println("K giống");
+		return false;
+		}
 	
 	public void loadCombobox() {
 		try {
@@ -298,47 +310,48 @@ public class them_chuyenbay extends JFrame {
 		lb_id.setBounds(172, 85, 151, 18);
 		contentPane.add(lb_id);
 		
-		
-		
-		
 		bt_them.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (textField_ID_NQL.getText().isEmpty()) {
-					 JOptionPane.showMessageDialog(null, "vui lòng nhập ID người quản lý");
-					 textField_ID_NQL.requestFocus();
-					 return; 
-					}
 				
-				
-			
-				try {
+				if (Teststringcomparison(comboBox_noidi.getSelectedItem(), comboBox_noiden.getSelectedItem()) == true) {
+					JOptionPane.showMessageDialog(null, "Vui lòng chọn lại nơi đến, nơi đi!");
+				}
+				else {
+					if (textField_ID_NQL.getText().isEmpty()) {
+						 JOptionPane.showMessageDialog(null, "vui lòng nhập ID người quản lý");
+						 textField_ID_NQL.requestFocus();
+						 return; 
+						}
 					
-					SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-YY hh:mm:ss");
-					String tgString=formatter.format(dateChooser_kh.getDate());
-					String ngay_khoihanh="TO_DATE('"+tgString+"','DD-MM-RR HH24:MI:SS')";
+					try {
+						
+						SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-YY hh:mm:ss");
+						String tgString=formatter.format(dateChooser_kh.getDate());
+						String ngay_khoihanh="TO_DATE('"+tgString+"','DD-MM-RR HH24:MI:SS')";
+		
 	
-
-					SimpleDateFormat formatter1 = new SimpleDateFormat("dd-MM-YY hh:mm:ss");
-					String tgString1=formatter1.format(dateChooser_hc.getDate());
-					String ngay_hacanh="TO_DATE('"+tgString1+"','DD-MM-RR HH24:MI:SS')";
-
-
-				Class.forName("oracle.jdbc.OracleDriver");
-				con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
-				PreparedStatement pst= con.prepareStatement("insert into \"DB_AIRLINE\".\"CHUYENBAY\"  (\"ID\", \"TTMAYBAY_ID\", \"SANBAYDI\",\"SANBAYDEN\",  \"NGAY_GIO_KH\", \"NGAY_GIO_HC\", \"TONGSOVE\",\"NGUOIQUANLY_ID\") values("+lb_id.getText()+","+comboBox.getSelectedItem()+",'"+comboBox_noidi.getSelectedItem()+"','"+comboBox_noiden.getSelectedItem()+"',"+ngay_khoihanh+","+ngay_hacanh+","+textField_tongsove.getText()+","+textField_ID_NQL.getText()+")");		
-				pst.execute();	
-				
-
-				JOptionPane.showMessageDialog(null, "Thêm chuyến bay thành công");
-				con.close();
-			} catch (ClassNotFoundException e1) {
-				JOptionPane.showMessageDialog(null, e);
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				//e1.printStackTrace();
-				JOptionPane.showMessageDialog(null, e1);
-
-			}
+						SimpleDateFormat formatter1 = new SimpleDateFormat("dd-MM-YY hh:mm:ss");
+						String tgString1=formatter1.format(dateChooser_hc.getDate());
+						String ngay_hacanh="TO_DATE('"+tgString1+"','DD-MM-RR HH24:MI:SS')";
+	
+	
+					Class.forName("oracle.jdbc.OracleDriver");
+					con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+					PreparedStatement pst= con.prepareStatement("insert into \"DB_AIRLINE\".\"CHUYENBAY\"  (\"ID\", \"TTMAYBAY_ID\", \"SANBAYDI\",\"SANBAYDEN\",  \"NGAY_GIO_KH\", \"NGAY_GIO_HC\", \"TONGSOVE\",\"NGUOIQUANLY_ID\") values("+lb_id.getText()+","+comboBox.getSelectedItem()+",'"+comboBox_noidi.getSelectedItem()+"','"+comboBox_noiden.getSelectedItem()+"',"+ngay_khoihanh+","+ngay_hacanh+","+textField_tongsove.getText()+","+textField_ID_NQL.getText()+")");		
+					pst.execute();	
+					
+	
+					JOptionPane.showMessageDialog(null, "Thêm chuyến bay thành công");
+					con.close();
+				} catch (ClassNotFoundException e1) {
+					JOptionPane.showMessageDialog(null, e);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					//e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, e1);
+	
+				}
+				}
 				
 			}
 				
@@ -389,5 +402,14 @@ public class them_chuyenbay extends JFrame {
 		lblNewLabel.setIcon(scaleIcon);
 		
 	}
+	public static boolean Teststringcomparison (){
+			try {
+				comboBox_noidi.getSelectedItem().equals(comboBox_noidi.getSelectedItem());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return true;
+			}
 	
 	}

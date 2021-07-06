@@ -42,6 +42,7 @@ public class dichvu_hoanve extends JFrame {
 	private JTextField textField_lido;
 	private JTable table;
 	private JLabel lb_id;
+	private JTextField textField_sdt;
 
 	public dichvu_hoanve() {
 		initcomponents();
@@ -71,7 +72,7 @@ public class dichvu_hoanve extends JFrame {
 		setVisible(true);
 		setBackground(new Color(240, 255, 255));
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 170, 644, 383);
+		setBounds(100, 170, 644, 490);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(240, 255, 255));
 		contentPane.setBorder(null);
@@ -90,11 +91,11 @@ public class dichvu_hoanve extends JFrame {
 		
 		JLabel lb_lido = new JLabel("Lí do:");
 		lb_lido.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lb_lido.setBounds(23, 181, 49, 16);
+		lb_lido.setBounds(23, 235, 49, 16);
 		contentPane.add(lb_lido);
 		
 		textField_lido = new JTextField();
-		textField_lido.setBounds(123, 179, 189, 22);
+		textField_lido.setBounds(123, 233, 189, 22);
 		contentPane.add(textField_lido);
 		textField_lido.setColumns(10);
 		
@@ -118,22 +119,34 @@ public class dichvu_hoanve extends JFrame {
 		
 		JLabel lblNewLabel_1 = new JLabel("Phí hoàn:");
 		lblNewLabel_1.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lblNewLabel_1.setBounds(23, 219, 90, 22);
+		lblNewLabel_1.setBounds(23, 278, 90, 22);
 		contentPane.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("20 % tiền vé");
 		lblNewLabel_2.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		lblNewLabel_2.setBounds(123, 219, 103, 22);
+		lblNewLabel_2.setBounds(123, 278, 103, 22);
 		contentPane.add(lblNewLabel_2);
 		
 		 lb_id = new JLabel("New label");
 		lb_id.setBounds(123, 109, 103, 22);
 		contentPane.add(lb_id);
 		
+		JLabel lblNewLabel_5 = new JLabel("SDT:");
+		lblNewLabel_5.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lblNewLabel_5.setBounds(23, 181, 89, 26);
+		contentPane.add(lblNewLabel_5);
+		
+		textField_sdt = new JTextField();
+		textField_sdt.setBounds(123, 184, 189, 22);
+		contentPane.add(textField_sdt);
+		textField_sdt.setColumns(10);
+		
+		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(23, 271, 588, 39);
+		scrollPane.setBounds(23, 355, 588, 39);
 		contentPane.add(scrollPane);
 		scrollPane.setVisible(false);
+		
 		
 		table = new JTable();
 		scrollPane.setViewportView(table);
@@ -183,7 +196,7 @@ public class dichvu_hoanve extends JFrame {
 				Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
 				Statement st=con.createStatement(); 
 	
-				String b= "select TONGTIEN, TAIKHOAN_ID, ID from DATVEBAY   WHERE  DATVEBAY.ID="+textField_madatcho.getText();
+				String b="SELECT DV.TONGTIEN, DV.TAIKHOAN_ID, DV.ID, HK.SDT FROM HANHKHACH HK, DATVEBAY DV WHERE HK.ID=DV.HANHKHACH_ID AND HK.SDT="+textField_sdt.getText()+" and DV.ID="+textField_madatcho.getText();
 				ResultSet rs= st.executeQuery(b);
 				
 				
@@ -202,11 +215,11 @@ public class dichvu_hoanve extends JFrame {
 					}
 					
 				}
-					System.out.println(tk_id);
-					
-				String idString=rs.getString(3);
-
 				
+
+				String idString=rs.getString(3);
+								
+
 				
 				int confirm =JOptionPane.showConfirmDialog(null, "Xác nhận nếu bạn muốn hoàn vé","Xác nhận",JOptionPane.YES_NO_OPTION);
 				if(confirm==JOptionPane.YES_OPTION) {
@@ -252,10 +265,10 @@ public class dichvu_hoanve extends JFrame {
 				pst2.execute();
 				
 				
-				String C= "select DT.ID, DT.TONGPHIHOANVE,DT.TONGDOANHTHU, DT.CHUYENBAY_ID\r\n"
+				String C1= "select DT.ID, DT.TONGPHIHOANVE,DT.TONGDOANHTHU, DT.CHUYENBAY_ID\r\n"
 						+ "from DOANHTHUCHUYENBAY DT, VEMAYBAY VE, DATVEBAY DV \r\n"
 						+ "WHERE   DT.CHUYENBAY_ID=VE.CHUYENBAY_ID AND VE.ID=DV.VEMAYBAY_ID AND DV.ID="+textField_madatcho.getText();
-				ResultSet rs2= st.executeQuery(C);
+				ResultSet rs2= st.executeQuery(C1);
 
 				rs2.next();
 				String tonghoanve =rs2.getString(2);				
@@ -345,15 +358,20 @@ String search="select ID, DATVEBAY_ID,LIDO, NGAYHOAN, PHIHV, TIENHV from HOANVEB
 					dispose();
 				}
 				}
+				
+				
 
 				else if(!rs.next()) {
-					JOptionPane.showMessageDialog(null, "Mã đặt chỗ không tồn tại");
+					JOptionPane.showMessageDialog(null, "Thông tin không chính xác");
 				}
 				}
 			 catch (ClassNotFoundException e1) {
-				JOptionPane.showMessageDialog(null, e1);
+				//JOptionPane.showMessageDialog(null, e1);
+				 e1.printStackTrace();
 			} catch (SQLException e1) {
-				JOptionPane.showMessageDialog(null, e1);
+				//JOptionPane.showMessageDialog(null, e1);
+				 e1.printStackTrace();
+
 			}
 				
 				
@@ -366,8 +384,9 @@ String search="select ID, DATVEBAY_ID,LIDO, NGAYHOAN, PHIHV, TIENHV from HOANVEB
 		bt_gui.setBounds(434, 159, 81, 22);
 		contentPane.add(bt_gui);
 		
+		
 		JLabel lblNewLabel_3 = new JLabel("New label");
-		lblNewLabel_3.setBounds(0, 0, 643, 356);
+		lblNewLabel_3.setBounds(0, 0, 643, 463);
 		contentPane.add(lblNewLabel_3);
 		
 		ImageIcon icon=new ImageIcon("444571.jpg");
@@ -375,8 +394,6 @@ String search="select ID, DATVEBAY_ID,LIDO, NGAYHOAN, PHIHV, TIENHV from HOANVEB
 		Image imgScale =imgIcon.getScaledInstance(lblNewLabel_3.getWidth(), lblNewLabel_3.getHeight(), Image.SCALE_SMOOTH);
 		ImageIcon scaleIcon=new ImageIcon(imgScale);
 		lblNewLabel_3.setIcon(scaleIcon);
-		
-		
 		
 		
 	}

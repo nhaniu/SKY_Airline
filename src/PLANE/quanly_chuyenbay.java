@@ -146,7 +146,7 @@ Connection con=null;
 		});
 		bt_them.setBackground(new Color(255, 255, 224));
 		bt_them.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		bt_them.setBounds(256, 398, 102, 23);
+		bt_them.setBounds(306, 398, 102, 23);
 		contentPane.add(bt_them);
 		//bt_them.setVisible(false);
 		
@@ -206,49 +206,9 @@ Connection con=null;
 		
 		bt_sua.setBackground(new Color(255, 255, 224));
 		bt_sua.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		bt_sua.setBounds(450, 398, 102, 23);
+		bt_sua.setBounds(601, 398, 102, 23);
 		contentPane.add(bt_sua);
 		bt_sua.setVisible(false);
-		
-		JButton bt_xoa = new JButton("Xóa");
-		bt_xoa.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				DefaultTableModel model =(DefaultTableModel) table.getModel();
-				int SelectedRows=table.getSelectedRow();
-				
-				if(SelectedRows==-1) {
-					JOptionPane.showMessageDialog(null, "Chọn chuyến bay cần xóa");
-				}
-				try {	
-						int id=Integer.parseInt(model.getValueAt(SelectedRows, 0).toString());
-						int deleteItem =JOptionPane.showConfirmDialog(null, "Xác nhận nếu bạn muốn xóa","Warning",JOptionPane.YES_NO_OPTION);
-						if(deleteItem==JOptionPane.YES_OPTION) {
-																											
-							Class.forName("oracle.jdbc.OracleDriver");
-							 con= DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");  		
-							PreparedStatement pst = con.prepareStatement("delete from CHUYENBAY where ID=?");
-							pst.setInt(1, id);
-							pst.executeUpdate(); // lúc này không đc commit nên transaction vẫn tiếp tục thực hiện
-							JOptionPane.showMessageDialog(null, "Xóa thành công");
-
-					}
-				} catch (ClassNotFoundException e1) {
-					e1.printStackTrace();
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
-				
-			}
-		});
-
-		
-
-		bt_xoa.setBackground(new Color(255, 255, 224));
-		bt_xoa.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		bt_xoa.setBounds(676, 398, 89, 23);
-		contentPane.add(bt_xoa);
-		bt_xoa.setVisible(false);
 		
 		
 		
@@ -353,7 +313,6 @@ Connection con=null;
 						bt_them.setVisible(true);
 						bt_sua.setVisible(true);
 						bt_timkiem.setVisible(true);
-						bt_xoa.setVisible(true);
 					}
 					
 					con.close();
@@ -405,7 +364,6 @@ Connection con=null;
 						bt_them.setVisible(true);
 						bt_sua.setVisible(true);
 						bt_timkiem.setVisible(true);
-						bt_xoa.setVisible(true);
 					}
 					
 					con.close();

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="xuatve" pageWidth="595" pageHeight="442" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9cfcdb32-5f8e-487c-aa33-bbb2378d3142">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="FILE "/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT DV.ID, HK.HOTEN, CB.SANBAYDI, CB.SANBAYDEN, HV.TENHV,  DVBT.NOIDUNGDV, DV.TONGTIEN
+FROM CHUYENBAY CB, VEMAYBAY VE,DATVEBAY DV,HANGVE HV, HANHKHACH HK, DICHVUBOTRO DVBT
+WHERE CB.ID=VE.CHUYENBAY_ID AND VE.ID=DV.VEMAYBAY_ID and HV.ID=VE.HANGVE_ID AND HK.ID=DV.HANHKHACH_ID AND DVBT.ID=DV.DICHVUBOTRO_ID]]>
+	</queryString>
+	<field name="ID" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ID"/>
+		<property name="com.jaspersoft.studio.field.label" value="ID"/>
+	</field>
+	<field name="HOTEN" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="HOTEN"/>
+		<property name="com.jaspersoft.studio.field.label" value="HOTEN"/>
+	</field>
+	<field name="SANBAYDI" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="SANBAYDI"/>
+		<property name="com.jaspersoft.studio.field.label" value="SANBAYDI"/>
+	</field>
+	<field name="SANBAYDEN" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="SANBAYDEN"/>
+		<property name="com.jaspersoft.studio.field.label" value="SANBAYDEN"/>
+	</field>
+	<field name="TENHV" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TENHV"/>
+		<property name="com.jaspersoft.studio.field.label" value="TENHV"/>
+	</field>
+	<field name="NOIDUNGDV" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NOIDUNGDV"/>
+		<property name="com.jaspersoft.studio.field.label" value="NOIDUNGDV"/>
+	</field>
+	<field name="TONGTIEN" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="TONGTIEN"/>
+		<property name="com.jaspersoft.studio.field.label" value="TONGTIEN"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="83" splitType="Stretch">
+			<staticText>
+				<reportElement x="140" y="0" width="321" height="41" uuid="3192c449-7d16-4776-abdb-b0d495c079d2"/>
+				<textElement>
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Thông tin đặt vé máy bay]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="410" y="50" width="91" height="21" uuid="3abeb297-11e1-4c22-92af-045251132a97"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH:mm">
+				<reportElement x="510" y="50" width="51" height="21" uuid="28184ee9-b0c1-46d1-9560-8cb9ea42ead3"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="315" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<rectangle>
+				<reportElement x="80" y="7" width="411" height="301" backcolor="#F0F9FA" uuid="0a924547-4b81-4221-986f-675e1b3b2d2c"/>
+			</rectangle>
+			<textField>
+				<reportElement x="260" y="13" width="100" height="30" uuid="8099d344-d198-443a-b2b8-dc172ae60393"/>
+				<textFieldExpression><![CDATA[$F{ID}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="160" y="13" width="100" height="30" uuid="574bb93d-e3bb-4c56-8a45-b07778e16ba6"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mã đặt vé:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="260" y="50" width="236" height="30" uuid="fc798709-a119-4e53-b7ec-d67f3f11799c"/>
+				<textFieldExpression><![CDATA[$F{HOTEN}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="160" y="50" width="100" height="30" uuid="a92c6e59-4e23-4f4c-8533-a77b5f4de66b"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Họ tên:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="260" y="100" width="236" height="30" uuid="095a533b-2849-45bc-946a-67de96c7f342"/>
+				<textFieldExpression><![CDATA[$F{SANBAYDI}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="160" y="100" width="100" height="30" uuid="7911e31a-dc8e-47d8-8e8f-d52dbdecca8e"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sân bay đi:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="260" y="140" width="236" height="30" uuid="0a887873-c151-4cd1-b9bc-697995b160f3"/>
+				<textFieldExpression><![CDATA[$F{SANBAYDEN}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="160" y="140" width="100" height="30" uuid="b2515ae4-a388-4379-bb2f-2f251fba4111"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sân bay đến:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="260" y="180" width="236" height="30" uuid="0b866af6-14ec-4745-b6d6-82f59694ac0a"/>
+				<textFieldExpression><![CDATA[$F{TENHV}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="160" y="180" width="100" height="30" uuid="c9f8f651-bbcf-4b6e-b748-100691e20933"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tên hạng vé:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="260" y="220" width="236" height="30" uuid="e0b95cf7-154d-4836-8b41-fd1e379fc2c0"/>
+				<textFieldExpression><![CDATA[$F{NOIDUNGDV}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="160" y="220" width="100" height="30" uuid="8fefeda8-dbd3-4737-9458-6f1bf9641ea4"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nội dung dịch vụ:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="260" y="260" width="236" height="30" uuid="e616065b-0d6a-4d8e-a701-ca253daa7621"/>
+				<textFieldExpression><![CDATA[$F{TONGTIEN}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="160" y="260" width="100" height="30" uuid="d9fd8782-31bc-46bc-a2ea-51acebcc990c"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tổng tiền:]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

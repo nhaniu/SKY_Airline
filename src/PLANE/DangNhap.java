@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
@@ -47,7 +48,7 @@ public class DangNhap extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DangNhap frame = new DangNhap(0,null,null,null,null,null);
+					DangNhap frame = new DangNhap(0,null,null,null,null,null,null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -60,7 +61,7 @@ public class DangNhap extends JFrame {
 
 	/**
 	 */
-	public DangNhap(final int n, final JMenu Mn,  final JMenu Mn1, final JMenu mndn, final JButton bt,final JButton  bt_user) {
+	public DangNhap(final int n, final JMenu Mn,  final JMenu Mn1, final JMenu mndn, final JButton bt,final JButton  bt_user, final JMenuItem dvbt) {
 		
 		setBackground(new Color(240, 255, 255));
 		setVisible(true);
@@ -129,6 +130,7 @@ public class DangNhap extends JFrame {
 							setVisible(false);
 							bt.setVisible(true);
 							bt_user.setVisible(true);
+							dvbt.setVisible(false);
 
 						}
 						else {

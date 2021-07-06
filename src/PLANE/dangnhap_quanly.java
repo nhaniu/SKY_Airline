@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
@@ -44,7 +45,7 @@ public class dangnhap_quanly extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					dangnhap_quanly frame = new dangnhap_quanly(0,null,null,null,null,null);
+					dangnhap_quanly frame = new dangnhap_quanly(0,null,null,null,null,null,null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -56,7 +57,7 @@ public class dangnhap_quanly extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public dangnhap_quanly(final int n, final JMenu Mn,  final JMenu Mn1, final JMenu mndn, final JButton bt, final JButton bt_user) {
+	public dangnhap_quanly(final int n, final JMenu Mn,  final JMenu Mn1, final JMenu mndn, final JButton bt, final JButton bt_user, final JMenuItem dvbt) {
 		
 		setBackground(new Color(240, 255, 255));
 		setVisible(true);
@@ -121,7 +122,7 @@ public class dangnhap_quanly extends JFrame {
 							setVisible(false);
 							bt.setVisible(true);
 							bt_user.setVisible(true);
-
+							dvbt.setVisible(true);
 						}
 						else {
 							JOptionPane.showMessageDialog(null, "Đăng nhập không hợp lệ","Login Error",JOptionPane.ERROR_MESSAGE);

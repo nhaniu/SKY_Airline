@@ -11,6 +11,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.awt.GraphicsConfiguration;
+import java.awt.HeadlessException;
+
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -19,9 +22,11 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.awt.event.ActionEvent;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JSeparator;
@@ -30,16 +35,51 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.ImageIcon;
+import com.toedter.calendar.JDayChooser;
+import com.toedter.components.JLocaleChooser;
 
 public class QuanLy_DatVe extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField_maCB;
 	private JTable table;
+	private JComboBox cb_machuyenbay;
+	Connection con=null;
+	private JButton bt_xuatve;
+	private JButton bt_chuatt;
+	private JButton bt_thanhtoan;
+	public static String thoigian;
+	public static String thoigian1;
 
-	/**
-	 * Launch the application.
-	 */
+	
+	
+	public QuanLy_DatVe() {
+		initComponent();
+		loadCombobox1();
+	}
+
+
+	public void loadCombobox1() {
+		try {
+			Class.forName("oracle.jdbc.OracleDriver");
+			con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+             PreparedStatement pst = con.prepareStatement("Select ID from CHUYENBAY");
+				ResultSet rs= pst.executeQuery();
+				cb_machuyenbay.addItem("");
+				while(rs.next()) {
+					cb_machuyenbay.addItem(rs.getString(1));
+					
+
+				}
+	         
+
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		
+	}
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -52,15 +92,13 @@ public class QuanLy_DatVe extends JFrame {
 			}
 		});
 	}
-
-	/**
-	 * Create the frame.
-	 */
-	public QuanLy_DatVe() {
+	
+	
+	public void initComponent() {
 		setBackground(new Color(240, 255, 255));
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 170, 928, 501);
+		setBounds(100, 170, 995, 570);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(240, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -82,82 +120,47 @@ public class QuanLy_DatVe extends JFrame {
 		lb_mcb.setBounds(72, 127, 160, 19);
 		contentPane.add(lb_mcb);
 		
-		textField_maCB = new JTextField();
-		textField_maCB.setBounds(214, 127, 111, 19);
-		contentPane.add(textField_maCB);
-		textField_maCB.setColumns(10);
+
+		final JDateChooser dateChooser = new JDateChooser();
+		dateChooser.setBounds(621, 126, 162, 20);
+		contentPane.add(dateChooser);
 		
-	
 		
-		JButton bt_sua = new JButton("Cập nhật");
-		bt_sua.setVisible(false);
-		bt_sua.addActionListener(new ActionListener() {
+		bt_chuatt = new JButton("Danh sách chưa thanh toán");
+		bt_chuatt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DefaultTableModel model=(DefaultTableModel) table.getModel();
-				int SelectedRows=table.getSelectedRow();
-				if(SelectedRows==-1) {
-					JOptionPane.showMessageDialog(null, "Vui lòng chọn vé muốn cập nhật ở trong bảng");
-				}
-				
-				String id= model.getValueAt(SelectedRows, 0).toString();
-				String vemaybayid =model.getValueAt(SelectedRows, 1).toString();
-				String hanhkhachid= model.getValueAt(SelectedRows, 2).toString();
-				String khuyenmaiid ="null";
-				if(model.getValueAt(SelectedRows, 3)!=null) {
-
-				 khuyenmaiid =model.getValueAt(SelectedRows, 3).toString();
-				}
-				String dvbtid ="null";
-				if(model.getValueAt(SelectedRows, 4)!=null) {
-				 dvbtid =model.getValueAt(SelectedRows, 4).toString();
-				}
-				String ngaydat =model.getValueAt(SelectedRows, 5).toString();
-				String tg1 = ngaydat.substring(0, 10);
-
-				String tongtien =model.getValueAt(SelectedRows, 6).toString();
-				String tinhtrang =model.getValueAt(SelectedRows, 7).toString();
-				String taikhoanid ="null";
-				if(model.getValueAt(SelectedRows, 8)!=null) {
-
-				 taikhoanid =model.getValueAt(SelectedRows, 8).toString();
-				}
-				
-				update_datve update= new update_datve(id,vemaybayid,hanhkhachid,khuyenmaiid,dvbtid,tg1,tongtien,tinhtrang,taikhoanid);
-				update.setVisible(true);
+				//new ds_chuathanhtoan();
 			}
 		});
-		bt_sua.setBackground(new Color(255, 255, 224));
-		bt_sua.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		bt_sua.setBounds(660, 408, 111, 23);
-		contentPane.add(bt_sua);
+		bt_chuatt.setVisible(true);
+		bt_chuatt.setBackground(new Color(255, 255, 224));
+		bt_chuatt.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		bt_chuatt.setBounds(346, 424, 218, 29);
+		contentPane.add(bt_chuatt);
 		
-		JButton bt_timkiem = new JButton("Tìm kiếm");
-		bt_timkiem.setVisible(false);
-		bt_timkiem.addActionListener(new ActionListener() {
+		bt_thanhtoan = new JButton("Cập nhật thanh toán");
+		bt_thanhtoan.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new timkiem_datve();
+				//new capnhat_thanhtoan();
 			}
 		});
-		bt_timkiem.setBackground(new Color(255, 255, 224));
-		bt_timkiem.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		bt_timkiem.setBounds(151, 408, 117, 23);
-		contentPane.add(bt_timkiem);
-		
-		JLabel lblNewLabel = new JLabel("(Ví dụ: 601)");
-		lblNewLabel.setFont(new Font("Times New Roman", Font.ITALIC, 15));
-		lblNewLabel.setBounds(362, 127, 86, 19);
-		contentPane.add(lblNewLabel);
+		bt_thanhtoan.setBackground(new Color(255, 255, 224));
+		bt_thanhtoan.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		bt_thanhtoan.setBounds(51, 424, 181, 29);
+		contentPane.add(bt_thanhtoan);
+		bt_thanhtoan.setVisible(true);
+
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(51, 208, 821, 166);
+		scrollPane.setBounds(41, 208, 930, 166);
 		contentPane.add(scrollPane);
 		scrollPane.setVisible(false);
 		
 		table = new JTable();
 		table.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		table.setBackground(new Color(255, 255, 255));
+		scrollPane.setViewportView(table);
 		final DefaultTableModel model=new DefaultTableModel();
-		
 		model.addColumn("ID");
 		model.addColumn("ID vé máy bay ");
 		model.addColumn("ID hành khách");
@@ -172,94 +175,182 @@ public class QuanLy_DatVe extends JFrame {
 		 Theader.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		Theader.setBackground(new Color(255, 255, 255));
 		table.setModel(model);
-		table.setVisible(false);
+		//table.setVisible(false);
 
-		
-		scrollPane.setViewportView(table);
-		
-		JButton bt_timcb = new JButton("Tìm kiếm");
+		JButton bt_timcb = new JButton("Hiển thị");
 		bt_timcb.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				try {
-					
-					if (textField_maCB.getText().isEmpty()) {
-						 JOptionPane.showMessageDialog(null, "vui lòng nhập mã chuyến bay");
-						 textField_maCB.requestFocus();
-						 return; 
+				scrollPane.setVisible(true);
+				 dateChooser.setVisible(true);
+				 thoigian = "";
+				 String idcb = (String) cb_machuyenbay.getItemAt(cb_machuyenbay.getSelectedIndex());
+				 if(dateChooser.getDate() == null)
+				 {
+					 thoigian = "";
+				 }else {
+					SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-YY");		
+					String tgString = formatter.format(dateChooser.getDate());	
+					  thoigian="TO_DATE('"+tgString+"','DD-MM-RR')";					
+						System.out.println(thoigian);
+				 }
+						if(idcb == "" && thoigian != "") {
+						 try {
+								Class.forName("oracle.jdbc.OracleDriver");
+								Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+								Statement st=con.createStatement(); 
+								
+								String search="select d.ID, d.VEMAYBAY_ID, d.HANHKHACH_ID, d.KHUYENMAI_ID,"
+										+ "d.DICHVUBOTRO_ID, d.NGAYDAT, d.TONGTIEN, d.TINHTRANG, d.TAIKHOAN_ID"
+										+ " from DATVEBAY d INNER JOIN VEMAYBAY v ON d.VEMAYBAY_ID = v.ID where NGAYDAT="+thoigian+"";					
+													
+								while(model.getRowCount() > 0) 
+								{									
+									model.removeRow(0);
+								}
+								ResultSet rs= st.executeQuery(search);
+								while(rs.next()) {
+									String ID =rs.getString(1);
+									String vemaybay_id =rs.getString(2);
+									String hanhkhach_id =rs.getString(3);
+									String khuyenmai_id =rs.getString(4);
+									String dichvubotro_id = rs.getString(5);
+									String ngaydat =rs.getString(6);
+									String tongtien =rs.getString(7);
+									String tinhtrang=rs.getString(8);
+									String taikhoan_id =rs.getString(9);
+									
+									
+									model.addRow(new Object[] {ID,vemaybay_id,hanhkhach_id,khuyenmai_id,dichvubotro_id,ngaydat,tongtien,tinhtrang,taikhoan_id});
+
+									table.setModel(model);
+									scrollPane.setVisible(true);
+								}
+								con.close();
+								
+							} catch (ClassNotFoundException e1) {
+								e1.printStackTrace();
+							} catch (SQLException e2) {
+								e2.printStackTrace();
+							}		
 						}
-					
-						
-					Class.forName("oracle.jdbc.OracleDriver");
-					Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
-					Statement st=con.createStatement(); 
-					
-					
-					ResultSet rs1= st.executeQuery("select ID from CHUYENBAY where ID="+textField_maCB.getText()+"");
-					if(rs1.next()) {
-						String ID =rs1.getString(1);
-						}
-					else {
-						JOptionPane.showMessageDialog(null, "ID chuyến bay không tồn tại");
+			
+				 else if (idcb != "" && thoigian == "") {
+					 try {
+							Class.forName("oracle.jdbc.OracleDriver");
+							Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+							Statement st=con.createStatement(); 
+							
+							String search="select d.ID, d.VEMAYBAY_ID, d.HANHKHACH_ID, d.KHUYENMAI_ID,"
+									+ "d.DICHVUBOTRO_ID, d.NGAYDAT, d.TONGTIEN, d.TINHTRANG, d.TAIKHOAN_ID"
+									+ " from DATVEBAY d INNER JOIN VEMAYBAY v ON d.VEMAYBAY_ID = v.ID INNER JOIN CHUYENBAY c ON V.CHUYENBAY_ID = c.ID where c.ID="+idcb+"";					
+												
+							while(model.getRowCount() > 0) 
+							{									
+								model.removeRow(0);
+							}
+							
+							ResultSet rs= st.executeQuery(search);
+							while(rs.next()) {
+								String ID =rs.getString(1);
+								String vemaybay_id =rs.getString(2);
+								String hanhkhach_id =rs.getString(3);
+								String khuyenmai_id =rs.getString(4);
+								String dichvubotro_id = rs.getString(5);
+								String ngaydat =rs.getString(6);
+								String tongtien =rs.getString(7);
+								String tinhtrang=rs.getString(8);
+								String taikhoan_id =rs.getString(9);
+								
+								
+								model.addRow(new Object[] {ID,vemaybay_id,hanhkhach_id,khuyenmai_id,dichvubotro_id,ngaydat,tongtien,tinhtrang,taikhoan_id});
+
+								table.setModel(model);
+								scrollPane.setVisible(true);
+							}
+							con.close();
+							
+						} catch (ClassNotFoundException e1) {
+							e1.printStackTrace();
+						} catch (SQLException e2) {
+							e2.printStackTrace();
+						}			
 					}
-					rs1.close();
-					String search="select dv.ID,dv.VEMAYBAY_ID, dv.HANHKHACH_ID, dv.KHUYENMAI_ID, dv.DICHVUBOTRO_ID, dv.NGAYDAT, dv.TONGTIEN, dv.TINHTRANG, dv.TAIKHOAN_ID\r\n"
-							+ "from DATVEBAY dv, CHUYENBAY cb, VEMAYBAY ve\r\n"
-							+ "where dv.VEMAYBAY_ID=ve.ID and ve.CHUYENBAY_ID=cb.ID and ve.CHUYENBAY_ID="+textField_maCB.getText()+" ";					
-										
-					while(model.getRowCount() > 0) 
-					{									
-						model.removeRow(0);
+				 else if (idcb != "" && thoigian != "") {
+					 try {
+							Class.forName("oracle.jdbc.OracleDriver");
+							Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+							Statement st=con.createStatement(); 
+							
+							String search="select d.ID, d.VEMAYBAY_ID, d.HANHKHACH_ID, d.KHUYENMAI_ID,"
+									+ "d.DICHVUBOTRO_ID, d.NGAYDAT, d.TONGTIEN, d.TINHTRANG, d.TAIKHOAN_ID"
+									+ " from DATVEBAY d INNER JOIN VEMAYBAY v ON d.VEMAYBAY_ID = v.ID where v.CHUYENBAY_ID="+cb_machuyenbay.getSelectedItem()+"and NGAYDAT="+thoigian+"";					
+												
+							while(model.getRowCount() > 0) 
+							{									
+								model.removeRow(0);
+							}
+							ResultSet rs= st.executeQuery(search);
+							while(rs.next()) {
+								String ID =rs.getString(1);
+								String vemaybay_id =rs.getString(2);
+								String hanhkhach_id =rs.getString(3);
+								String khuyenmai_id =rs.getString(4);
+								String dichvubotro_id = rs.getString(5);
+								String ngaydat =rs.getString(6);
+								String tongtien =rs.getString(7);
+								String tinhtrang=rs.getString(8);
+								String taikhoan_id =rs.getString(9);
+								
+								
+								model.addRow(new Object[] {ID,vemaybay_id,hanhkhach_id,khuyenmai_id,dichvubotro_id,ngaydat,tongtien,tinhtrang,taikhoan_id});
+
+								table.setModel(model);
+								scrollPane.setVisible(true);
+							}
+							con.close();
+							
+						} catch (ClassNotFoundException e1) {
+							e1.printStackTrace();
+						} catch (SQLException e2) {
+							e2.printStackTrace();
+						}			
 					}
-					
-					ResultSet rs= st.executeQuery(search);
-					while(rs.next()) {
-						String ID =rs.getString(1);
-						String vemaybayid =rs.getString(2);
-						String hanhkhachid =rs.getString(3);
-						String khuyenmaiid =rs.getString(4);
-						String dvbtid =rs.getString(5);
-						String ngaydat =rs.getString(6);
-						String tongtien =rs.getString(7);
-						String tinhtrang =rs.getString(8);
-						String taikhoanid =rs.getString(9);
-
-						
-						System.out.print(ID+vemaybayid+hanhkhachid+khuyenmaiid+dvbtid+ngaydat+tongtien+tinhtrang+taikhoanid+"\n");
-						
-						model.addRow(new Object[] {ID,vemaybayid,hanhkhachid,khuyenmaiid,dvbtid,ngaydat,tongtien,tinhtrang,taikhoanid});
-
-						table.setModel(model);
-						scrollPane.setVisible(true);
-						bt_timkiem.setVisible(true);
-						bt_sua.setVisible(true);
-						table.setVisible(true);
-
-					}
-					
-					con.close();
-
-					
-				} catch (ClassNotFoundException e1) {
-					e1.printStackTrace();
-				} catch (SQLException e2) {
-					e2.printStackTrace();
+				 else if (idcb == "" && thoigian.equals("")) {
+					 JOptionPane.showMessageDialog(null, "vui lòng nhập thông tin để tìm danh sách");
+				 }
 				}
-
-			
-			}
-				
-			
-		});
+			});
 		bt_timcb.setBackground(new Color(255, 255, 224));
 		bt_timcb.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		bt_timcb.setBounds(701, 125, 127, 23);
+		bt_timcb.setBounds(716, 175, 127, 23);
 		contentPane.add(bt_timcb);
 		
-		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setIcon(new ImageIcon("anh.jpg"));
-		lblNewLabel_1.setBounds(0, 0, 926, 483);
-		contentPane.add(lblNewLabel_1);
+		cb_machuyenbay = new JComboBox();
+		cb_machuyenbay.setBounds(187, 127, 148, 21);
+		contentPane.add(cb_machuyenbay);
+		
+		JLabel lblNewLabel = new JLabel("Ngày");
+		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lblNewLabel.setBounds(565, 122, 127, 29);
+		contentPane.add(lblNewLabel);
+		
+		bt_xuatve = new JButton("Xuất vé");
+		bt_xuatve.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new xuat_thongtin_ve();
+			}
+		});
+		bt_xuatve.setBackground(new Color(255, 255, 224));
+		bt_xuatve.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		bt_xuatve.setBounds(676, 424, 181, 29);
+		contentPane.add(bt_xuatve);
+		bt_xuatve.setVisible(true);
+		
+		JLabel lblNewLabel2 = new JLabel("New label");
+		lblNewLabel2.setIcon(new ImageIcon("anh.jpg"));
+		lblNewLabel2.setBounds(10, 0, 1051, 543);
+		contentPane.add(lblNewLabel2);
+		
 		
 	}
 }

@@ -35,8 +35,8 @@ public class muave_motchieu extends JFrame {
 	public static String idcb;
 
 	Connection con=null;
-	private JComboBox comboBox_noidi;
-	private JComboBox comboBox_noiden;
+	private static JComboBox comboBox_noidi;
+	private static JComboBox comboBox_noiden;
 	private String tsgcb;
 	private int tongsoghe;
 	private int countid;
@@ -46,11 +46,24 @@ public class muave_motchieu extends JFrame {
 		initComponent();
 		loadCombobox();
 		loadCombobox1();
+		Teststringcomparison(toString(), toString());
 
 	}
 	/**
 	 * Launch the application.
 	 */
+	
+	public static boolean Teststringcomparison (Object object, Object object2){
+		object = comboBox_noidi.getSelectedItem().toString();
+		object2 = comboBox_noiden.getSelectedItem().toString();
+		if (object.equals(object2)) {
+			System.out.println("Giống");
+			return true;
+		}
+		System.out.println("K giống");
+		return false;
+		}
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -77,7 +90,9 @@ public class muave_motchieu extends JFrame {
 	         
 
 		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
 		} catch (SQLException e1) {
+			e1.printStackTrace();
 		}
 		
 	}
@@ -94,7 +109,9 @@ public class muave_motchieu extends JFrame {
 	         
 
 		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
 		} catch (SQLException e1) {
+			e1.printStackTrace();
 		}
 		
 	}
@@ -175,79 +192,83 @@ public class muave_motchieu extends JFrame {
 		bt_tim_chuyen_bay.setBackground(new Color(0, 191, 255));
 		bt_tim_chuyen_bay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			 
-				try {
-					Class.forName("oracle.jdbc.driver.OracleDriver");
-					Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "DB_AIRLINE", "123");
-					java.sql.Statement st = conn.createStatement();
-					
-					String day = new String();
-					String month = new String();
-					String year = new String();
-					String date = new String();
-					
-					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-					String tgString=formatter.format(dateChooser.getDate());
-					day = tgString.substring(8,10);
-					month = tgString.substring(5,7);
-					year = tgString.substring(0,4);
-					date = tgString.substring(0,10);
-					
-					//String texString="TO_DATE('"+tgString+"','DD-MM-RR HH24:MI:SS')";
-					String sql = "select distinct c.ID, c.NGAY_GIO_KH, c.NGAY_GIO_HC, h.TENHV, h.GIA, h.ID"
-							+ " from CHUYENBAY c JOIN VEMAYBAY v ON c.ID = v.CHUYENBAY_ID JOIN HANGVE h ON h.ID = v.HANGVE_ID "
-							+ "where c.SANBAYDI = " + "'"+comboBox_noidi.getSelectedItem()+"'"+" and c.SANBAYDEN = "+"'"+comboBox_noiden.getSelectedItem()+"'"
-							+ " and EXTRACT( DAY FROM c.NGAY_GIO_KH)= "+"'"+day+"'"+" and EXTRACT( MONTH FROM c.NGAY_GIO_KH)= "+"'"+month+"'"+" and EXTRACT(YEAR FROM c.NGAY_GIO_KH)= "+"'"+year+"'";
-				
-					
-					System.out.println(day);
-					System.out.println(month);
-					System.out.println(year);
-					System.out.println(date);
-					System.out.println(sql);
-					
-					ResultSet rs =  ((java.sql.Statement) st).executeQuery(sql);
-					
-					 int dem=0;
-					 
-					 while(tableModel.getRowCount() > 0) 
-						{									
-							tableModel.removeRow(0);
-						}
-					while(rs.next()) 
-					{
-						 idcb = rs.getString(1);
-						String giokh = rs.getString(2);
-						String giohc = rs.getString(3);
-						String hv = rs.getString(4);
-						String gv = rs.getString(5);
-						idhv = rs.getString(6);
-
-						dem++;
+				if (Teststringcomparison(comboBox_noidi.getSelectedItem(), comboBox_noiden.getSelectedItem()) == true) {
+					JOptionPane.showMessageDialog(null, "Vui lòng chọn lại nơi đến, nơi đi!");
+				}
+				else {
+					try {
+						Class.forName("oracle.jdbc.driver.OracleDriver");
+						Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "DB_AIRLINE", "123");
+						java.sql.Statement st = conn.createStatement();
 						
-
-						tableModel.addRow(new Object[] {giokh, giohc, hv, gv});
-							System.out.print(giokh+giohc+hv+gv);
-
-							scrollPane.setVisible(true);
-							table.setVisible(true);
-							button_chonmua.setVisible(true);
+											
+						String day = new String();
+						String month = new String();
+						String year = new String();
+						String date = new String();
+						
+						SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+						String tgString=formatter.format(dateChooser.getDate());
+						day = tgString.substring(8,10);
+						month = tgString.substring(5,7);
+						year = tgString.substring(0,4);
+						date = tgString.substring(0,10);
+						
+						//String texString="TO_DATE('"+tgString+"','DD-MM-RR HH24:MI:SS')";
+						String sql = "select distinct c.ID, c.NGAY_GIO_KH, c.NGAY_GIO_HC, h.TENHV, h.GIA, h.ID"
+								+ " from CHUYENBAY c JOIN VEMAYBAY v ON c.ID = v.CHUYENBAY_ID JOIN HANGVE h ON h.ID = v.HANGVE_ID "
+								+ "where c.SANBAYDI = " + "'"+comboBox_noidi.getSelectedItem()+"'"+" and c.SANBAYDEN = "+"'"+comboBox_noiden.getSelectedItem()+"'"
+								+ " and EXTRACT( DAY FROM c.NGAY_GIO_KH)= "+"'"+day+"'"+" and EXTRACT( MONTH FROM c.NGAY_GIO_KH)= "+"'"+month+"'"+" and EXTRACT(YEAR FROM c.NGAY_GIO_KH)= "+"'"+year+"'";
+					
+						
+						System.out.println(day);
+						System.out.println(month);
+						System.out.println(year);
+						System.out.println(date);
+						System.out.println(sql);
+						
+						ResultSet rs =  ((java.sql.Statement) st).executeQuery(sql);
+						
+						 int dem=0;
+						 
+						 while(tableModel.getRowCount() > 0) 
+							{									
+								tableModel.removeRow(0);
+							}
+						while(rs.next()) 
+						{
+							 idcb = rs.getString(1);
+							String giokh = rs.getString(2);
+							String giohc = rs.getString(3);
+							String hv = rs.getString(4);
+							String gv = rs.getString(5);
+							idhv = rs.getString(6);
+	
+							dem++;
 							
+	
+							tableModel.addRow(new Object[] {giokh, giohc, hv, gv});
+								System.out.print(giokh+giohc+hv+gv);
+	
+								scrollPane.setVisible(true);
+								table.setVisible(true);
+								button_chonmua.setVisible(true);
+								
+						}
+						
+		
+						if(dem==0) {
+							JOptionPane.showMessageDialog(null, "Không tìm thấy chuyến bay");
+						}
+						conn.close();
 					}
 					
-	
-					if(dem==0) {
-						JOptionPane.showMessageDialog(null, "Không tìm thấy chuyến bay");
+					catch(Exception e1 )
+					{
+					
 					}
-					conn.close();
-				}
-				
-				catch(Exception e1 )
-				{
-				
-				}
-				
-
+					
+					}
 			}
 		});
 		
@@ -272,7 +293,9 @@ public class muave_motchieu extends JFrame {
 						}
 
 				} catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
 				} catch (SQLException e1) {
+					e1.printStackTrace();
 				}
 				try {
 					Class.forName("oracle.jdbc.OracleDriver");
@@ -286,7 +309,9 @@ public class muave_motchieu extends JFrame {
 						}
 
 				} catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
 				} catch (SQLException e1) {
+					e1.printStackTrace();
 				}
 				if(tongsoghe==countid) {
 					JOptionPane.showMessageDialog(null, "Chuyến bay đã hết vé, xin quý khách chọn chuyến bay khác");
@@ -294,10 +319,6 @@ public class muave_motchieu extends JFrame {
 				else {
 				
 				int i = table.getSelectedRow();
-				if(i==-1) {
-					JOptionPane.showMessageDialog(null, "Vui lòng chọn chuyến bay cần mua");
-				}
-				else {
 				System.out.println(i);
 				 String gio_kh_di = new String();
 				 String gio_hc_di = new String();
@@ -324,7 +345,7 @@ public class muave_motchieu extends JFrame {
 				dispose();
 				}
 				
-				}
+				
 			}
 		});
 		JTableHeader theJTableHeader = table.getTableHeader();

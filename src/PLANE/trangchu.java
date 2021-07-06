@@ -283,10 +283,12 @@ public class trangchu extends JFrame {
 		item_muahanhly.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		item_muahanhly.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
 				new dv_muathem_hanhly();
 			}
 		});
 		mnDchV.add(item_muahanhly);
+		item_muahanhly.setVisible(false);
 		
 		JMenu menu_khuyenmai = new JMenu("Khuyến mãi");
 		menu_khuyenmai.setFont(new Font("Segoe UI", Font.BOLD, 15));
@@ -488,13 +490,6 @@ public class trangchu extends JFrame {
 		menuItem_qlttkh.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		menu_NV.add(menuItem_qlttkh);
 		
-		JMenuItem menuItem_QLVE = new JMenuItem("Quản lý vé");
-		menuItem_QLVE.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new quanly_ve();
-			}
-		});
-		
 		JMenuItem menu_qly_datve = new JMenuItem("Quản lý đặt vé");
 		menu_qly_datve.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -512,8 +507,6 @@ public class trangchu extends JFrame {
 		menu_NV.add(menuItem_QLTK);
 		menu_qly_datve.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		menu_NV.add(menu_qly_datve);
-		menuItem_QLVE.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		menu_NV.add(menuItem_QLVE);
 		
 		JMenuItem menuItem_QL_DVBT = new JMenuItem("Quản lý dịch vụ bổ trợ");
 		menuItem_QL_DVBT.addActionListener(new ActionListener() {
@@ -613,7 +606,7 @@ public class trangchu extends JFrame {
 				item_nhanvien.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 				item_nhanvien.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						new dangnhap_nhanvien(1,menu_NV, null,menu_dangnhap,bt_logout,bt_user);
+						new dangnhap_nhanvien(1,menu_NV, null,menu_dangnhap,bt_logout,bt_user,item_muahanhly);
 						
 						bt_user.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
@@ -629,7 +622,7 @@ public class trangchu extends JFrame {
 				item_khachhang.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 				item_khachhang.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						new DangNhap(0,null, null, menu_dangnhap,bt_logout,bt_user);
+						new DangNhap(0,null, null, menu_dangnhap,bt_logout,bt_user,item_muahanhly);
 						
 						bt_user.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
@@ -645,7 +638,7 @@ public class trangchu extends JFrame {
 				item_quanly.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 				item_quanly.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						new dangnhap_quanly(2,menu_NQL,menu_NV,menu_dangnhap,bt_logout,bt_user);
+						new dangnhap_quanly(2,menu_NQL,menu_NV,menu_dangnhap,bt_logout,bt_user,item_muahanhly);
 						
 						bt_user.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
@@ -672,6 +665,10 @@ public class trangchu extends JFrame {
 				Image imgScale =imgIcon.getScaledInstance(bt_user.getWidth(), bt_user.getHeight(), Image.SCALE_SMOOTH);
 				ImageIcon scaleIcon=new ImageIcon(imgScale);
 				bt_user.setIcon(scaleIcon);
+				
+				JMenu menu = new JMenu("New menu");
+				menu.setBounds(243, 108, 113, 27);
+				contentPane.add(menu);
 				bt_user.setVisible(false);
 
 			//	bt_user.setIcon(new ImageIcon("C:\\Users\\nguyen thi nhan\\Downloads\\pngtree-office-work-user-icon-avatar-png-image_4815124.jpg"));
