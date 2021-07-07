@@ -28,11 +28,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class quanly_khuyenmai extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
+	private JTextField textField_slkm;
 
 	/**
 	 * Launch the application.
@@ -120,11 +123,26 @@ public class quanly_khuyenmai extends JFrame {
 		bt_xoa.setVisible(false);
 		
 
+		JLabel lblNewLabel_1 = new JLabel("Số lượng khuyến mãi đã dùng:");
+		lblNewLabel_1.setForeground(Color.WHITE);
+		lblNewLabel_1.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lblNewLabel_1.setBounds(41, 334, 220, 23);
+		contentPane.add(lblNewLabel_1);
+		
+		textField_slkm = new JTextField();
+		textField_slkm.setEditable(false);
+		textField_slkm.setBounds(279, 335, 60, 23);
+		contentPane.add(textField_slkm);
+		textField_slkm.setColumns(10);
+		
+
 		JButton bt_capnhat = new JButton("Cập nhật");
 		bt_capnhat.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel model=(DefaultTableModel) table.getModel();
 				int SelectedRows=table.getSelectedRow();
+				
+				
 				
 				if(SelectedRows==-1) {
 					JOptionPane.showMessageDialog(null, "Chọn thông tin khuyến mãi cần cập nhật");
@@ -140,11 +158,14 @@ public class quanly_khuyenmai extends JFrame {
 				String tg2 = ngaykt.substring(0, 10);
 				System.out.println(tg1);
 				System.out.println(tg2);
-								
+							
 				update_khuyenmai update= new update_khuyenmai(id, tg1, tg2, noidung, phantram);
 				update.setVisible(true);
+				
+				
 			}
 		});
+		
 		bt_capnhat.setBackground(new Color(255, 255, 224));
 		bt_capnhat.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		bt_capnhat.setBounds(327, 386, 121, 23);
@@ -157,12 +178,59 @@ public class quanly_khuyenmai extends JFrame {
 		contentPane.add(separator);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(40, 149, 773, 184);
+		scrollPane.setBounds(44, 116, 773, 184);
 		contentPane.add(scrollPane);
 		scrollPane.setVisible(false);
 	
 		
 		table = new JTable();
+	
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				DefaultTableModel model=(DefaultTableModel) table.getModel();
+				int SelectedRows=table.getSelectedRow();
+				
+				
+				
+				if(SelectedRows==-1) {
+					JOptionPane.showMessageDialog(null, "Chọn thông tin khuyến mãi cần cập nhật");
+				}
+				
+				String id= model.getValueAt(SelectedRows, 0).toString();
+				String ngaybt =model.getValueAt(SelectedRows, 1).toString();
+				String ngaykt= model.getValueAt(SelectedRows, 2).toString();
+				String noidung= model.getValueAt(SelectedRows, 3).toString();
+				String phantram=model.getValueAt( SelectedRows, 4).toString();
+				
+				String tg1 = ngaybt.substring(0, 10);
+				String tg2 = ngaykt.substring(0, 10);
+				System.out.println(tg1);
+				System.out.println(tg2);
+				
+				try {
+					Class.forName("oracle.jdbc.OracleDriver");
+					Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+					Statement st=con.createStatement(); 
+					String search="SELECT COUNT(DV.KHUYENMAI_ID)\r\n"
+							+ "FROM BKHUYENMAI KM, DATVEBAY DV\r\n"
+							+ "WHERE KM.ID=DV.KHUYENMAI_ID AND DV.KHUYENMAI_ID="+id+"";				
+
+					ResultSet rs= st.executeQuery(search);
+					if(rs.next()) {
+						String sl =rs.getString(1);
+						System.out.println(sl);
+						textField_slkm.setText(sl);
+
+					}
+				} catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				
+			}
+		});
 		final DefaultTableModel tableModel = new DefaultTableModel();
 		tableModel.addColumn("ID");
 		tableModel.addColumn("Ngày bắt đầu");
@@ -273,10 +341,12 @@ public class quanly_khuyenmai extends JFrame {
 		btnNewButton.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		btnNewButton.setBounds(724, 386, 107, 23);
 		
+		
+		
+		
 		JLabel lblNewLabel = new JLabel("New label");
 		lblNewLabel.setIcon(new ImageIcon("anh.jpg"));
-		lblNewLabel.setBounds(-12, 0, 888, 457);
+		lblNewLabel.setBounds(-16, 0, 888, 457);
 		contentPane.add(lblNewLabel);
 	}
-	
 }

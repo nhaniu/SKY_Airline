@@ -613,7 +613,7 @@ public class Quanly_taichinh extends JFrame {
 		
 		JLabel lblNewLabel = new JLabel("New label");
 		lblNewLabel.setIcon(new ImageIcon("anh.jpg"));
-		lblNewLabel.setBounds(-20, 11, 850, 511);
+		lblNewLabel.setBounds(0, 0, 850, 511);
 		contentPane.add(lblNewLabel);
 	}
 }

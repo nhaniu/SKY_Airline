@@ -194,6 +194,7 @@ public class timkiemhanhkhach extends JFrame {
 		panel_sua.add(lblNewLabel_1);
 		
 		textField_taikhoan_id = new JTextField();
+		textField_taikhoan_id.setEditable(false);
 		textField_taikhoan_id.setBounds(135, 236, 128, 20);
 		panel_sua.add(textField_taikhoan_id);
 		textField_taikhoan_id.setColumns(10);

@@ -98,7 +98,7 @@ public class QuanLy_DatVe extends JFrame {
 		setBackground(new Color(240, 255, 255));
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 170, 995, 570);
+		setBounds(100, 170, 995, 531);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(240, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -348,7 +348,7 @@ public class QuanLy_DatVe extends JFrame {
 		
 		JLabel lblNewLabel2 = new JLabel("New label");
 		lblNewLabel2.setIcon(new ImageIcon("anh.jpg"));
-		lblNewLabel2.setBounds(10, 0, 1051, 543);
+		lblNewLabel2.setBounds(0, 0, 1061, 543);
 		contentPane.add(lblNewLabel2);
 		
 		

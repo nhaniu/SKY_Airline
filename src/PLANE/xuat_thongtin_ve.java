@@ -119,8 +119,6 @@ public class xuat_thongtin_ve extends JFrame {
 
 
 		//					float ttdv_daupdate=Float.parseFloat(ttdv_update);
-							
-
 							//bắt đầu transaction 1
 //							String search1="SELECT SOLUONGVECON,SOLUONGVEBAN FROM THONGKECHUYENBAY WHERE CHUYENBAY_ID="+id_cb+"";					
 //							
