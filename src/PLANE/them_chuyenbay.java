@@ -54,6 +54,10 @@ public class them_chuyenbay extends JFrame {
 	private static JComboBox comboBox_noiden;
 	private JComboBox comboBox;
 	private String tsgcb;
+	private JTextField txTG;
+	private JTextField txtPTĐB;
+	private JTextField txtPTLH;
+	private JTextField txtPTTK;
 
 
 
@@ -159,7 +163,7 @@ public class them_chuyenbay extends JFrame {
 		setBackground(new Color(240, 255, 255));
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 170, 797, 543);
+		setBounds(100, 170, 840, 561);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(240, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -174,17 +178,17 @@ public class them_chuyenbay extends JFrame {
 		
 		JLabel lb_sbdi = new JLabel("Sân bay đi: ");
 		lb_sbdi.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lb_sbdi.setBounds(25, 133, 102, 18);
+		lb_sbdi.setBounds(24, 114, 102, 18);
 		contentPane.add(lb_sbdi);
 		
 		
 		 comboBox_noiden = new JComboBox();
 		
-		comboBox_noiden.setBounds(559, 133, 151, 21);
+		comboBox_noiden.setBounds(172, 149, 192, 21);
 		contentPane.add(comboBox_noiden);
 		
 		 comboBox_noidi = new JComboBox();
-		comboBox_noidi.setBounds(172, 133, 151, 20);
+		comboBox_noidi.setBounds(172, 114, 192, 20);
 		contentPane.add(comboBox_noidi);
 		
 		
@@ -192,17 +196,17 @@ public class them_chuyenbay extends JFrame {
 		
 		JLabel lb_noiden = new JLabel("Sân bay đến: ");
 		lb_noiden.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lb_noiden.setBounds(421, 133, 102, 18);
+		lb_noiden.setBounds(24, 149, 102, 18);
 		contentPane.add(lb_noiden);
 
 		
 		JLabel lb_ngaydi = new JLabel("Ngày-giờ hạ cánh:");
 		lb_ngaydi.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lb_ngaydi.setBounds(421, 172, 152, 20);
+		lb_ngaydi.setBounds(24, 226, 152, 20);
 		contentPane.add(lb_ngaydi);
 		
 		JDateChooser dateChooser_hc = new JDateChooser();
-		dateChooser_hc.setBounds(559, 172, 151, 20);
+		dateChooser_hc.setBounds(172, 226, 151, 20);
 		contentPane.add(dateChooser_hc);
 		
 
@@ -224,23 +228,23 @@ public class them_chuyenbay extends JFrame {
 		
 		JLabel lb_idnql = new JLabel("ID người quản lý:");
 		lb_idnql.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lb_idnql.setBounds(408, 260, 127, 18);
+		lb_idnql.setBounds(24, 263, 127, 18);
 		contentPane.add(lb_idnql);
 		
 		textField_ID_NQL = new JTextField();
-		textField_ID_NQL.setBounds(559, 260, 151, 21);
+		textField_ID_NQL.setBounds(172, 263, 151, 21);
 		contentPane.add(textField_ID_NQL);
 		textField_ID_NQL.setColumns(10);
 		
 		JLabel lblNewLabel_1 = new JLabel("Tổng số vé:");
 		lblNewLabel_1.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lblNewLabel_1.setBounds(421, 210, 86, 28);
+		lblNewLabel_1.setBounds(521, 118, 86, 28);
 		contentPane.add(lblNewLabel_1);
 		
 		textField_tongsove = new JTextField();
 		
 		textField_tongsove.setEditable(false);
-		textField_tongsove.setBounds(559, 216, 151, 18);
+		textField_tongsove.setBounds(621, 126, 151, 18);
 		contentPane.add(textField_tongsove);
 		textField_tongsove.setColumns(10);
 		
@@ -276,22 +280,22 @@ public class them_chuyenbay extends JFrame {
 		    }
 		});
 	
-		comboBox.setBounds(559, 89, 152, 21);
+		comboBox.setBounds(621, 87, 152, 21);
 		contentPane.add(comboBox);
 		
 		
 		JLabel lblNewLabel_2 = new JLabel("Ngày-giờ khởi hành:");
 		lblNewLabel_2.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lblNewLabel_2.setBounds(25, 174, 136, 18);
+		lblNewLabel_2.setBounds(24, 191, 136, 18);
 		contentPane.add(lblNewLabel_2);
 		
 		JDateChooser dateChooser_kh = new JDateChooser();
-		dateChooser_kh.setBounds(172, 172, 151, 20);
+		dateChooser_kh.setBounds(172, 191, 151, 20);
 		contentPane.add(dateChooser_kh);
 		
 		JLabel lblNewLabel_3 = new JLabel("ID máy bay:");
 		lblNewLabel_3.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lblNewLabel_3.setBounds(421, 87, 114, 17);
+		lblNewLabel_3.setBounds(521, 86, 114, 20);
 		contentPane.add(lblNewLabel_3);
 		
 		JLabel lblNewLabel_4 = new JLabel("ID chuyến bay:");
@@ -313,52 +317,90 @@ public class them_chuyenbay extends JFrame {
 		bt_them.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				if (Teststringcomparison(comboBox_noidi.getSelectedItem(), comboBox_noiden.getSelectedItem()) == true) {
-					JOptionPane.showMessageDialog(null, "Vui lòng chọn lại nơi đến, nơi đi!");
-				}
-				else {
-					if (textField_ID_NQL.getText().isEmpty()) {
-						 JOptionPane.showMessageDialog(null, "vui lòng nhập ID người quản lý");
-						 textField_ID_NQL.requestFocus();
-						 return; 
-						}
-					
-					try {
-						
-						SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-YY hh:mm:ss");
-						String tgString=formatter.format(dateChooser_kh.getDate());
-						String ngay_khoihanh="TO_DATE('"+tgString+"','DD-MM-RR HH24:MI:SS')";
-		
-	
-						SimpleDateFormat formatter1 = new SimpleDateFormat("dd-MM-YY hh:mm:ss");
-						String tgString1=formatter1.format(dateChooser_hc.getDate());
-						String ngay_hacanh="TO_DATE('"+tgString1+"','DD-MM-RR HH24:MI:SS')";
-	
-	
+				dangnhap_quanly dn=null;
+				System.out.println("ten dang nhap: "+dn.tendn);
+				try {
 					Class.forName("oracle.jdbc.OracleDriver");
 					con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
-					PreparedStatement pst= con.prepareStatement("insert into \"DB_AIRLINE\".\"CHUYENBAY\"  (\"ID\", \"TTMAYBAY_ID\", \"SANBAYDI\",\"SANBAYDEN\",  \"NGAY_GIO_KH\", \"NGAY_GIO_HC\", \"TONGSOVE\",\"NGUOIQUANLY_ID\") values("+lb_id.getText()+","+comboBox.getSelectedItem()+",'"+comboBox_noidi.getSelectedItem()+"','"+comboBox_noiden.getSelectedItem()+"',"+ngay_khoihanh+","+ngay_hacanh+","+textField_tongsove.getText()+","+textField_ID_NQL.getText()+")");		
-					pst.execute();	
 					
-	
-					JOptionPane.showMessageDialog(null, "Thêm chuyến bay thành công");
-					con.close();
-				} catch (ClassNotFoundException e1) {
-					JOptionPane.showMessageDialog(null, e);
+					String nv="SELECT ID FROM NGUOIQUANLY WHERE PHONGBAN='Quản Lí Chuyến Bay' and TENDANGNHAP='"+dn.tendn+"'";
+					Statement st=(Statement) ((java.sql.Connection) con).createStatement();  	
+
+					ResultSet rsn= st.executeQuery(nv);
+					if(rsn.next()) {
+						
+					
+						if (Teststringcomparison(comboBox_noidi.getSelectedItem(), comboBox_noiden.getSelectedItem()) == true) {
+							JOptionPane.showMessageDialog(null, "Vui lòng chọn lại nơi đến, nơi đi!");
+						}
+						else {
+							if (textField_ID_NQL.getText().isEmpty()) {
+								 JOptionPane.showMessageDialog(null, "vui lòng nhập ID người quản lý");
+								 textField_ID_NQL.requestFocus();
+								 return; 
+								} else {
+									int TG = Integer.parseInt(txTG.getText());
+									int PTĐB = Integer.parseInt(txtPTĐB.getText());
+									int PTLH = Integer.parseInt(txtPTLH.getText());
+									int PTTK = Integer.parseInt(txtPTTK.getText());
+									int sum = TG + PTĐB + PTTK + PTLH;
+									int tongsove = Integer.parseInt(textField_tongsove.getText());
+									if(sum != tongsove)
+									{
+										 JOptionPane.showMessageDialog(null, "Tổng số lượng vé của các hạng vé không hợp lệ");
+									}else
+										
+									{
+							 
+							
+							try {
+								
+								SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-YY hh:mm:ss");
+								String tgString=formatter.format(dateChooser_kh.getDate());
+								String ngay_khoihanh="TO_DATE('"+tgString+"','DD-MM-RR HH24:MI:SS')";
+				
+			
+								SimpleDateFormat formatter1 = new SimpleDateFormat("dd-MM-YY hh:mm:ss");
+								String tgString1=formatter1.format(dateChooser_hc.getDate());
+								String ngay_hacanh="TO_DATE('"+tgString1+"','DD-MM-RR HH24:MI:SS')";
+			
+			
+							PreparedStatement pst= con.prepareStatement("insert into \"DB_AIRLINE\".\"CHUYENBAY\"  (\"ID\", \"TTMAYBAY_ID\", \"SANBAYDI\",\"SANBAYDEN\",  \"NGAY_GIO_KH\", \"NGAY_GIO_HC\", \"TONGSOVE\", \"THUONGGIA\", \"PHOTHONGDB\", \"PHOTHONGLH\", \"PHOTHONGTK\", \"NGUOIQUANLY_ID\") "
+									+ "values("+lb_id.getText()+","+comboBox.getSelectedItem()+",'"+comboBox_noidi.getSelectedItem()+"','"+comboBox_noiden.getSelectedItem()+"',"
+									+ngay_khoihanh+","+ngay_hacanh+","+textField_tongsove.getText()+","+txTG.getText()+","+txtPTĐB.getText()+","+txtPTLH.getText()+","+txtPTTK.getText()+","+textField_ID_NQL.getText()+")");		
+							pst.execute();	
+							
+			
+							JOptionPane.showMessageDialog(null, "Thêm chuyến bay thành công");
+							con.close();
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							//e1.printStackTrace();
+							JOptionPane.showMessageDialog(null, e1);
+							}
+						}
+					}
+					}
+						}
+					else {
+						JOptionPane.showMessageDialog(null, "Bạn không thuộc nhiệm vụ này");
+					}
+				} catch (ClassNotFoundException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
-					//e1.printStackTrace();
-					JOptionPane.showMessageDialog(null, e1);
-	
-				}
+					e1.printStackTrace();
 				}
 				
-			}
 				
-		});
-
+				
 		
+				
 	}
+		
+});
+}
 
 	public void autoID() {
 		
@@ -391,8 +433,49 @@ public class them_chuyenbay extends JFrame {
 			} catch (SQLException e) {
 				JOptionPane.showMessageDialog(null, e);
 		}
+	
+		JLabel lbHVTG = new JLabel("Hạng vé thương gia:");
+		lbHVTG.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lbHVTG.setBounds(465, 161, 152, 17);
+		contentPane.add(lbHVTG);
+		
+		txTG = new JTextField();
+		txTG.setBounds(621, 158, 151, 19);
+		contentPane.add(txTG);
+		txTG.setColumns(10);
+		
+		JLabel lblPTLH = new JLabel("Hạng vé PTLH:");
+		lblPTLH.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lblPTLH.setBounds(483, 223, 127, 23);
+		contentPane.add(lblPTLH);
+		
+		JLabel lbPTĐB = new JLabel("Hạng vé PTĐB:");
+		lbPTĐB.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lbPTĐB.setBounds(483, 194, 131, 21);
+		contentPane.add(lbPTĐB);
+		
+		txtPTĐB = new JTextField();
+		txtPTĐB.setBounds(621, 191, 151, 19);
+		contentPane.add(txtPTĐB);
+		txtPTĐB.setColumns(10);
+		
+		txtPTLH = new JTextField();
+		txtPTLH.setBounds(621, 226, 151, 20);
+		contentPane.add(txtPTLH);
+		txtPTLH.setColumns(10);
+		
+		JLabel lblNewLabel_5 = new JLabel("Hạng vé PTTK:");
+		lblNewLabel_5.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lblNewLabel_5.setBounds(483, 261, 141, 18);
+		contentPane.add(lblNewLabel_5);
+		
+		txtPTTK = new JTextField();
+		txtPTTK.setBounds(621, 262, 151, 18);
+		contentPane.add(txtPTTK);
+		txtPTTK.setColumns(10);
+		
 		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setBounds(0, 0, 795, 524);
+		lblNewLabel.setBounds(0, 3, 844, 540);
 		contentPane.add(lblNewLabel);
 		
 		ImageIcon icon=new ImageIcon("anh1.jpg");
@@ -402,6 +485,8 @@ public class them_chuyenbay extends JFrame {
 		lblNewLabel.setIcon(scaleIcon);
 		
 	}
+	
+	
 	public static boolean Teststringcomparison (){
 			try {
 				comboBox_noidi.getSelectedItem().equals(comboBox_noidi.getSelectedItem());
@@ -411,5 +496,4 @@ public class them_chuyenbay extends JFrame {
 			}
 			return true;
 			}
-	
 	}

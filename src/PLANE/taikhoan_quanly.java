@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import net.sf.jasperreports.data.ejbql.EjbqlDataAdapter;
+
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -98,7 +101,7 @@ public class taikhoan_quanly extends JFrame {
 		contentPane.add(lblNewLabel_8);
 		
 		JLabel lb_mk = new JLabel("New label");
-		lb_mk.setBounds(224, 294, 79, 14);
+		lb_mk.setBounds(20, 324, 79, 14);
 		contentPane.add(lb_mk);
 		lb_mk.setVisible(false);
 		
@@ -124,22 +127,22 @@ public class taikhoan_quanly extends JFrame {
 		
 		JLabel lb_sdt = new JLabel("New label");
 		lb_sdt.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		lb_sdt.setBounds(121, 197, 99, 20);
+		lb_sdt.setBounds(121, 197, 182, 20);
 		contentPane.add(lb_sdt);
 		
 		JLabel lb_email = new JLabel("New label");
 		lb_email.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		lb_email.setBounds(122, 228, 156, 20);
+		lb_email.setBounds(122, 228, 200, 20);
 		contentPane.add(lb_email);
 		
 		JLabel lb_phongban = new JLabel("New label");
 		lb_phongban.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		lb_phongban.setBounds(122, 261, 130, 18);
+		lb_phongban.setBounds(122, 261, 200, 18);
 		contentPane.add(lb_phongban);
 		
 		JLabel lb_tendn = new JLabel("New label");
 		lb_tendn.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		lb_tendn.setBounds(122, 291, 107, 20);
+		lb_tendn.setBounds(122, 291, 181, 20);
 		contentPane.add(lb_tendn);
 		
 		JSeparator separator = new JSeparator();
@@ -156,17 +159,14 @@ public class taikhoan_quanly extends JFrame {
 		ImageIcon scaleIcon=new ImageIcon(imgScale);
 		lblNewLabel_9.setIcon(scaleIcon);
 		
-try {
+		try {
 			
 			Class.forName("oracle.jdbc.OracleDriver");
 			Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
 			Statement st=con.createStatement(); 
-			dangnhap_quanly dn=null;
-			String a = dn.tendn;
-			String b=dn.mk;
+			dangnhap_quanly ql = null;
 			
-			
-			String search="select* from NGUOIQUANLY where TENDANGNHAP='"+a+"' and MATKHAU='"+b+"'";					
+			String search="select* from NGUOIQUANLY where TENDANGNHAP='"+ql.tendn+"' and MATKHAU='"+ql.mk+"'";					
 
 			
 			ResultSet rs= st.executeQuery(search);

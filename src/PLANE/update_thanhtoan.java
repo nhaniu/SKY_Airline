@@ -112,6 +112,8 @@ public class update_thanhtoan extends JFrame {
 		model.addColumn("Tổng tiền");
 		model.addColumn("Tình trạng");
 		model.addColumn("Tài khoản ID");
+		model.addColumn("ID nhân viên");
+
 
 		JTableHeader Theader = table.getTableHeader();
 		 Theader.setFont(new Font("Times New Roman", Font.PLAIN, 14));
@@ -145,7 +147,7 @@ public class update_thanhtoan extends JFrame {
 				Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
 				Statement st=con.createStatement(); 
 				
-				String timkiem = "select d.ID, d.VEMAYBAY_ID, d.HANHKHACH_ID, d.KHUYENMAI_ID, d.DICHVUBOTRO_ID, d.NGAYDAT, d.TONGTIEN, d.TINHTRANG, d.TAIKHOAN_ID from HANHKHACH h, DATVEBAY d "
+				String timkiem = "select d.ID, d.VEMAYBAY_ID, d.HANHKHACH_ID, d.KHUYENMAI_ID, d.DICHVUBOTRO_ID, d.NGAYDAT, d.TONGTIEN, d.TINHTRANG, d.TAIKHOAN_ID, d.NHANVIEN_ID from HANHKHACH h, DATVEBAY d "
 						+ " where h.ID=d.HANHKHACH_ID AND h.SDT='"+textField_SDT.getText()+"'AND d.ID ='"+textField_madatve.getText()+"' AND d.TINHTRANG='Chưa thanh toán'";
 				
 				while(model.getRowCount() > 0) 
@@ -164,11 +166,13 @@ public class update_thanhtoan extends JFrame {
 					String tongtien =rs.getString(7);
 					String tinhtrang =rs.getString(8);
 					String taikhoanid =rs.getString(9);
+					String nhanvienid =rs.getString(10);
+
 
 					
 					System.out.print(ID+vemaybayid+hanhkhachid+khuyenmaiid+dvbtid+ngaydat+tongtien+tinhtrang+taikhoanid+"\n");
 					
-					model.addRow(new Object[] {ID,vemaybayid,hanhkhachid,khuyenmaiid,dvbtid,ngaydat,tongtien,tinhtrang,taikhoanid});
+					model.addRow(new Object[] {ID,vemaybayid,hanhkhachid,khuyenmaiid,dvbtid,ngaydat,tongtien,tinhtrang,taikhoanid, nhanvienid});
 
 					table.setModel(model);
 					scrollPane.setVisible(true);
@@ -234,7 +238,7 @@ public class update_thanhtoan extends JFrame {
 						String idnv1 =rsn.getString(1);	
 						System.out.println("idnv: "+idnv1);
 					
-					String timkiem = "select d.ID, d.VEMAYBAY_ID, d.HANHKHACH_ID, d.KHUYENMAI_ID, d.DICHVUBOTRO_ID, d.NGAYDAT, d.TONGTIEN, d.TINHTRANG, d.TAIKHOAN_ID from HANHKHACH h, DATVEBAY d "
+					String timkiem = "select d.ID, d.VEMAYBAY_ID, d.HANHKHACH_ID, d.KHUYENMAI_ID, d.DICHVUBOTRO_ID, d.NGAYDAT, d.TONGTIEN, d.TINHTRANG, d.TAIKHOAN_ID, d.NHANVIEN_ID from HANHKHACH h, DATVEBAY d "
 							+ " where h.ID=d.HANHKHACH_ID AND d.ID ='"+textField_madatve.getText()+"'";
 					
 					while(model.getRowCount() > 0) 
@@ -253,10 +257,12 @@ public class update_thanhtoan extends JFrame {
 						String tongtien =rs.getString(7);
 						String tinhtrang =rs.getString(8);
 						String taikhoanid =rs.getString(9);
+						String nhanvienid =rs.getString(10);
+
 
 						
 						
-						model.addRow(new Object[] {ID,vemaybayid,hanhkhachid,khuyenmaiid,dvbtid,ngaydat,tongtien,tinhtrang,taikhoanid});
+						model.addRow(new Object[] {ID,vemaybayid,hanhkhachid,khuyenmaiid,dvbtid,ngaydat,tongtien,tinhtrang,taikhoanid, nhanvienid});
 
 						table.setModel(model);
 						scrollPane.setVisible(true);
@@ -269,6 +275,7 @@ public class update_thanhtoan extends JFrame {
 						PreparedStatement pst4=con.prepareStatement("update DATVEBAY set TINHTRANG = 'Đã thanh toán', NHANVIEN_ID="+idnv1+" where ID ="+ID);		
 						pst4.execute();
 						JOptionPane.showMessageDialog(null, "Cập nhật thành công");
+
 						
 						 con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
 						Statement st1=con.createStatement(); 
@@ -430,8 +437,8 @@ public class update_thanhtoan extends JFrame {
 						}
 								//Statement st=con.createStatement(); 
 								
-								String timkiem1 = "select d.ID, d.VEMAYBAY_ID, d.HANHKHACH_ID, d.KHUYENMAI_ID, d.DICHVUBOTRO_ID, d.NGAYDAT, d.TONGTIEN, d.TINHTRANG, d.TAIKHOAN_ID from HANHKHACH h, DATVEBAY d "
-										+ " where h.ID=d.HANHKHACH_ID AND h.SDT="+textField_SDT.getText()+"";
+								String timkiem1 = "select * from DATVEBAY "
+										+ " where  ID="+textField_madatve.getText()+"";
 								
 								while(model.getRowCount() > 0) 
 								{									
@@ -448,14 +455,18 @@ public class update_thanhtoan extends JFrame {
 									String ngaydat1 =rs11.getString(6);
 									String tongtien1 =rs11.getString(7);
 									String tinhtrang1 =rs11.getString(8);
-									 String taikhoanid1 =rs11.getString(9);
+									String taikhoanid1 =rs11.getString(9);
+									
+									String nhanvienid1 =rs11.getString(10);
+
 
 									
 									
-									model.addRow(new Object[] {ID1,vemaybayid1,hanhkhachid1,khuyenmaiid1,dvbtid1,ngaydat1,tongtien1,tinhtrang1,taikhoanid1});
+									model.addRow(new Object[] {ID1,vemaybayid1,hanhkhachid1,khuyenmaiid1,dvbtid1,ngaydat1,tongtien1,tinhtrang1,taikhoanid1,nhanvienid1});
 
 									table.setModel(model);
-									
+									btnNewButton.setVisible(false);
+
 									
 								}
 						

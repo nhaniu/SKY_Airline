@@ -42,6 +42,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -314,15 +315,6 @@ public class xacnhantt_mv1chieu extends JFrame {
 		label_tiengiam_tk.setBounds(235, 149, 164, 19);
 		panel_2.add(label_tiengiam_tk);
 		
-		
-		JButton btnNewButton_1 = new JButton("Xuất vé");
-		
-		btnNewButton_1.setBackground(new Color(0, 250, 154));
-		btnNewButton_1.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		btnNewButton_1.setBounds(310, 343, 129, 25);
-		panel_2.add(btnNewButton_1);
-		btnNewButton_1.setVisible(false);
-		
 		  if (iddvbt.equals("null")){
 		    	Label_DichvuBotro.setVisible(false);
 		    	lblNewLabel_1.setVisible(false);
@@ -460,7 +452,7 @@ public class xacnhantt_mv1chieu extends JFrame {
 		panel.add(Label_Gia_ve);
 		Label_Gia_ve.setText(s + " VND");
 		
-		JButton btnNewButton = new JButton("Xác nhận thanh toán ");
+		JButton btnNewButton = new JButton("Xuất mã đặt vé");
 		btnNewButton.setBackground(new Color(0, 250, 154));
 		btnNewButton.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		btnNewButton.setBounds(47, 343, 172, 25);
@@ -540,10 +532,15 @@ public class xacnhantt_mv1chieu extends JFrame {
 							System.out.println("\ninsert ve thanh cong\n");
 
 						
-						SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-YY hh:mm:ss");
-						Date date=new Date();					
-						String tgString=formatter.format(date);
-						String ngaydatve="TO_DATE('"+tgString+"','DD-MM-RR HH24:MI:SS')";
+//						SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-YY hh:mm:ss");
+//						Date date=new Date();					
+//						String tgString=formatter.format(date);
+//						String ngaydatve="TO_DATE('"+tgString+"','DD-MM-RR HH24:MI:SS')";
+//						
+						DateFormat df2 = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+						Date date = new java.sql.Timestamp(new java.util.Date().getTime());				
+						String tgString=df2.format(date);
+						String ngaydatve="TO_DATE('"+tgString+"','DD-MM-RR HH24-MI-SS')";
 						
 						
 						String insert_datve;

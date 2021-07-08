@@ -94,7 +94,8 @@ public class trangchu extends JFrame {
 	final JMenu menu_NQL = new JMenu("Người quản lý");
 	JButton bt_user = new JButton("");
 	
-
+    private int itemChoser=0;
+    private String a=null,b=null;
 	public trangchu() {		
 		setTitle("SKY Airline");
 		setBackground(new Color(240, 255, 255));
@@ -562,6 +563,15 @@ public class trangchu extends JFrame {
 				new quanly_sanbay();
 			}
 		});
+		
+		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Cập nhật hạng vé, giá vé");
+		mntmNewMenuItem_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new Capnhat_hangve_giave();
+			}
+		});
+		mntmNewMenuItem_1.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		menu_NQL.add(mntmNewMenuItem_1);
 		mntmNewMenuItem.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		menu_NQL.add(mntmNewMenuItem);
 		menuitem_dk_taikhoan_nv.setFont(new Font("Segoe UI", Font.PLAIN, 14));
@@ -601,59 +611,65 @@ public class trangchu extends JFrame {
 		
 		menu_dangnhap.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		menu_dangnhap.setBounds(407, 96, 93, 40);
-		
-				JMenuItem item_nhanvien = new JMenuItem("Nhân viên");
-				item_nhanvien.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-				item_nhanvien.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						new dangnhap_nhanvien(1,menu_NV, null,menu_dangnhap,bt_logout,bt_user,menu_dichvu);
-						
-						bt_user.addActionListener(new ActionListener() {
-							public void actionPerformed(ActionEvent e) {
-								new taikhoan_nhanvien();
-							}
-						});
-							
-					}
-				});
-				menu_dangnhap.add(item_nhanvien);
 				
 				JMenuItem item_khachhang = new JMenuItem("Khách hàng");
 				item_khachhang.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 				item_khachhang.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						new DangNhap(0,null, null, menu_dangnhap,bt_logout,bt_user,menu_dichvu);
-						
-						bt_user.addActionListener(new ActionListener() {
-							public void actionPerformed(ActionEvent e) {
-								new taikhoan_khachhang();
-								
-							}
-						});
+					    new DangNhap(0,null, null, menu_dangnhap,bt_logout,bt_user,menu_dichvu);
+						itemChoser=1;
 					}
 				});
-				menu_dangnhap.add(item_khachhang);
+				menu_dangnhap.add(item_khachhang); 
 				
 				JMenuItem item_quanly = new JMenuItem("Quản lý");
 				item_quanly.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 				item_quanly.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						new dangnhap_quanly(2,menu_NQL,menu_NV,menu_dangnhap,bt_logout,bt_user,menu_dichvu);
-						
-						bt_user.addActionListener(new ActionListener() {
-							public void actionPerformed(ActionEvent e) {
-								new taikhoan_quanly();
-
-							}
-						});
+					   new dangnhap_quanly(2,menu_NQL,menu_NV,menu_dangnhap,bt_logout,bt_user,menu_dichvu);
+					   itemChoser=3;
 					}
 				});
 				menu_dangnhap.add(item_quanly);
+				
+						JMenuItem item_nhanvien = new JMenuItem("Nhân viên");
+						item_nhanvien.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+						item_nhanvien.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent arg0) {
+								
+						new dangnhap_nhanvien(1,menu_NV, null,menu_dangnhap,bt_logout,bt_user,menu_dichvu);						
+						
+						
+						itemChoser=2;
+									
+							}
+						});
+						menu_dangnhap.add(item_nhanvien);
 				bt_user.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						//System.out.println(a +" "+ b);
+						switch (itemChoser) {
+						case 1:
+						//	DangNhap tg= null;
+							new taikhoan_khachhang();
+							break;
+						case 2:
+							//dangnhap_nhanvien dv=null;
+
+							new taikhoan_nhanvien();
+							break;
+						case 3:
+							//dangnhap_quanly ql=null;
+
+
+							new taikhoan_quanly();
+						default:
+							break;
+						}
 					}
 				});
-		
+				
+				
 
 				
 				bt_user.setBounds(1161, 30, 42, 42);

@@ -20,6 +20,7 @@ import javax.swing.table.TableModel;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
 import java.sql.*;
+import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
@@ -263,26 +264,54 @@ public class muave_khuhoi extends JFrame {
 		bt_timchuyebay.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		bt_timchuyebay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
+				java.sql.Timestamp date_ht = new java.sql.Timestamp(new java.util.Date().getTime());
+				Date ngay_ht = new Date(date_ht.getTime());
+				
+				String day = new String();
+				String month = new String();
+				String year = new String();
+				String date = new String();
+				
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+				String tgString=formatter.format(dateChooser_ngaydi.getDate());
+				day = tgString.substring(8,10);
+				month = tgString.substring(5,7);
+				year = tgString.substring(0,4);
+				date = tgString.substring(0,10);
+				
+				String day1 = new String();
+				String month1 = new String();
+				String year1 = new String();
+				String date1 = new String();
+				
+				SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+				String tgString1=formatter1.format(dateChooser_ngayve.getDate());
+				day1 = tgString1.substring(8,10);
+				month1 = tgString1.substring(5,7);
+				year1 = tgString1.substring(0,4);
+				date1 = tgString1.substring(0,10);
+				
+				try {
+					Date ngay_kh = (Date) formatter.parse(tgString);
+					Date ngay_hc = (Date) formatter1.parse(tgString1);
+				
 				if (Teststringcomparison(comboBox_noidi.getSelectedItem(), comboBox_noiden.getSelectedItem()) == true) {
 					JOptionPane.showMessageDialog(null, "Vui lòng chọn lại nơi đến, nơi đi!");
 				}
 				else {
-					try {
+					if(ngay_kh.compareTo(ngay_ht)<0) {
+						JOptionPane.showMessageDialog(null, "Vui lòng chọn ngày khởi hành lớn hơn ngày hiện tại!");
+					}
+					else {
+						if(ngay_hc.compareTo(ngay_kh)<0) {
+							JOptionPane.showMessageDialog(null, "Vui lòng chọn ngày về lớn hơn ngày khởi hành!");
+						}
+						else {
+					
 						Class.forName("oracle.jdbc.driver.OracleDriver");
 						Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "DB_AIRLINE", "123");
 						java.sql.Statement st = conn.createStatement();
-						
-						String day = new String();
-						String month = new String();
-						String year = new String();
-						String date = new String();
-						
-						SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-						String tgString=formatter.format(dateChooser_ngaydi.getDate());
-						day = tgString.substring(8,10);
-						month = tgString.substring(5,7);
-						year = tgString.substring(0,4);
-						date = tgString.substring(0,10);
 						
 						//String texString="TO_DATE('"+tgString+"','DD-MM-RR HH24:MI:SS')";
 						String sql = "select distinct c.NGAY_GIO_KH, c.NGAY_GIO_HC, h.TENHV, h.GIA, h.ID, c.ID"
@@ -333,40 +362,27 @@ public class muave_khuhoi extends JFrame {
 						conn.close();
 					}
 					
-					catch(Exception e1 )
-					{
-						System.out.println(e1);
-						
-					}
 					
 					try {
+						if(ngay_hc.compareTo(ngay_kh)<0) {
+							JOptionPane.showMessageDialog(null, "Vui lòng chọn ngày về lớn hơn ngày khởi hành!");
+						}
+						else {
 						Class.forName("oracle.jdbc.driver.OracleDriver");
 						Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "DB_AIRLINE", "123");
 						java.sql.Statement st = conn.createStatement();
-						
-						String day = new String();
-						String month = new String();
-						String year = new String();
-						String date = new String();
-						
-						SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-						String tgString=formatter.format(dateChooser_ngayve.getDate());
-						day = tgString.substring(8,10);
-						month = tgString.substring(5,7);
-						year = tgString.substring(0,4);
-						date = tgString.substring(0,10);
 						
 						// Chuyen ve
 						String sql = "select distinct c.NGAY_GIO_KH, c.NGAY_GIO_HC, h.TENHV, h.GIA,h.ID, c.ID"
 								+ " from CHUYENBAY c JOIN VEMAYBAY v ON c.ID = v.CHUYENBAY_ID JOIN HANGVE h ON h.ID = v.HANGVE_ID "
 								+ "where c.SANBAYDI = " + "'"+comboBox_noiden.getSelectedItem()+"'"+" and c.SANBAYDEN = "+"'"+comboBox_noidi.getSelectedItem()+"'"
-								+ " and EXTRACT( DAY FROM c.NGAY_GIO_KH)= "+"'"+day+"'"+" and EXTRACT( MONTH FROM c.NGAY_GIO_KH)= "+"'"+month+"'"+" and EXTRACT(YEAR FROM c.NGAY_GIO_KH)= "+"'"+year+"'";
+								+ " and EXTRACT( DAY FROM c.NGAY_GIO_KH)= "+"'"+day1+"'"+" and EXTRACT( MONTH FROM c.NGAY_GIO_KH)= "+"'"+month1+"'"+" and EXTRACT(YEAR FROM c.NGAY_GIO_KH)= "+"'"+year1+"'";
 					
 						
-						System.out.println(day);
-						System.out.println(month);
-						System.out.println(year);
-						System.out.println(date);
+						System.out.println(day1);
+						System.out.println(month1);
+						System.out.println(year1);
+						System.out.println(date1);
 						System.out.println(sql);
 						
 				
@@ -404,18 +420,26 @@ public class muave_khuhoi extends JFrame {
 							System.out.println("\nidcbve"+idcbve);
 						conn.close();
 					}
-					
+					}
 					catch(Exception e1 )
 					{
 						System.out.println(e1);
 						
 					}
+					}
 				}
+				}
+					catch(Exception e1 )
+					{
+						System.out.println(e1);
+						
+					}
 				
 				
 				
 			}
 		});
+		
 		bt_timchuyebay.setBackground(new Color(0, 191, 255));
 		bt_timchuyebay.setBounds(270, 149, 145, 23);
 		contentPane.add(bt_timchuyebay);
@@ -427,7 +451,6 @@ public class muave_khuhoi extends JFrame {
 		theJTableHeader1.setBackground(new Color(135, 206, 250));
 		
 	
-
 		button_chonmua.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//chuyến đi
@@ -779,3 +802,4 @@ public class muave_khuhoi extends JFrame {
 		
 	}
 }
+

@@ -569,7 +569,6 @@ public class Quanly_taichinh extends JFrame {
 				JasperExportManager.exportReportToPdfStream(j1, os1);
 
 				} catch (Exception e2) {
-					e2.printStackTrace();
 				}
 				}
 				if(kt==2) {
@@ -597,7 +596,6 @@ public class Quanly_taichinh extends JFrame {
 						JasperExportManager.exportReportToPdfStream(j1, os1);
 
 					} catch (Exception e2) {
-						e2.printStackTrace();
 					}
 				}
 			}

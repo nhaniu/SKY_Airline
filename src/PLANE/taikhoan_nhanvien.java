@@ -114,7 +114,7 @@ public class taikhoan_nhanvien extends JFrame {
 		
 		JLabel lb_email = new JLabel("New label");
 		lb_email.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		lb_email.setBounds(97, 257, 125, 21);
+		lb_email.setBounds(97, 257, 291, 21);
 		contentPane.add(lb_email);
 		
 		JLabel lblNewLabel_8 = new JLabel("Ngày vào làm:");
@@ -134,7 +134,7 @@ public class taikhoan_nhanvien extends JFrame {
 		
 		JLabel lb_noict = new JLabel("New label");
 		lb_noict.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		lb_noict.setBounds(117, 343, 159, 21);
+		lb_noict.setBounds(117, 343, 271, 21);
 		contentPane.add(lb_noict);
 		
 		JLabel lblNewLabel_12 = new JLabel("Nhiệm vụ:");
@@ -144,7 +144,7 @@ public class taikhoan_nhanvien extends JFrame {
 		
 		JLabel lb_nv = new JLabel("New label");
 		lb_nv.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		lb_nv.setBounds(118, 383, 116, 21);
+		lb_nv.setBounds(118, 383, 270, 21);
 		contentPane.add(lb_nv);
 		
 		JLabel lblNewLabel_9 = new JLabel("Tên đăng nhập:");
@@ -154,11 +154,11 @@ public class taikhoan_nhanvien extends JFrame {
 		
 		JLabel lb_tendn = new JLabel("New label");
 		lb_tendn.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		lb_tendn.setBounds(118, 429, 94, 21);
+		lb_tendn.setBounds(118, 429, 183, 21);
 		contentPane.add(lb_tendn);
 		
 		JLabel lb_mk = new JLabel("New label");
-		lb_mk.setBounds(199, 432, 77, 14);
+		lb_mk.setBounds(311, 432, 77, 14);
 		contentPane.add(lb_mk);
 		
 		JSeparator separator = new JSeparator();
@@ -166,6 +166,7 @@ public class taikhoan_nhanvien extends JFrame {
 		contentPane.add(separator);
 		
 		JLabel lblNewLabel_2 = new JLabel("New label");
+		lblNewLabel_2.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		lblNewLabel_2.setBounds(0, 0, 453, 494);
 		contentPane.add(lblNewLabel_2);
 		lb_mk.setVisible(false);
@@ -182,12 +183,10 @@ public class taikhoan_nhanvien extends JFrame {
 			Class.forName("oracle.jdbc.OracleDriver");
 			Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
 			Statement st=con.createStatement(); 
-			dangnhap_nhanvien dn=null;
-			String a = dn.tendn;
-			String b=dn.mk;
 			
+			dangnhap_nhanvien nv=null;
 			
-			String search="select* from NHANVIEN where TENDANGNHAP='"+a+"' and MATKHAU='"+b+"'";					
+			String search="select* from NHANVIEN where TENDANGNHAP='"+nv.tendn+"' and MATKHAU='"+nv.mk+"'";					
 
 			
 			ResultSet rs= st.executeQuery(search);

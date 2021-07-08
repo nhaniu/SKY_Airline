@@ -24,6 +24,7 @@ import java.awt.event.MouseListener;
 import java.beans.Statement;
 import java.nio.channels.SelectableChannel;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.sql.*;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
@@ -206,34 +207,42 @@ public class muave_motchieu extends JFrame {
 		bt_tim_chuyen_bay.setBackground(new Color(0, 191, 255));
 		bt_tim_chuyen_bay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				java.sql.Timestamp date_ht = new java.sql.Timestamp(new java.util.Date().getTime());
+				Date ngay_ht = new Date(date_ht.getTime());
+
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+				String tgString=formatter.format(dateChooser.getDate());
+				String day = new String();
+				String month = new String();
+				String year = new String();
+				String date = new String();
+				
+				day = tgString.substring(8,10);
+				month = tgString.substring(5,7);
+				year = tgString.substring(0,4);
+				date = tgString.substring(0,10);
+				
+				try {
+					Date ngay_kh = (Date) formatter.parse(tgString);
 				if (Teststringcomparison(comboBox_noidi.getSelectedItem(), comboBox_noiden.getSelectedItem()) == true) {
 					JOptionPane.showMessageDialog(null, "Vui lòng chọn lại nơi đến, nơi đi!");
 				}
 				else {
-					try {
+					if(ngay_kh.compareTo(ngay_ht)<0) {
+						JOptionPane.showMessageDialog(null, "Vui lòng chọn ngày khởi hành lớn hơn ngày hiện tại!");
+					}
+					else
+					{
 						Class.forName("oracle.jdbc.driver.OracleDriver");
 						Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "DB_AIRLINE", "123");
 						java.sql.Statement st = conn.createStatement();
 						
-											
-						String day = new String();
-						String month = new String();
-						String year = new String();
-						String date = new String();
-						
-						SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-						String tgString=formatter.format(dateChooser.getDate());
-						day = tgString.substring(8,10);
-						month = tgString.substring(5,7);
-						year = tgString.substring(0,4);
-						date = tgString.substring(0,10);
-						
-						//String texString="TO_DATE('"+tgString+"','DD-MM-RR HH24:MI:SS')";
-						String sql = "select distinct c.ID, c.NGAY_GIO_KH, c.NGAY_GIO_HC, h.TENHV, h.GIA, h.ID"
-								+ " from CHUYENBAY c JOIN VEMAYBAY v ON c.ID = v.CHUYENBAY_ID JOIN HANGVE h ON h.ID = v.HANGVE_ID "
-								+ "where c.SANBAYDI = " + "'"+comboBox_noidi.getSelectedItem()+"'"+" and c.SANBAYDEN = "+"'"+comboBox_noiden.getSelectedItem()+"'"
-								+ " and EXTRACT( DAY FROM c.NGAY_GIO_KH)= "+"'"+day+"'"+" and EXTRACT( MONTH FROM c.NGAY_GIO_KH)= "+"'"+month+"'"+" and EXTRACT(YEAR FROM c.NGAY_GIO_KH)= "+"'"+year+"'";
-					
+
+						 String sql = "select distinct CB.ID, CB.NGAY_GIO_KH, CB.NGAY_GIO_HC, HV.TENHV, HV.GIA\r\n"
+														+ " from CHUYENBAY CB, VEMAYBAY VE, HANGVE HV\r\n"
+														+ " WHERE CB.ID=HV.CHUYENBAY_ID AND CB.ID=VE.CHUYENBAY_ID AND CB.SANBAYDI = " + "'"+comboBox_noidi.getSelectedItem()+"'"+" and CB.SANBAYDEN = "+"'"+comboBox_noiden.getSelectedItem()+"'"
+														+ " and EXTRACT( DAY FROM CB.NGAY_GIO_KH)= "+"'"+day+"'"+" and EXTRACT( MONTH FROM CB.NGAY_GIO_KH)= "+"'"+month+"'"+" and EXTRACT(YEAR FROM CB.NGAY_GIO_KH)= "+"'"+year+"'";
+							
 						
 						System.out.println(day);
 						System.out.println(month);
@@ -256,7 +265,7 @@ public class muave_motchieu extends JFrame {
 							String giohc = rs.getString(3);
 							String hv = rs.getString(4);
 							String gv = rs.getString(5);
-							idhv = rs.getString(6);
+					//		idhv = rs.getString(6);
 	
 							dem++;
 							
@@ -276,14 +285,15 @@ public class muave_motchieu extends JFrame {
 						}
 						conn.close();
 					}
-					
+				}
+				}
 					catch(Exception e1 )
 					{
 					
 					}
 					
 					}
-			}
+			
 		});
 		
 		bt_tim_chuyen_bay.setBounds(252, 122, 137, 24);
@@ -394,7 +404,7 @@ public class muave_motchieu extends JFrame {
 				int a=table.getSelectedRow();								
 				//String hangve = model.getValueAt(a, 2).toString();
 				
-				System.out.println("\nhạng ve: "+model.getValueAt(a, 2).toString());
+				System.out.println("\nhạng vé: "+model.getValueAt(a, 2).toString());
 				
 				
 

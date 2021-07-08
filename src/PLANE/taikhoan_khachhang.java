@@ -35,6 +35,7 @@ public class taikhoan_khachhang extends JFrame {
 	private JPasswordField passwordField;
 	private JTextField textField_sdt;
 	private JTextField textField_email;
+	private int dem;
 
 	/**
 	 * Launch the application.
@@ -124,7 +125,7 @@ public class taikhoan_khachhang extends JFrame {
 		contentPane.add(lblNewLabel_2);
 		
 		JLabel lb_ngaybd = new JLabel("New label");
-		lb_ngaybd.setBounds(155, 150, 122, 22);
+		lb_ngaybd.setBounds(155, 150, 201, 22);
 		contentPane.add(lb_ngaybd);
 		
 		JLabel lblNewLabel_6 = new JLabel("SĐT:");
@@ -179,12 +180,9 @@ public class taikhoan_khachhang extends JFrame {
 			Class.forName("oracle.jdbc.OracleDriver");
 			Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
 			Statement st=con.createStatement(); 
+			
 			DangNhap dn=null;
-			String a = dn.tendn;
-			String b=dn.mk;
-			
-			
-			String search="select * from TAIKHOAN where TENDANGNHAP='"+a+"' and MATKHAU='"+b+"'";					
+			String search="select * from TAIKHOAN where TENDANGNHAP='"+dn.tendn+"' and MATKHAU='"+dn.mk+"'";					
 
 			
 			ResultSet rs= st.executeQuery(search);

@@ -9,7 +9,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
-import org.apache.lucene.util.BytesRefHash.MaxBytesLengthExceededException;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -64,6 +63,10 @@ public class quanly_chuyenbay extends JFrame {
 	public static String idmb ;
 	public static String sanbaydi;
 	public static String sanbayden;
+	public static String TG;
+	public static String PTDB;
+	public static String PTLH ;
+	public static String PTTK ;
 	
 	public static String tg1;
 	public static String tg2; 
@@ -195,6 +198,36 @@ Connection con=null;
 								
 				 tongsove= model.getValueAt(SelectedRows, 6).toString();
 				 idnql= model.getValueAt(SelectedRows, 7).toString();
+				 
+				 try {
+						
+						Class.forName("oracle.jdbc.OracleDriver");
+						 con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+						Statement st=con.createStatement();
+
+					String search="select * from CHUYENBAY WHERE  ID ="+id+"";				
+					while(tableModel.getRowCount() > 0) 
+					{									
+						tableModel.removeRow(0);
+					}
+					
+					ResultSet rs= st.executeQuery(search);
+					while(rs.next()) {
+						TG = rs.getString(8);
+						PTDB = rs.getString(9);
+						PTLH = rs.getString(10);
+						PTTK = rs.getString(11);
+						
+						}
+					
+					con.close();
+					
+				} catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}					
+			
 				
 				update_chuyenbay update= new update_chuyenbay();
 				update.setVisible(true);
@@ -298,13 +331,14 @@ Connection con=null;
 					while(rs.next()) {
 						String ID =rs.getString(1);
 						String ttmaybayid =rs.getString(2);
-						String sanbaydi =rs.getString(3);
-						String sanbayden =rs.getString(4);
+						 sanbaydi =rs.getString(3);
+						 sanbayden =rs.getString(4);
 						String ngaygiokh =rs.getString(5);
 						String ngaygiohc =rs.getString(6);
 						String tongsove=rs.getString(7);
-						String ID_NQL =rs.getString(8);
+						String ID_NQL =rs.getString(12);
 						
+
 						
 						tableModel.addRow(new Object[] {ID,ttmaybayid,sanbaydi,sanbayden,ngaygiokh,ngaygiohc,tongsove,ID_NQL});
 
@@ -354,7 +388,7 @@ Connection con=null;
 						String ngaygiokh =rs.getString(5);
 						String ngaygiohc =rs.getString(6);
 						String tongsove=rs.getString(7);
-						String ID_NQL =rs.getString(8);
+						String ID_NQL =rs.getString(12);
 						
 						
 						tableModel.addRow(new Object[] {ID,ttmaybayid,sanbaydi,sanbayden,ngaygiokh,ngaygiohc,tongsove,ID_NQL});

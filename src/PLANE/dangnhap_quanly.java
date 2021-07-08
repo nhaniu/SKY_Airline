@@ -38,6 +38,12 @@ public class dangnhap_quanly extends JFrame {
 	public static String tendn;
 	public static String mk;
 
+	public static String getMk() {
+		return mk;
+	}
+	public static String getTendn() {
+		return tendn;
+	}
 	/**
 	 * Launch the application.
 	 */

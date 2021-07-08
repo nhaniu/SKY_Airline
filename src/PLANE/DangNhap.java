@@ -40,7 +40,12 @@ public class DangNhap extends JFrame {
 	public static String mk;
 
 	
-
+public static String getMk() {
+	return mk;
+}
+public static String getTendn() {
+	return tendn;
+}
 	/**
 	 * Launch the application.
 	 */

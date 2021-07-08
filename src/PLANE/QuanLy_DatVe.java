@@ -106,7 +106,7 @@ public class QuanLy_DatVe extends JFrame {
 		setBackground(new Color(240, 255, 255));
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 170, 995, 570);
+		setBounds(100, 100, 1063, 570);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(240, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -168,7 +168,7 @@ public class QuanLy_DatVe extends JFrame {
 
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(28, 206, 930, 166);
+		scrollPane.setBounds(10, 206, 1039, 166);
 		contentPane.add(scrollPane);
 		scrollPane.setVisible(false);
 		
@@ -184,9 +184,11 @@ public class QuanLy_DatVe extends JFrame {
 		model.addColumn("ID khuyến mãi");
 		model.addColumn("ID dịch vụ bổ trợ");
 		model.addColumn("Ngày đặt");
+		model.addColumn("Ngày khởi hành");
 		model.addColumn("Tổng tiền");
 		model.addColumn("Tình trạng");
 		model.addColumn("Tài khoản ID");
+
 		
 		JTableHeader Theader = table.getTableHeader();
 		 Theader.setFont(new Font("Times New Roman", Font.PLAIN, 14));
@@ -204,10 +206,12 @@ public class QuanLy_DatVe extends JFrame {
 				 if(dateChooser.getDate() == null)
 				 {
 					 thoigian = "";
-				 }else {
+				 }
+				 else {
 					SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-YY");		
 					String tgString = formatter.format(dateChooser.getDate());	
-					  thoigian="TO_DATE('"+tgString+"','DD-MM-RR')";					
+					  thoigian="TO_DATE('"+tgString+"','DD-MM-RR')";	
+					  thoigian1="TO_DATE('"+tgString+" 23:59:59','DD-MM-RR HH24:MI:SS')";
 						System.out.println(thoigian);
 				 }
 						if(idcb == "" && thoigian != "") {
@@ -216,10 +220,9 @@ public class QuanLy_DatVe extends JFrame {
 								Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
 								Statement st=con.createStatement(); 
 								
-								String search="select v.CHUYENBAY_ID, d.ID, d.VEMAYBAY_ID, d.HANHKHACH_ID, d.KHUYENMAI_ID,"
-										+ "d.DICHVUBOTRO_ID, d.NGAYDAT, d.TONGTIEN, d.TINHTRANG, d.TAIKHOAN_ID"
-										+ " from DATVEBAY d INNER JOIN VEMAYBAY v ON d.VEMAYBAY_ID = v.ID where NGAYDAT="+thoigian+"";					
-													
+								String search="select v.CHUYENBAY_ID, d.ID, d.VEMAYBAY_ID, d.HANHKHACH_ID, d.KHUYENMAI_ID, C.NGAY_GIO_KH,"
+										+ "d.DICHVUBOTRO_ID, d.NGAYDAT, d.TONGTIEN, d.TINHTRANG, d.TAIKHOAN_ID, d.NHANVIEN_ID"
+										+ " from DATVEBAY d INNER JOIN VEMAYBAY v ON d.VEMAYBAY_ID = v.ID INNER JOIN CHUYENBAY C ON C.ID=v.CHUYENBAY_ID where  NGAYDAT>="+thoigian+" and NGAYDAT<"+thoigian1+"";					
 								while(model.getRowCount() > 0) 
 								{									
 									model.removeRow(0);
@@ -236,9 +239,11 @@ public class QuanLy_DatVe extends JFrame {
 									String tongtien =rs.getString(8);
 									String tinhtrang=rs.getString(9);
 									String taikhoan_id =rs.getString(10);
+									String ngaykh =rs.getString(11);
+
 									
 									
-									model.addRow(new Object[] {chuyenbay_ID,ID,vemaybay_id,hanhkhach_id,khuyenmai_id,dichvubotro_id,ngaydat,tongtien,tinhtrang,taikhoan_id});
+									model.addRow(new Object[] {chuyenbay_ID,ID,vemaybay_id,hanhkhach_id,khuyenmai_id,dichvubotro_id,ngaydat,ngaykh,tongtien ,tinhtrang,taikhoan_id});
 
 									table.setModel(model);
 									scrollPane.setVisible(true);
@@ -258,9 +263,9 @@ public class QuanLy_DatVe extends JFrame {
 							Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
 							Statement st=con.createStatement(); 
 							
-							String search="select v.CHUYENBAY_ID, d.ID, d.VEMAYBAY_ID, d.HANHKHACH_ID, d.KHUYENMAI_ID,"
+							String search="select v.CHUYENBAY_ID, d.ID, d.VEMAYBAY_ID, d.HANHKHACH_ID, d.KHUYENMAI_ID,c.NGAY_GIO_KH, "
 									+ "d.DICHVUBOTRO_ID, d.NGAYDAT, d.TONGTIEN, d.TINHTRANG, d.TAIKHOAN_ID"
-									+ " from DATVEBAY d INNER JOIN VEMAYBAY v ON d.VEMAYBAY_ID = v.ID INNER JOIN CHUYENBAY c ON V.CHUYENBAY_ID = c.ID where c.ID="+idcb+"";					
+									+ " from DATVEBAY d INNER JOIN VEMAYBAY v ON d.VEMAYBAY_ID = v.ID INNER JOIN CHUYENBAY c ON v.CHUYENBAY_ID = c.ID where c.ID="+idcb+"";					
 												
 							while(model.getRowCount() > 0) 
 							{									
@@ -279,9 +284,11 @@ public class QuanLy_DatVe extends JFrame {
 								String tongtien =rs.getString(8);
 								String tinhtrang=rs.getString(9);
 								String taikhoan_id =rs.getString(10);
+								String ngaykh =rs.getString(11);
+
 								
 								
-								model.addRow(new Object[] {chuyenbay_ID,ID,vemaybay_id,hanhkhach_id,khuyenmai_id,dichvubotro_id,ngaydat,tongtien,tinhtrang,taikhoan_id});
+								model.addRow(new Object[] {chuyenbay_ID,ID,vemaybay_id,hanhkhach_id,khuyenmai_id,dichvubotro_id,ngaydat,ngaykh,tongtien,tinhtrang,taikhoan_id});
 
 								table.setModel(model);
 								scrollPane.setVisible(true);
@@ -300,10 +307,9 @@ public class QuanLy_DatVe extends JFrame {
 							Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
 							Statement st=con.createStatement(); 
 							
-							String search="select v.CHUYENBAY_ID, d.ID, d.VEMAYBAY_ID, d.HANHKHACH_ID, d.KHUYENMAI_ID,"
-									+ "d.DICHVUBOTRO_ID, d.NGAYDAT, d.TONGTIEN, d.TINHTRANG, d.TAIKHOAN_ID"
-									+ " from DATVEBAY d INNER JOIN VEMAYBAY v ON d.VEMAYBAY_ID = v.ID where v.CHUYENBAY_ID="+cb_machuyenbay.getSelectedItem()+"and NGAYDAT="+thoigian+"";					
-												
+							String search="select v.CHUYENBAY_ID, d.ID, d.VEMAYBAY_ID, d.HANHKHACH_ID, d.KHUYENMAI_ID, C.NGAY_GIO_KH,"
+									+ "d.DICHVUBOTRO_ID, d.NGAYDAT, d.TONGTIEN, d.TINHTRANG, d.TAIKHOAN_ID, d.NHANVIEN_ID"
+									+ " from DATVEBAY d INNER JOIN VEMAYBAY v ON d.VEMAYBAY_ID = v.ID INNER JOIN CHUYENBAY C ON C.ID=v.CHUYENBAY_ID  where v.CHUYENBAY_ID="+cb_machuyenbay.getSelectedItem()+"and NGAYDAT>="+thoigian+"and NGAYDAT<"+thoigian1+"";					
 							while(model.getRowCount() > 0) 
 							{									
 								model.removeRow(0);
@@ -320,9 +326,10 @@ public class QuanLy_DatVe extends JFrame {
 								String tongtien =rs.getString(8);
 								String tinhtrang=rs.getString(9);
 								String taikhoan_id =rs.getString(10);
+								String ngaykh =rs.getString(11);
+
 								
-								
-								model.addRow(new Object[] {chuyenbay_ID,ID,vemaybay_id,hanhkhach_id,khuyenmai_id,dichvubotro_id,ngaydat,tongtien,tinhtrang,taikhoan_id});
+								model.addRow(new Object[] {chuyenbay_ID,ID,vemaybay_id,hanhkhach_id,khuyenmai_id,dichvubotro_id,ngaydat,ngaykh,tongtien,tinhtrang,taikhoan_id});
 
 								table.setModel(model);
 								scrollPane.setVisible(true);
@@ -467,7 +474,7 @@ public class QuanLy_DatVe extends JFrame {
 		JLabel lblNewLabel2 = new JLabel("New label");
 		lblNewLabel2.setBackground(SystemColor.info);
 		lblNewLabel2.setIcon(new ImageIcon("anh.jpg"));
-		lblNewLabel2.setBounds(0, 0, 995, 543);
+		lblNewLabel2.setBounds(0, 0, 1076, 543);
 		contentPane.add(lblNewLabel2);
 		
 		
