@@ -267,10 +267,10 @@ public class xuat_thongtin_ve extends JFrame {
 											 con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
 											
 
-												FileInputStream in=new FileInputStream(new File("C:\\Users\\nguyen thi nhan\\Documents\\SKY_Airline\\src\\PLANE\\xuatve.jrxml"));
+												FileInputStream in=new FileInputStream(new File("C:\\Users\\nguyen thi nhan\\Documents\\SKY_Airline\\src\\PLANE\\Xuat_vee.jrxml"));
 
 												JasperDesign jd1=JRXmlLoader.load(in);
-												String sql="SELECT DV.ID, HK.HOTEN, CB.SANBAYDI, CB.SANBAYDEN, HV.TENHV,  DVBT.NOIDUNGDV, DV.TONGTIEN\r\n"
+												String sql="SELECT DV.ID, HK.HOTEN, CB.SANBAYDI, CB.SANBAYDEN,CB.NGAY_GIO_KH, CB.NGAY_GIO_HC, HV.TENHV,  DVBT.NOIDUNGDV, DV.TONGTIEN\r\n"
 														+ "FROM CHUYENBAY CB, VEMAYBAY VE,DATVEBAY DV,HANGVE HV, HANHKHACH HK, DICHVUBOTRO DVBT\r\n"
 														+ "WHERE CB.ID=VE.CHUYENBAY_ID AND VE.ID=DV.VEMAYBAY_ID and HV.ID=VE.HANGVE_ID AND HK.ID=DV.HANHKHACH_ID AND DVBT.ID=DV.DICHVUBOTRO_ID AND DV.ID="+id+"";				
 												JRDesignQuery newQuery1=new JRDesignQuery();

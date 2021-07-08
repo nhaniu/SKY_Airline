@@ -58,7 +58,7 @@ public class dangnhap_nhanvien extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public dangnhap_nhanvien(final int n, final JMenu Mn,  final JMenu Mn1, final JMenu mndn, final JButton bt, final JButton bt_user, final JMenuItem dvbt) {
+	public dangnhap_nhanvien(final int n, final JMenu Mn,  final JMenu Mn1, final JMenu mndn, final JButton bt, final JButton bt_user, final JMenu dichvu) {
 		
 		setBackground(new Color(240, 255, 255));
 		setVisible(true);
@@ -124,7 +124,7 @@ public class dangnhap_nhanvien extends JFrame {
 							setVisible(false);
 							bt.setVisible(true);
 							bt_user.setVisible(true);
-							dvbt.setVisible(true);
+							dichvu.setVisible(true);
 
 						}
 						else {

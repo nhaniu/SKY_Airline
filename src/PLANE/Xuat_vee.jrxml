@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Xuat_vee" pageWidth="595" pageHeight="550" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c08acc74-2322-43e8-a778-786cc9179c92">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="FILE "/>
+	<queryString language="SQL">
+		<![CDATA[SELECT DV.ID, HK.HOTEN, CB.SANBAYDI, CB.SANBAYDEN,CB.NGAY_GIO_KH, CB.NGAY_GIO_HC, HV.TENHV,  DVBT.NOIDUNGDV, DV.TONGTIEN
+FROM CHUYENBAY CB, VEMAYBAY VE,DATVEBAY DV,HANGVE HV, HANHKHACH HK, DICHVUBOTRO DVBT
+WHERE CB.ID=VE.CHUYENBAY_ID AND VE.ID=DV.VEMAYBAY_ID and HV.ID=VE.HANGVE_ID AND HK.ID=DV.HANHKHACH_ID AND DVBT.ID=DV.DICHVUBOTRO_ID]]>
+	</queryString>
+	<field name="ID" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ID"/>
+		<property name="com.jaspersoft.studio.field.label" value="ID"/>
+	</field>
+	<field name="HOTEN" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="HOTEN"/>
+		<property name="com.jaspersoft.studio.field.label" value="HOTEN"/>
+	</field>
+	<field name="SANBAYDI" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="SANBAYDI"/>
+		<property name="com.jaspersoft.studio.field.label" value="SANBAYDI"/>
+	</field>
+	<field name="SANBAYDEN" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="SANBAYDEN"/>
+		<property name="com.jaspersoft.studio.field.label" value="SANBAYDEN"/>
+	</field>
+	<field name="NGAY_GIO_KH" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="NGAY_GIO_KH"/>
+		<property name="com.jaspersoft.studio.field.label" value="NGAY_GIO_KH"/>
+	</field>
+	<field name="NGAY_GIO_HC" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="NGAY_GIO_HC"/>
+		<property name="com.jaspersoft.studio.field.label" value="NGAY_GIO_HC"/>
+	</field>
+	<field name="TENHV" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TENHV"/>
+		<property name="com.jaspersoft.studio.field.label" value="TENHV"/>
+	</field>
+	<field name="NOIDUNGDV" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NOIDUNGDV"/>
+		<property name="com.jaspersoft.studio.field.label" value="NOIDUNGDV"/>
+	</field>
+	<field name="TONGTIEN" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="TONGTIEN"/>
+		<property name="com.jaspersoft.studio.field.label" value="TONGTIEN"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<textField pattern="HH:mm">
+				<reportElement x="490" y="49" width="51" height="21" uuid="8d83be5d-aab8-4d6b-9c0c-30611d774e23"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="399" y="49" width="91" height="21" uuid="83bb5472-8bb2-4117-9ff3-dbd9cb787e62"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="120" y="8" width="321" height="41" uuid="9435925d-3701-42d2-a1fd-fee8231470af"/>
+				<textElement textAlignment="Center">
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Thông tin đặt vé máy bay]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="423" splitType="Stretch">
+			<rectangle>
+				<reportElement x="70" y="0" width="421" height="380" backcolor="#F0F9FA" uuid="784e28ae-c926-4a4f-9a14-bfb2bcdf0e5a"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="160" y="13" width="100" height="30" uuid="73248986-8d6a-4918-8340-ede7eab4e6a6"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mã đặt vé:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="160" y="50" width="100" height="30" uuid="6b25a64c-8ce4-4ea7-ad24-d116e1682441"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Họ tên:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="160" y="170" width="100" height="30" uuid="fbe9635e-2961-4c82-b291-d02b64da32fa"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sân bay đi:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="160" y="210" width="100" height="30" uuid="96acd6d0-1167-4c8f-a17c-57f722e498e5"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sân bay đến:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="160" y="250" width="100" height="30" uuid="6428266c-0f0c-4ad4-8ab3-a96539e188b3"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tên hạng vé:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="160" y="290" width="100" height="30" uuid="dfe806e0-4e48-4e2f-9bf0-7dbe958dcb3e"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nội dung dịch vụ:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="160" y="330" width="100" height="30" uuid="a118a4fe-8cc3-4667-92e1-32872bc96d49"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tổng tiền:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="270" y="13" width="160" height="30" uuid="0d0486ed-c3e2-42b3-b8f1-69babbee7560"/>
+				<textFieldExpression><![CDATA[$F{ID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="270" y="50" width="160" height="30" uuid="62342371-2fb1-49d8-9950-c915c315f608"/>
+				<textFieldExpression><![CDATA[$F{HOTEN}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="270" y="90" width="160" height="30" uuid="2af46602-1525-4963-9630-78ae560ccce2"/>
+				<textFieldExpression><![CDATA[$F{NGAY_GIO_KH}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="160" y="90" width="100" height="30" uuid="3103e66b-84d9-44bc-a607-ce0d5d467760"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ngày giờ khởi hành:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="270" y="130" width="160" height="30" uuid="36d57b7d-1b15-4bf0-bc34-47bb580f3cd0"/>
+				<textFieldExpression><![CDATA[$F{NGAY_GIO_HC}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="160" y="130" width="100" height="30" uuid="8d850f01-e54a-4f6f-bfa1-f13c8aabae1b"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ngày giờ hạ cánh: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="270" y="170" width="160" height="30" uuid="85f547b4-3225-49a4-8717-16d10907e1f0"/>
+				<textFieldExpression><![CDATA[$F{SANBAYDI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="270" y="210" width="160" height="30" uuid="62f19729-8d6b-430e-b01d-d51f7a9feffd"/>
+				<textFieldExpression><![CDATA[$F{NGAY_GIO_HC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="270" y="250" width="160" height="30" uuid="6290be73-2c66-48f2-8274-7b07ba151ebe"/>
+				<textFieldExpression><![CDATA[$F{TENHV}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="270" y="290" width="160" height="30" uuid="f42048b5-dcf7-4b4c-89b9-6d0495499d1b"/>
+				<textFieldExpression><![CDATA[$F{NOIDUNGDV}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="270" y="330" width="160" height="30" uuid="c19327b9-73e8-4981-83d8-c5e0f4e5d3cf"/>
+				<textFieldExpression><![CDATA[$F{TONGTIEN}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="350" y="380" width="180" height="42" uuid="599de8a0-b821-4305-80f3-0a4172099b92"/>
+				<textElement textAlignment="Center">
+					<font fontName="Javanese Text" size="14" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[SKY AIRLINE]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

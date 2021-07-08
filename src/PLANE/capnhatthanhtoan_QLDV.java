@@ -14,6 +14,8 @@ import javax.swing.JOptionPane;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -28,10 +30,11 @@ import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-public class capnhatthanhtoan_QLĐV extends JFrame {
+public class capnhatthanhtoan_QLDV extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField_madatve;
@@ -47,7 +50,7 @@ public class capnhatthanhtoan_QLĐV extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					capnhatthanhtoan_QLĐV frame = new capnhatthanhtoan_QLĐV();
+					capnhatthanhtoan_QLDV frame = new capnhatthanhtoan_QLDV();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -59,38 +62,37 @@ public class capnhatthanhtoan_QLĐV extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public capnhatthanhtoan_QLĐV() {
-		//setVisible(rootPaneCheckingEnabled);
-		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 689, 468);
+	public capnhatthanhtoan_QLDV() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 942, 530);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(224, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
 		JLabel lb_cntt = new JLabel("CẬP NHẬT THANH TOÁN");
-		lb_cntt.setBounds(184, 21, 350, 30);
+		lb_cntt.setBounds(184, 21, 433, 30);
 		lb_cntt.setHorizontalAlignment(SwingConstants.CENTER);
 		lb_cntt.setFont(new Font("Times New Roman", Font.BOLD, 25));
 		
 		JLabel lb_madv = new JLabel("Mã đặt vé :");
-		lb_madv.setBounds(10, 89, 96, 24);
-		lb_madv.setFont(new Font("Times New Roman", Font.BOLD, 20));
+		lb_madv.setBounds(87, 89, 96, 24);
+		lb_madv.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		
 		textField_madatve = new JTextField();
-		textField_madatve.setBounds(171, 91, 146, 24);
+		textField_madatve.setBounds(230, 89, 218, 24);
 		textField_madatve.setColumns(10);
 		
 		JLabel lb_SDT = new JLabel("Số điện thoại :");
-		lb_SDT.setBounds(10, 140, 156, 24);
-		lb_SDT.setFont(new Font("Times New Roman", Font.BOLD, 20));
+		lb_SDT.setBounds(87, 140, 121, 24);
+		lb_SDT.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		
 		textField_SDT = new JTextField();
-		textField_SDT.setBounds(171, 142, 146, 24);
+		textField_SDT.setBounds(230, 137, 218, 24);
 		textField_SDT.setColumns(10);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 238, 655, 131);
+		scrollPane.setBounds(52, 290, 823, 53);
 
 		table = new JTable();
 		final DefaultTableModel model=new DefaultTableModel();
@@ -114,8 +116,9 @@ public class capnhatthanhtoan_QLĐV extends JFrame {
 		scrollPane.setViewportView(table);
 		
 		JButton btn_timkiem = new JButton("Tìm kiếm");
-		btn_timkiem.setBounds(10, 183, 115, 33);
-		btn_timkiem.setFont(new Font("Times New Roman", Font.BOLD, 20));
+		btn_timkiem.setBackground(new Color(124, 252, 0));
+		btn_timkiem.setBounds(87, 219, 107, 24);
+		btn_timkiem.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		btn_timkiem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
@@ -135,7 +138,7 @@ public class capnhatthanhtoan_QLĐV extends JFrame {
 				Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
 				Statement st=con.createStatement(); 
 				
-				String timkiem = "select d.ID, d.VEMAYBAY_ID, d.HANHKHACH_ID, d.KHUYENMAI_ID, d.DVBT_ID, d.NGAYDAT, d.TONGTIEN, d.TINHTRANG, d.TAIKHOAN_ID from HANHKHACH h, DATVEBAY d "
+				String timkiem = "select d.ID, d.VEMAYBAY_ID, d.HANHKHACH_ID, d.KHUYENMAI_ID, d.DICHVUBOTRO_ID, d.NGAYDAT, d.TONGTIEN, d.TINHTRANG, d.TAIKHOAN_ID from HANHKHACH h, DATVEBAY d "
 						+ " where h.ID=d.HANHKHACH_ID AND h.SDT='"+textField_SDT.getText()+"'AND d.ID ='"+textField_madatve.getText()+"'";
 				
 				while(model.getRowCount() > 0) 
@@ -189,7 +192,8 @@ public class capnhatthanhtoan_QLĐV extends JFrame {
 		
 		
 		JButton btnNewButton = new JButton("Xác nhận thanh toán");
-		btnNewButton.setBounds(10, 379, 209, 30);
+		btnNewButton.setBackground(new Color(124, 252, 0));
+		btnNewButton.setBounds(87, 428, 183, 24);
 		contentPane.add(btnNewButton);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -214,8 +218,17 @@ public class capnhatthanhtoan_QLĐV extends JFrame {
 
 			}
 		});
-		btnNewButton.setFont(new Font("Times New Roman", Font.BOLD, 20));
+		btnNewButton.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setBounds(0, 0, 940, 493);
+		contentPane.add(lblNewLabel);
+		
+		ImageIcon icon=new ImageIcon("anh1.jpg");
+		Image imgIcon =icon.getImage();
+		Image imgScale =imgIcon.getScaledInstance(lblNewLabel.getWidth(), lblNewLabel.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon scaleIcon=new ImageIcon(imgScale);
+		lblNewLabel.setIcon(scaleIcon);
 		
 	}
 }

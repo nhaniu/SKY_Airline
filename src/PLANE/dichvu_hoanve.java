@@ -195,7 +195,29 @@ public class dichvu_hoanve extends JFrame {
 				Class.forName("oracle.jdbc.OracleDriver");
 				Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
 				Statement st=con.createStatement(); 
-	
+				
+				dangnhap_nhanvien dn=null;
+				System.out.println("ten dang nhap: "+dn.tendn);
+				
+				String nv="SELECT ID FROM NHANVIEN WHERE NHIEMVU='Hoàn Vé' and TENDANGNHAP='"+dn.tendn+"'";
+				ResultSet rsn= st.executeQuery(nv);
+				if(rsn.next()) {
+					String idnv1 =rsn.getString(1);	
+					System.out.println("idnv: "+idnv1);
+					//System.out.println("Nhiem vu: "+nhiemvu);
+					
+					
+//					String idnv1=null;
+//					Statement st1=con.createStatement(); 
+//					String nv1="SELECT ID FROM NHANVIEN WHERE TENDANGNHAP='"+dn.tendn+"'";
+//					ResultSet rsm= st1.executeQuery(nv1);
+//					if(rsm.next()) {
+//						 idnv1 =rsn.getString(1);
+//					
+//					System.out.println("idnv: "+idnv1);
+//					}
+
+
 				String b="SELECT DV.TONGTIEN, DV.TAIKHOAN_ID, DV.ID, HK.SDT FROM HANHKHACH HK, DATVEBAY DV WHERE HK.ID=DV.HANHKHACH_ID AND HK.SDT="+textField_sdt.getText()+" and DV.ID="+textField_madatcho.getText();
 				ResultSet rs= st.executeQuery(b);
 				
@@ -219,14 +241,13 @@ public class dichvu_hoanve extends JFrame {
 
 				String idString=rs.getString(3);
 								
-
+				
 				
 				int confirm =JOptionPane.showConfirmDialog(null, "Xác nhận nếu bạn muốn hoàn vé","Xác nhận",JOptionPane.YES_NO_OPTION);
 				if(confirm==JOptionPane.YES_OPTION) {
+					
 
-				
-
-				PreparedStatement pst= con.prepareStatement("insert into \"DB_AIRLINE\".\"HOANVEBAY\"  (\"ID\", \"DATVEBAY_ID\", \"LIDO\",\"NGAYHOAN\",  \"PHIHV\", \"TIENHV\", \"NHANVIEN_ID\") values("+lb_id.getText()+","+textField_madatcho.getText()+",'"+textField_lido.getText()+"',"+ngayhoan+","+phihv+","+tienhoan+","+0+")");		
+				PreparedStatement pst= con.prepareStatement("insert into \"DB_AIRLINE\".\"HOANVEBAY\"  (\"ID\", \"DATVEBAY_ID\", \"LIDO\",\"NGAYHOAN\",  \"PHIHV\", \"TIENHV\", \"NHANVIEN_ID\") values("+lb_id.getText()+","+textField_madatcho.getText()+",'"+textField_lido.getText()+"',"+ngayhoan+","+phihv+","+tienhoan+","+idnv1+")");		
 				pst.execute();
 				
 				if(tk_id!=null) {
@@ -256,13 +277,13 @@ public class dichvu_hoanve extends JFrame {
 						System.out.println("hạng: "+" "+"Diem: "+diem);
 						PreparedStatement pst2= con.prepareStatement("update TAIKHOAN set TONGTIENMUAVE="+tongtienupdate+", DIEM="+diem+",HANG='"+hang+"' where ID="+id_tk+"");		
 						pst2.execute();
-						pst2.close();
+						//pst2.close();
 						
 					
 				}
 				
-				PreparedStatement pst2= con.prepareStatement("update DATVEBAY set TINHTRANG='Đã hoàn' where ID= "+idString+"");		
-				pst2.execute();
+				PreparedStatement pst3= con.prepareStatement("update DATVEBAY set TINHTRANG='Đã hoàn' where ID= "+idString+"");		
+				pst3.execute();
 				
 				
 				String C1= "select DT.ID, DT.TONGPHIHOANVE,DT.TONGDOANHTHU, DT.CHUYENBAY_ID\r\n"
@@ -284,8 +305,8 @@ public class dichvu_hoanve extends JFrame {
 				System.out.println("idcb: "+idcb);
 				
 
-				PreparedStatement pst1= con.prepareStatement("update DOANHTHUCHUYENBAY set TONGPHIHOANVE="+updatetth+", TONGDOANHTHU="+tongdoanhthu+" where ID= "+id_dt+"");		
-				pst1.execute();
+				PreparedStatement pst4= con.prepareStatement("update DOANHTHUCHUYENBAY set TONGPHIHOANVE="+updatetth+", TONGDOANHTHU="+tongdoanhthu+" where ID= "+id_dt+"");		
+				pst4.execute();
 				
 
 			
@@ -303,9 +324,9 @@ public class dichvu_hoanve extends JFrame {
 					int slvecon_update=slvecon-1;
 					int slveban_update=slveban+1;
 					String updatetk ="update THONGKECHUYENBAY set SOLUONGVECON="+slvecon_update+",SOLUONGVEBAN="+slveban_update+" where CHUYENBAY_ID="+idcb+"";
-					PreparedStatement pst4 = con.prepareStatement(updatetk);
-					pst4= con.prepareStatement(updatetk);
-					pst4.execute();  
+					PreparedStatement pst5 = con.prepareStatement(updatetk);
+					pst5= con.prepareStatement(updatetk);
+					pst5.execute();  
 					
 					System.out.println("update thong ke thanh cong");
 					
@@ -337,7 +358,7 @@ String search="select ID, DATVEBAY_ID,LIDO, NGAYHOAN, PHIHV, TIENHV from HOANVEB
 				
 				
 					
-				rs1.close();	
+				//rs1.close();	
 
 
 				}
@@ -345,31 +366,38 @@ String search="select ID, DATVEBAY_ID,LIDO, NGAYHOAN, PHIHV, TIENHV from HOANVEB
 				Component a=null;
 				JOptionPane.showMessageDialog(a, "Hoàn vé thành công");
 				
-				rs2.close();
-				rs.close();
-				pst.close();
-				
+				//rs2.close();
+			//	pst.close();
+				//rs.close();
+
 							
-				con.close();
-				
-				
+					
+					
 				}	
 				else {
 					dispose();
 				}
+			//	rsn.close();
+
 				}
 				
-				
+
 
 				else if(!rs.next()) {
 					JOptionPane.showMessageDialog(null, "Thông tin không chính xác");
 				}
 				}
+				else {
+					JOptionPane.showMessageDialog(null, "Bạn không thuộc nhiệm vụ hoàn vé");
+				}
+				//con.close();
+
+				}
 			 catch (ClassNotFoundException e1) {
-				//JOptionPane.showMessageDialog(null, e1);
+			//	JOptionPane.showMessageDialog(null, e1);
 				 e1.printStackTrace();
 			} catch (SQLException e1) {
-				//JOptionPane.showMessageDialog(null, e1);
+			//	JOptionPane.showMessageDialog(null, e1);
 				 e1.printStackTrace();
 
 			}

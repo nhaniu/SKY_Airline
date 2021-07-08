@@ -266,6 +266,15 @@ public class dv_muathem_hanhly extends JFrame {
 						Class.forName("oracle.jdbc.OracleDriver");
 						Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
 						Statement st=con.createStatement(); 
+						
+						dangnhap_nhanvien dn=null;
+						System.out.println("ten dang nhap: "+dn.tendn);
+						
+						String nv="SELECT ID FROM NHANVIEN WHERE NHIEMVU='Dịch vụ bổ trợ' and TENDANGNHAP='"+dn.tendn+"'";
+						ResultSet rsn= st.executeQuery(nv);
+						if(rsn.next()) {
+							String idnv1 =rsn.getString(1);	
+							System.out.println("idnv: "+idnv1);
 	
 						String search="select DV.ID, HK.SDT from DATVEBAY DV, HANHKHACH HK where HK.ID=DV.HANHKHACH_ID AND DV.TINHTRANG='Đã thanh toán' and DV.ID="+textField_MaDC.getText()+" AND HK.SDT="+textField_sdt.getText();				
 					
@@ -297,7 +306,10 @@ public class dv_muathem_hanhly extends JFrame {
 						rs.close();
 
 						con.close();
-						
+						}
+						else {
+							JOptionPane.showMessageDialog(null, "Bạn không thuộc nhiệm vụ này");
+						}
 					} catch (ClassNotFoundException e1) {
 						e1.printStackTrace();
 					} catch (SQLException e1) {
@@ -343,7 +355,7 @@ public class dv_muathem_hanhly extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 								
-				int confirm =JOptionPane.showConfirmDialog(null, "Khách hàng đã thanh toán thành công","Xác nhận",JOptionPane.YES_NO_OPTION);
+				int confirm =JOptionPane.showConfirmDialog(null, "Xác nhận mua dịch vụ bổ trợ","Xác nhận",JOptionPane.YES_NO_OPTION);
 				if(confirm==JOptionPane.YES_OPTION) {
 					try {
 						
@@ -500,7 +512,6 @@ public class dv_muathem_hanhly extends JFrame {
 		
 		JLabel lblNewLabel_7 = new JLabel("New label");
 		lblNewLabel_7.setBorder(new LineBorder(new Color(255, 192, 203), 3, true));
-		//lblNewLabel_7.setIcon(new ImageIcon("C:\\Users\\nguyen thi nhan\\Downloads\\212330.jpg"));
 		lblNewLabel_7.setBounds(0, 0, 819, 457);
 		contentPane.add(lblNewLabel_7);
 		

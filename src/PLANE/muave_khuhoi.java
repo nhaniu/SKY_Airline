@@ -34,11 +34,28 @@ public class muave_khuhoi extends JFrame {
 	public static String idhvve;
 	public static String idcbve;
 	private int tongsoghe;
+	private int thuonggia;
+	private int phothongdb;
+
+	private int phothonglh;
+
+	private int phothongtk;
+	private int countid_ptdb;
+	private int countid_ptlh;
+	private int countid_pttk;
 	private int countid;
-	private int tongsoghe1;
-	private int countid1;
+	
+	private int thuonggiakh;
+	private int phothongdbkh;
 
+	private int phothonglhkh;
 
+	private int phothongtkkh;
+	private int countid_ptdbkh;
+	private int countid_ptlhkh;
+	private int countid_pttkkh;
+	private int countidkh;
+    private int demKt;
 
 	/**
 	 * Launch the application.
@@ -293,8 +310,10 @@ public class muave_khuhoi extends JFrame {
 							String giohc = rs.getString(2);
 							String hv = rs.getString(3);
 							String gv = rs.getString(4);
-							idhvdi = rs.getString(5);
+							//idhvdi = rs.getString(5);
 							idcbdi = rs.getString(6);
+						//	System.out.println(idhvdi+" huhu");
+
 	
 							 dem++;
 								tableModeldi.addRow(new Object[] {giokh, giohc, hv, gv});
@@ -363,8 +382,10 @@ public class muave_khuhoi extends JFrame {
 							String giohc = rs.getString(2);
 							String hv = rs.getString(3);
 							String gv = rs.getString(4);
-							idhvve = rs.getString(5);
+							//idhvve = rs.getString(5);
 							idcbve = rs.getString(6);
+							//System.out.println(idhvve+" huhu");
+
 							 dem++;
 							
 							tableModel.addRow(new Object[] {giokh, giohc, hv, gv});
@@ -379,70 +400,7 @@ public class muave_khuhoi extends JFrame {
 						if(dem==0) {
 							JOptionPane.showMessageDialog(null, "Không tìm thấy chuyến bay về");
 						}
-						try {
-							Class.forName("oracle.jdbc.OracleDriver");
-							con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
-				             PreparedStatement pst = con.prepareStatement("Select count(CHUYENBAY_ID) from VEMAYBAY ve where CHUYENBAY_ID="+idcbdi+" ");
-				         	
-								ResultSet rs1= pst.executeQuery();
-								while(rs1.next()) {
-									 String a =rs1.getString(1);
-									 countid=Integer.parseInt(a);							}
-	
-						} catch (ClassNotFoundException e1) {
-							e1.printStackTrace();
-						} catch (SQLException e1) {
-							e1.printStackTrace();
-						}
-						try {
-							Class.forName("oracle.jdbc.OracleDriver");
-							con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
-				             PreparedStatement pst = con.prepareStatement("Select TONGSOVE from CHUYENBAY  where ID="+idcbdi+"");
-				         	
-								ResultSet rs1= pst.executeQuery();
-								while(rs1.next()) {
-									String b =rs1.getString(1);
-									 tongsoghe=Integer.parseInt(b);							}
-	
-						} catch (ClassNotFoundException e1) {
-							e1.printStackTrace();
-						} catch (SQLException e1) {
-							e1.printStackTrace();
-						}
-						//chuyenve
-						try {
-							Class.forName("oracle.jdbc.OracleDriver");
-							con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
-				             PreparedStatement pst1 = con.prepareStatement("Select count(CHUYENBAY_ID) from VEMAYBAY ve where CHUYENBAY_ID="+idcbve+" ");
-				         	
-								ResultSet rs2= pst1.executeQuery();
-								while(rs2.next()) {
-									 String a =rs2.getString(1);
-									 countid1=Integer.parseInt(a);
-								}
-	
-						} catch (ClassNotFoundException e1) {
-							e1.printStackTrace();
-						} catch (SQLException e1) {
-							e1.printStackTrace();
-						}
-						try {
-							Class.forName("oracle.jdbc.OracleDriver");
-							con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
-				             PreparedStatement pst1 = con.prepareStatement("Select TONGSOVE from CHUYENBAY  where ID="+idcbve+"");
-				         	
-								ResultSet rs2= pst1.executeQuery();
-								while(rs2.next()) {
-									 String b =rs2.getString(1);
-									 tongsoghe1=Integer.parseInt(b);
-								}
-								System.out.println("tong so ghe ve: "+tongsoghe1);
-						} catch (ClassNotFoundException e1) {
-							e1.printStackTrace();
-						} catch (SQLException e1) {
-							e1.printStackTrace();
-						}
-						
+
 							System.out.println("\nidcbve"+idcbve);
 						conn.close();
 					}
@@ -468,21 +426,270 @@ public class muave_khuhoi extends JFrame {
 		JTableHeader theJTableHeader1 = table_ve.getTableHeader();
 		theJTableHeader1.setBackground(new Color(135, 206, 250));
 		
-		System.out.println("so ghe chuyen bay di: "+tongsoghe);
-		System.out.println("so ghe chuyen bay ve: "+tongsoghe1);
-
+	
 
 		button_chonmua.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				if(tongsoghe==countid) {
-					JOptionPane.showMessageDialog(null, "Chuyến bay thứ nhất đã hết vé, xin quý khách chọn chuyến bay khác");
+				//chuyến đi
+				 demKt=0;
+
+				try {
+					Class.forName("oracle.jdbc.OracleDriver");
+					con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+		             PreparedStatement pst = con.prepareStatement("SELECT COUNT(VE.CHUYENBAY_ID)\r\n"
+		             		+ "    FROM VEMAYBAY VE, HANGVE HV\r\n"
+		             		+ "        WHERE VE.HANGVE_ID=HV.ID AND TENHV='Hạng thương gia' AND CHUYENBAY_ID="+idcbdi+" ");
+		            
+						ResultSet rs1= pst.executeQuery();
+						while(rs1.next()) {
+							String t1 =rs1.getString(1);
+							countid=Integer.parseInt(t1);
+						}
+
+				} catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
 				}
-				else if(tongsoghe1==countid1) {
-					JOptionPane.showMessageDialog(null, "Chuyến bay thứ 2 đã hết vé, xin quý khách chọn chuyến bay khác");
+				try {
+					Class.forName("oracle.jdbc.OracleDriver");
+					con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+		             PreparedStatement pst = con.prepareStatement("SELECT COUNT(VE.CHUYENBAY_ID)\r\n"
+		             		+ "    FROM VEMAYBAY VE, HANGVE HV\r\n"
+		             		+ "        WHERE VE.HANGVE_ID=HV.ID AND TENHV='Hạng phổ thông tiết kiệm' AND CHUYENBAY_ID="+idcbdi+" ");
+		            
+						ResultSet rs1= pst.executeQuery();
+						while(rs1.next()) {
+							String t2 =rs1.getString(1);
+							countid_pttk=Integer.parseInt(t2);
+						}
+
+				} catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				try {
+					Class.forName("oracle.jdbc.OracleDriver");
+					con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+		             PreparedStatement pst = con.prepareStatement("SELECT COUNT(VE.CHUYENBAY_ID)\r\n"
+		             		+ "    FROM VEMAYBAY VE, HANGVE HV\r\n"
+		             		+ "        WHERE VE.HANGVE_ID=HV.ID AND TENHV='Hạng phổ thông linh hoạt' AND CHUYENBAY_ID="+idcbdi+" ");
+		            
+						ResultSet rs1= pst.executeQuery();
+						while(rs1.next()) {
+							String t =rs1.getString(1);
+							countid_ptlh=Integer.parseInt(t);
+						}
+
+				} catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				try {
+					Class.forName("oracle.jdbc.OracleDriver");
+					con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+		             PreparedStatement pst = con.prepareStatement("SELECT COUNT(VE.CHUYENBAY_ID)\r\n"
+		             		+ "    FROM VEMAYBAY VE, HANGVE HV\r\n"
+		             		+ "        WHERE VE.HANGVE_ID=HV.ID AND TENHV='Hạng phổ thông đặc biệt' AND CHUYENBAY_ID="+idcbdi+" ");
+		            
+						ResultSet rs1= pst.executeQuery();
+						while(rs1.next()) {
+							String n =rs1.getString(1);
+							countid_ptdb=Integer.parseInt(n);
+						}
+
+				} catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				try {
+					Class.forName("oracle.jdbc.OracleDriver");
+					con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+		             PreparedStatement pst = con.prepareStatement("Select THUONGGIA, PHOTHONGDB, PHOTHONGLH, PHOTHONGTK from CHUYENBAY  where ID="+idcbdi+"");
+		         	
+						ResultSet rs1= pst.executeQuery();
+						while(rs1.next()) {
+							String  TG =rs1.getString(1);
+							thuonggia=Integer.parseInt(TG);
+							String PTDB  =rs1.getString(2);
+							phothongdb=Integer.parseInt(PTDB);
+							String  PTLH =rs1.getString(3);
+							phothonglh=Integer.parseInt(PTLH);
+							String  PTTK =rs1.getString(4);
+							phothongtk=Integer.parseInt(PTTK);
+
+						}
+
+				} catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+
+				//chuyen ve
+				try {
+					Class.forName("oracle.jdbc.OracleDriver");
+					con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+		             PreparedStatement pst = con.prepareStatement("SELECT COUNT(VE.CHUYENBAY_ID)\r\n"
+		             		+ "    FROM VEMAYBAY VE, HANGVE HV\r\n"
+		             		+ "        WHERE VE.HANGVE_ID=HV.ID AND TENHV='Hạng thương gia' AND CHUYENBAY_ID="+idcbve+" ");
+		            
+						ResultSet rs1= pst.executeQuery();
+						while(rs1.next()) {
+							String t1 =rs1.getString(1);
+							countidkh=Integer.parseInt(t1);
+						}
+
+				} catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				try {
+					Class.forName("oracle.jdbc.OracleDriver");
+					con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+		             PreparedStatement pst = con.prepareStatement("SELECT COUNT(VE.CHUYENBAY_ID)\r\n"
+		             		+ "    FROM VEMAYBAY VE, HANGVE HV\r\n"
+		             		+ "        WHERE VE.HANGVE_ID=HV.ID AND TENHV='Hạng phổ thông tiết kiệm' AND CHUYENBAY_ID="+idcbve+" ");
+		            
+						ResultSet rs1= pst.executeQuery();
+						while(rs1.next()) {
+							String t2 =rs1.getString(1);
+							countid_pttkkh=Integer.parseInt(t2);
+						}
+
+				} catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				try {
+					Class.forName("oracle.jdbc.OracleDriver");
+					con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+		             PreparedStatement pst = con.prepareStatement("SELECT COUNT(VE.CHUYENBAY_ID)\r\n"
+		             		+ "    FROM VEMAYBAY VE, HANGVE HV\r\n"
+		             		+ "        WHERE VE.HANGVE_ID=HV.ID AND TENHV='Hạng phổ thông linh hoạt' AND CHUYENBAY_ID="+idcbve+" ");
+		            
+						ResultSet rs1= pst.executeQuery();
+						while(rs1.next()) {
+							String t =rs1.getString(1);
+							countid_ptlhkh=Integer.parseInt(t);
+						}
+
+				} catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				try {
+					Class.forName("oracle.jdbc.OracleDriver");
+					con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+		             PreparedStatement pst = con.prepareStatement("SELECT COUNT(VE.CHUYENBAY_ID)\r\n"
+		             		+ "    FROM VEMAYBAY VE, HANGVE HV\r\n"
+		             		+ "        WHERE VE.HANGVE_ID=HV.ID AND TENHV='Hạng phổ thông đặc biệt' AND CHUYENBAY_ID="+idcbve+" ");
+		            
+						ResultSet rs1= pst.executeQuery();
+						while(rs1.next()) {
+							String n =rs1.getString(1);
+							countid_ptdbkh=Integer.parseInt(n);
+						}
+
+				} catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				try {
+					Class.forName("oracle.jdbc.OracleDriver");
+					con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+		             PreparedStatement pst = con.prepareStatement("Select THUONGGIA, PHOTHONGDB, PHOTHONGLH, PHOTHONGTK from CHUYENBAY  where ID="+idcbve+"");
+		         	
+						ResultSet rs1= pst.executeQuery();
+						while(rs1.next()) {
+							String  TG =rs1.getString(1);
+							thuonggiakh=Integer.parseInt(TG);
+							String PTDB  =rs1.getString(2);
+							phothongdbkh=Integer.parseInt(PTDB);
+							String  PTLH =rs1.getString(3);
+							phothonglhkh=Integer.parseInt(PTLH);
+							String  PTTK =rs1.getString(4);
+							phothongtkkh=Integer.parseInt(PTTK);
+
+						}
+
+				} catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				
+				
+				//chuyen di
+				
+				DefaultTableModel model=(DefaultTableModel)table_di.getModel();
+				int a=table_di.getSelectedRow();								
+				//String hangve = model.getValueAt(a, 2).toString();
+				
+				System.out.println("\nhạng ve: "+model.getValueAt(a, 2).toString());
+      			boolean kt;
+				//if(kt=true) {
+
+				
+				if(model.getValueAt(a, 2).toString().equals("Hạng phổ thông đặc biệt")&&phothongdb==countid_ptdb) {
+					System.out.println("\nhạng ptdb trong ve: "+countid_ptdb);
+					System.out.println("\nhạng ptdb : "+phothongdb);
+					JOptionPane.showMessageDialog(null, "Hạng phổ thông đặc biệt chuyến đi đã hết vé, xin quý khách chọn chuyến bay khác");
+				}
+				else if(model.getValueAt(a, 2).toString().equals("Hạng phổ thông tiết kiệm")&&phothongtk==countid_pttk) {
+					JOptionPane.showMessageDialog(null, "Hạng phổ thông tiết kiệm chuyến đi đã hết vé, xin quý khách chọn chuyến bay khác");
+				}
+				else if(model.getValueAt(a, 2).toString().equals("Hạng phổ thông linh hoạt")&&phothonglh==countid_ptlh) {
+					JOptionPane.showMessageDialog(null, "Hạng phổ thông linh hoạt chuyến đi đã hết vé, xin quý khách chọn chuyến bay khác");
+				}
+				else if(model.getValueAt(a, 2).toString().equals("Hạng thương gia")&&thuonggia==countid) {
+					System.out.println("\nhạng thương gia: "+thuonggia);
+					System.out.println("\nhạng thương gia trong ve: "+countid);
+					JOptionPane.showMessageDialog(null, "Hạng thương gia chuyến đi đã hết vé, xin quý khách chọn chuyến bay khác");
 				}
 				else {
+					demKt++;
+				}
+				
+				//chuyen ve
+				DefaultTableModel model1=(DefaultTableModel)table_ve.getModel();
+				int a1=table_ve.getSelectedRow();								
+				//String hangve = model.getValueAt(a, 2).toString();
+				
+				System.out.println("\nhạng ve: "+model1.getValueAt(a1, 2).toString());
+				
+				
+
+
+				
+				 if(model1.getValueAt(a1, 2).toString().equals("Hạng phổ thông đặc biệt")&&phothongdbkh==countid_ptdbkh) {
+					System.out.println("\nhạng ptdb trong ve: "+countid_ptdbkh);
+					System.out.println("\nhạng ptdb : "+phothongdbkh);
+					JOptionPane.showMessageDialog(null, "Hạng phổ thông đặc biệt chuyến về đã hết vé, xin quý khách chọn chuyến bay khác");
+				}
+				else if(model1.getValueAt(a1, 2).toString().equals("Hạng phổ thông tiết kiệm")&&phothongtkkh==countid_pttkkh) {
+					JOptionPane.showMessageDialog(null, "Hạng phổ thông tiết kiệm chuyến về đã hết vé, xin quý khách chọn chuyến bay khác");
+				}
+				else if(model1.getValueAt(a1, 2).toString().equals("Hạng phổ thông linh hoạt")&&phothonglhkh==countid_ptlhkh) {
+					JOptionPane.showMessageDialog(null, "Hạng phổ thông linh hoạt chuyến về đã hết vé, xin quý khách chọn chuyến bay khác");
+				}
+				else if(model1.getValueAt(a1, 2).toString().equals("Hạng thương gia")&&thuonggiakh==countidkh) {
+					System.out.println("\nhạng thương gia: "+thuonggiakh);
+					System.out.println("\nhạng thương gia trong ve: "+countidkh);
+					JOptionPane.showMessageDialog(null, "Hạng thương gia chuyến về đã hết vé, xin quý khách chọn chuyến bay khác");
+				}
+				
+				else {
+			    demKt++;
 				int id = table_di.getSelectedRow();
+				
 				System.out.println(id);
 				String gio_kh_di= new String();
 				String gio_hc_di = new String();
@@ -490,14 +697,14 @@ public class muave_khuhoi extends JFrame {
 				String gia_ve_di = new String();
 				String noi_di = new String();
 				String noi_den = new String();
-				TableModel model = table_di.getModel();
+				TableModel model11 = table_di.getModel();
 				
 				noi_di = comboBox_noidi.getSelectedItem().toString();
 				noi_den = comboBox_noiden.getSelectedItem().toString();
-				gio_kh_di = model.getValueAt(id, 0).toString();
-				gio_hc_di = model.getValueAt(id, 1).toString();
-				h_ve_di = model.getValueAt(id, 2).toString();
-				gia_ve_di = model.getValueAt(id, 3).toString();
+				gio_kh_di = model11.getValueAt(id, 0).toString();
+				gio_hc_di = model11.getValueAt(id, 1).toString();
+				h_ve_di = model11.getValueAt(id, 2).toString();
+				gia_ve_di = model11.getValueAt(id, 3).toString();
 				
 				int iv = table_ve.getSelectedRow();
 				System.out.println(iv);
@@ -505,14 +712,52 @@ public class muave_khuhoi extends JFrame {
 				String gio_hc_ve = new String();
 				String h_ve_ve = new String();
 				String gia_ve_ve = new String();
-				TableModel model1 = table_ve.getModel();
+				TableModel model111 = table_ve.getModel();
 				
 				
-				gio_kh_ve = model1.getValueAt(iv, 0).toString();
-				gio_hc_ve = model1.getValueAt(iv, 1).toString();
-				h_ve_ve = model1.getValueAt(iv, 2).toString();
-				gia_ve_ve = model1.getValueAt(iv, 3).toString();
+				gio_kh_ve = model111.getValueAt(iv, 0).toString();
+				gio_hc_ve = model111.getValueAt(iv, 1).toString();
+				h_ve_ve = model111.getValueAt(iv, 2).toString();
+				gia_ve_ve = model111.getValueAt(iv, 3).toString();
 				
+				
+				System.out.println("id hạng vé đi: "+idhvdi);
+				System.out.println("id hạng vé về: "+idhvve);
+				
+				try {
+					Class.forName("oracle.jdbc.OracleDriver");
+					con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+		             PreparedStatement pst = con.prepareStatement("Select ID from HANGVE  where TENHV='"+h_ve_di+"'");
+		         	
+						ResultSet rs1= pst.executeQuery();
+						if(rs1.next()) {
+							idhvdi =rs1.getString(1);
+						}
+
+				} catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				try {
+					Class.forName("oracle.jdbc.OracleDriver");
+					con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","DB_AIRLINE","123");
+		             PreparedStatement pst = con.prepareStatement("Select ID from HANGVE  where TENHV='"+h_ve_ve+"'");
+		         	
+						ResultSet rs1= pst.executeQuery();
+						if(rs1.next()) {
+							idhvve =rs1.getString(1);
+							
+
+						}
+
+				} catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				System.out.println(idhvdi+" huhuhu "+idhvve);
+
 
 				if (table_ve.getSelectionModel().isSelectionEmpty() || table_di.getSelectionModel().isSelectionEmpty()) {
 					JOptionPane.showConfirmDialog(null, "Xin vui lòng chọn chuyến bay!","Warning",JOptionPane.YES_OPTION);
@@ -520,10 +765,13 @@ public class muave_khuhoi extends JFrame {
 					table_ve.requestFocus();
 					return;
 				}
-				nhapthongtin_mvkhuhoi obj = new nhapthongtin_mvkhuhoi(gio_kh_di, gio_hc_di, h_ve_di, gia_ve_di, noi_di, noi_den, gio_kh_ve, gio_hc_ve, h_ve_ve, gia_ve_ve);
-				obj.setVisible(true);
-				dispose();
-				}}
+				if(demKt==2)
+				{
+					nhapthongtin_mvkhuhoi obj = new nhapthongtin_mvkhuhoi(gio_kh_di, gio_hc_di, h_ve_di, gia_ve_di, noi_di, noi_den, gio_kh_ve, gio_hc_ve, h_ve_ve, gia_ve_ve);
+					obj.setVisible(true);
+					dispose();}
+				}
+				}
 			
 				
 		});
